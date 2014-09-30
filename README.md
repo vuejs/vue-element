@@ -24,9 +24,10 @@ Vue.element({ /* ... */ })
 
 ## Usage
 
-Usage is the same as `Vue.component` - you pass in exactly the same options as if you are defining a Vue component. Two things to note:
+Usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. A few things to note:
 
 - You don't need to manually instantiate a root level Vue instance. Custom Elements get auto-promoted when `document.registerElement` is called. You can also freely define the element before or after the markup.
 
 - You can expose attributes with Vue's `paramAttributes` option. See the example folder to see it in action.
 
+- This plugin uses *only* the Custom Elements API - it does not provide Shadow DOM encapsulation.
