@@ -19,7 +19,7 @@ If you are using Vue globally, just include `vue-element.js` and it will automat
 
 ``` js
 Vue.use(require('vue-element')) // installed
-Vue.element({ /* ... */ })
+Vue.element('my-element', { /* ... */ })
 ```
 
 ## Usage
