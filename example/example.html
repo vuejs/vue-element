@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue.element example</title>
+    <script src="platform.js"></script>
+    <script src="vue-0.11.0-rc.js"></script>
+    <script src="../vue-element.js"></script>
+  </head>
+  <body>
+
+    <my-element msg="custom message">
+      original content
+    </my-element>
+
+    <script>
+      /**
+       * Usage example, exactly the same with Vue.component,
+       * except it's a real custom element (in supported browsers)
+       */
+      Vue.element('my-element', {
+        template:
+          '<h1>This is a Vue custom element!</h1>' +
+          '<h2>{{msg}}</h2>' +
+          '<content></content>',
+        paramAttributes: ['msg'],
+        data: function () {
+          return {
+            msg: 'default message'
+          }
+        },
+        attached: function () {
+          console.log('attached!')
+        },
+        detached: function () {
+          console.log('detached!')
+        }
+      })
+    </script>
+  </body>
+</html>
