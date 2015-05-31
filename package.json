@@ -1,6 +1,6 @@
 {
   "name": "vue-element",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "register a custom element with Vue.js.",
   "main": "vue-element.js",
   "repository": {

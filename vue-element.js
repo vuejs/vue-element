@@ -11,10 +11,10 @@
       options.attached = null
       options.detached = null
       // Handle param attributes
-      var params = options.paramAttributes || []
-      var paramsHash = Object.create(null)
-      params.forEach(function (name) {
-        paramsHash[name] = true
+      var props = options.props || options.paramAttributes || []
+      var propsHash = Object.create(null)
+      props.forEach(function (name) {
+        propsHash[name] = true
         Object.defineProperty(p, name, {
           get: function () {
             return this.__vue__[name]
@@ -25,14 +25,22 @@
         })
       })
       p.attributeChangedCallback = function (name, oldVal, newVal) {
-        if (paramsHash[name]) {
+        if (propsHash[name]) {
           this.__vue__[name] = newVal
         }
       }
       // Define the Vue constructor to manage the element
       var VM = Vue.extend(options)
       p.createdCallback = function () {
-        new VM({ el: this })
+        var vm = new VM({
+          el: this
+        })
+        if (options.shadow) {
+          var shadow = this.createShadowRoot()
+          while (this.firstChild) {
+            shadow.appendChild(this.firstChild)
+          }
+        }
       }
       // register element
       document.registerElement(tag, {

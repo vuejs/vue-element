@@ -5,7 +5,7 @@ Register a real Custom Element using Vue.js.
 ## Requirements
 
 - Only works with Vue ^0.11.0
-- The browser must support the Custom Element API (currently Chrome only), or you need to include Polymer's [platform.js polyfill](https://www.polymer-project.org/docs/start/platform.html).
+- The browser must support the Custom Element API (currently Chrome only), or you need to include the [Web Components polyfill](https://github.com/webcomponents/webcomponentsjs).
 
 ## Installation
 
@@ -28,6 +28,6 @@ Usage is the same as `Vue.component()` - you pass in exactly the same options as
 
 - You don't need to manually instantiate a root level Vue instance. Custom Elements get auto-promoted when `document.registerElement` is called. You can also freely define the element before or after the markup.
 
-- You can expose attributes with Vue's `paramAttributes` option. See the example folder to see it in action.
+- You can expose attributes with Vue's `props` (0.12) or `paramAttributes` (0.11) option. See the example folder to see it in action.
 
-- This plugin uses *only* the Custom Elements API - it does not provide Shadow DOM encapsulation.
+- Be default the element does not use Shadow DOM. If you want to enable Shadow DOM encapsulation, pass in `shadow: true` in your component options.
