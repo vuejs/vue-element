@@ -26,8 +26,12 @@ Vue.element('my-element', { /* ... */ })
 
 Usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. A few things to note:
 
+- Nested Vue custom elements are not supported - it is recommended to use Vue's own component system inside a custom element; The custom element interface is intended for inter-op with other libraries (e.g. Polymer).
+
 - You don't need to manually instantiate a root level Vue instance. Custom Elements get auto-promoted when `document.registerElement` is called. You can also freely define the element before or after the markup.
 
-- You can expose attributes with Vue's `props` (0.12) or `paramAttributes` (0.11) option. See the example folder to see it in action.
+- Real custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not.
+
+- You can expose attributes with Vue's `props` (0.12) or `paramAttributes` (0.11) option, but you can only pass in literal values (no dynamic bindings). See the example folder to see it in action.
 
 - By default the element does not use Shadow DOM. If you want to enable Shadow DOM encapsulation, pass in `shadow: true` in your component options.
