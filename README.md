@@ -35,3 +35,7 @@ Usage is the same as `Vue.component()` - you pass in exactly the same options as
 - You can expose attributes with Vue's `props` (0.12) or `paramAttributes` (0.11) option, but you can only pass in literal values (no dynamic bindings). See the example folder to see it in action.
 
 - By default the element does not use Shadow DOM. If you want to enable Shadow DOM encapsulation, pass in `shadow: true` in your component options.
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
