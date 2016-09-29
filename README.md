@@ -4,6 +4,7 @@ Register a real Custom Element using Vue.js.
 
 ## Requirements
 
+- Does not work with Vue 2.0 yet
 - Only works with Vue ^0.11.0
 - The browser must support the Custom Element API (currently Chrome only), or you need to include the [Web Components polyfill](https://github.com/webcomponents/webcomponentsjs).
 
