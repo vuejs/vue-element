@@ -4,9 +4,8 @@ Register a real Custom Element using Vue.js.
 
 ## Requirements
 
-- Does not work with Vue 2.0 yet
-- Only works with Vue ^0.11.0
-- The browser must support the Custom Element API (currently Chrome only), or you need to include the [Web Components polyfill](https://github.com/webcomponents/webcomponentsjs).
+- Work with Vue 1.x and 2.x
+- The browser must support the Custom Element API (currently Chrome only), or you need to include the [Web Components polyfill](https://github.com/WebReflection/document-register-element/blob/master/build/document-register-element.js).
 
 ## Installation
 
@@ -33,9 +32,30 @@ Usage is the same as `Vue.component()` - you pass in exactly the same options as
 
 - Real custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not.
 
-- You can expose attributes with Vue's `props` (0.12) or `paramAttributes` (0.11) option, but you can only pass in literal values (no dynamic bindings). See the example folder to see it in action.
+## Examples
 
-- By default the element does not use Shadow DOM. If you want to enable Shadow DOM encapsulation, pass in `shadow: true` in your component options.
+``` html
+<widget-vue prop1="1", prop2="string" prop3="true"></widget-test>
+```
+
+``` js
+Vue.element('widget-vue', {
+  props: [
+    'prop1',
+    'prop2',
+    'prop3'
+  ],
+  data: {
+    message: 'Hello Vue!'
+  },
+  template: '<p>{{ message }}, {{ prop1  }}, {{prop2}}, {{prop3}}</p>'
+});
+
+document.querySelector('widget-vue').prop2 // get prop value
+document.querySelector('widget-vue').prop2 = 'another string' // set prop value
+```
+
+You can also change <widget-vue> attributes and changes will be instantly applied.
 
 ## License
 
