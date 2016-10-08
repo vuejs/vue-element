@@ -21,29 +21,6 @@
   }
 
   /**
-   * In root Vue instance we should pass props as 'propsData'.
-   * That's why we get element attributes and set proper propsData
-   * @param element
-   * @param instanceOptions
-   */
-  function initVueAttributes(element, instanceOptions) {
-    var attributes = Vue.util.toArray(element.attributes);
-    instanceOptions.propsData = instanceOptions.propsData || {};
-
-    attributes.forEach(function(attribute) {
-      if (typeof attribute.nodeValue === 'string') {
-        var name = attribute.nodeName,
-            nameCamelCase = Vue.util.camelize(name),
-            value = attribute.nodeValue;
-
-        if (value !== '') {
-          instanceOptions.propsData[nameCamelCase] = convertProp(value);
-        }
-      }
-    });
-  }
-
-  /**
    * If we get DOM node of element we could use it like this:
    * document.querySelector('widget-vue1').prop1 <-- get prop
    * document.querySelector('widget-vue1').prop1 = 'new Value' <-- set prop
@@ -76,6 +53,29 @@
   }
 
   /**
+   * In root Vue instance we should pass props as 'propsData'.
+   * That's why we get element attributes and set proper propsData
+   * @param element
+   * @param instanceOptions
+   */
+  function initProps(element, instanceOptions, propsHash) {
+    var attributes = Vue.util.toArray(element.attributes);
+    instanceOptions.propsData = instanceOptions.propsData || {};
+
+    attributes.forEach(function(attribute) {
+      if (typeof attribute.nodeValue === 'string') {
+        var name = attribute.nodeName,
+            nameCamelCase = Vue.util.camelize(name),
+            value = attribute.nodeValue;
+
+        if (value !== '' && propsHash[name]) {
+          instanceOptions.propsData[nameCamelCase] = convertProp(value);
+        }
+      }
+    });
+  }
+
+  /**
    * If it's not already created (like when opening modal and moving element around DOM), we should create new Vue instance
    * @param element
    * @param Vue
@@ -93,8 +93,8 @@
       //add v-cloak
       instanceOptions.el.setAttribute('v-cloak', '');
 
-      initVueAttributes(element, instanceOptions);
       reactiveProps(element, instanceOptions, propsHash);
+      initProps(element, instanceOptions, propsHash);
 
       // Define the Vue constructor to manage the element
       element.__vue__ = new Vue(instanceOptions); // eslint-disable-line no-new
@@ -107,7 +107,11 @@
           propsHash = Object.create(null);
       options = options || {};
 
-      p.createdCallback = function () {};
+      p.createdCallback = function () {
+        if (typeof options.created === 'function') {
+          options.created.call(this);
+        }
+      };
 
       // Handle attached to DOM callback
       p.attachedCallback = function () {
