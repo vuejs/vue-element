@@ -108,6 +108,7 @@
       options = options || {};
 
       p.createdCallback = function () {
+        createVueInstance(this, Vue, component, propsHash);
         if (typeof options.created === 'function') {
           options.created.call(this);
         }
@@ -115,13 +116,6 @@
 
       // Handle attached to DOM callback
       p.attachedCallback = function () {
-        if (!this.__detached) {
-          createVueInstance(this, Vue, component, propsHash);
-        }
-        if (typeof options.attached === 'function') {
-          options.attached.call(this);
-        }
-
         this.__detached = false;
       };
 
