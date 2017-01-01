@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "document-register-element": "^1.3.0",
+    "set-prototype-of": "^1.0.0",
     "vue": "^2.1.0"
   },
   "devDependencies": {
