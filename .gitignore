@@ -1,1 +1,33 @@
+# OS generated files #
+######################
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+.idea
+
+# Generated files #
+######################
+*node_modules
+.sass-cache
+.happypack
+.bower-*
+report/
+bower_component
+docs/bower_components
+libs/
+dist
+coverage
+*.log
+docs/esdoc/
+docs/docco/
+TESTS-*
+.yarnrc
+yarn.lock
+test/unit/coverage
+test/e2e/reports
+selenium-debug.log
