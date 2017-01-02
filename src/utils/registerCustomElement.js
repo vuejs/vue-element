@@ -1,7 +1,7 @@
 /*eslint-disable */
 import isES2015 from './isES2015';
 import 'set-prototype-of'; //polyfill for older browsers (IE < 11) that do not support Object.setPrototypeOf needed by Webpack's transpiled ES2015 "class", even if it's not directly used
-import setProto from './setProto'; // for non ES2015 version of Custom Elements registration
+import setProto from './setProto'; // function for non ES2015 version of Custom Elements registration
 
 export default function registerCustomElement(name, options = {}) {
   if (isES2015) {
@@ -28,8 +28,8 @@ export default function registerCustomElement(name, options = {}) {
         return options.observedAttributes || [];
       }
 
-      attributeChangedCallback(name, oldValue, newValue) {
-        typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, newValue);
+      attributeChangedCallback(name, oldValue, value) {
+        typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
       }
     }
 
@@ -54,8 +54,8 @@ export default function registerCustomElement(name, options = {}) {
       typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
     };
 
-    myCustomElement.prototype.attributeChangedCallback = function (name, oldValue, newValue) {
-      typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, newValue);
+    myCustomElement.prototype.attributeChangedCallback = function (name, oldValue, value) {
+      typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
     };
 
     customElements.define(name, myCustomElement);
