@@ -1,7 +1,7 @@
 /*eslint-disable */
 
 import 'document-register-element/build/document-register-element.js';
-import 'set-prototype-of';
+import 'set-prototype-of'; //polyfill
 
 // // The Vue build version to load with the `import` command
 // // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
@@ -17,12 +17,13 @@ import 'set-prototype-of';
 
 function setProto(A, B) {
   A.prototype = Object.create(
-    B.prototype,
-    {constructor: {
-      configurable: true,
-      writable: true,
-      value: A
-    }}
+    B.prototype, {
+      constructor: {
+        configurable: true,
+        writable: true,
+        value: A
+      }
+    }
   );
 }
 
@@ -30,9 +31,8 @@ function isES2015() {
   if (typeof Symbol == "undefined") return false;
   try {
     eval("class Foo {}");
-  } catch (e) { console.warn('NOT ES6'); return false; }
+  } catch (e) { return false; }
 
-  console.warn('IS ES6');
   return true;
 }
 
@@ -41,98 +41,89 @@ document.body.appendChild(
 ).textContent = 'ES6 detection - ' + isES2015();
 
 if (isES2015()) {
+  console.info('IS ES6');
   class AppDrawer extends HTMLElement {
     // Can define constructor arguments if you wish.
     constructor(self) {
       super();
       self = HTMLElement.call(self || this);
 
-      self.textContent = 'click me'; // eslint-disable-line
-
-      console.info('self.textContent', self.textContent);
-
-      // Setup a click listener on <app-drawer> itself.
+      self.setAttribute('cool', 'true');
+      self.textContent = 'V1 click me'; // eslint-disable-line
       self.addEventListener('click', () => {
-        // Don't toggle the drawer if it's disabled.
-        if (self.disabled) {
-          return;
-        }
         self.toggleDrawer();
-
-        return self; // eslint-disable-line
       });
 
       document.body.appendChild(
         document.createElement('p')
-      ).textContent = 'created';
+      ).textContent = 'V1 created';
     }
 
     connectedCallback() {
-      console.info('this.textContent', this.textContent);
-      // this.textContent = 'click me'; // eslint-disable-line
       document.body.appendChild(
         document.createElement('p')
-      ).textContent = 'attached';
+      ).textContent = 'V1 attached';
+    }
+
+    disconnectedCallback() {
+      console.warn('disconnectedCallback', this);
+    };
+
+    static get observedAttributes() {
+      return ['test', 'open'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      console.info('attributeChangedCallback', name, oldValue, newValue);
     }
 
     toggleDrawer() {
       console.info('toggle'); // eslint-disable-line
+      this.setAttribute('test', Math.random());
     }
   }
 
   customElements.define('app-drawer', AppDrawer);
 } else {
+  console.info('NOT ES6');
   function AppDrawer(self) {
     self = HTMLElement.call(self || this);
+
     self.setAttribute('cool', 'true');
-    self.textContent = 'my-button text'; // eslint-disable-line
-    console.info('my-button created');
+    self.textContent = 'V0 click me'; // eslint-disable-line
+    self.addEventListener('click', () => {
+      self.toggleDrawer();
+    });
+
+    document.body.appendChild(
+      document.createElement('p')
+    ).textContent = 'V0 created';
     return self;
   }
 
+  AppDrawer.observedAttributes = ['test', 'open'];
   setProto(AppDrawer, HTMLElement);
+
+  AppDrawer.prototype.connectedCallback = function () {
+    document.body.appendChild(
+      document.createElement('p')
+    ).textContent = 'V0 attached';
+  };
+
+  AppDrawer.prototype.disconnectedCallback = function () {
+    console.warn('disconnectedCallback', this);
+  };
+
+  AppDrawer.prototype.attributeChangedCallback = function (name, oldValue, newValue) {
+    console.info('attributeChangedCallback', name, oldValue, newValue);
+  };
+
+  AppDrawer.prototype.toggleDrawer = function() {
+    console.info('toggle'); // eslint-disable-line
+    this.setAttribute('test', Math.random());
+  };
+
   customElements.define('app-drawer', AppDrawer);
-
-  // document.registerElement(
-  //   'app-drawer',
-  //   {
-  //     prototype: Object.create(
-  //       HTMLElement.prototype, {
-  //         createdCallback: {value: function() {
-  //           console.log('here I am ^_^ ');
-  //           console.log('with content: ', this.textContent);
-  //         }},
-  //         attachedCallback: {value: function() {
-  //           console.log('live on DOM ;-) ');
-  //         }},
-  //         detachedCallback: {value: function() {
-  //           console.log('leaving the DOM :-( )');
-  //         }},
-  //         attributeChangedCallback: {value: function(
-  //           name, previousValue, value
-  //         ) {
-  //           if (previousValue == null) {
-  //             console.log(
-  //               'got a new attribute ', name,
-  //               ' with value ', value
-  //             );
-  //           } else if (value == null) {
-  //             console.log(
-  //               'somebody removed ', name,
-  //               ' its value was ', previousValue
-  //             );
-  //           } else {
-  //             console.log(
-  //               name,
-  //               ' changed from ', previousValue,
-  //               ' to ', value
-  //             );
-  //           }
-  //         }}
-  //       })
-  //   }
-  // );
-
 }
 
 

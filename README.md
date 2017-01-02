@@ -1,5 +1,11 @@
 # Vue.element plugin
 
+1. Examples, e.g. Lazy loading (opts callback) 
+2. spa/lazy adding
+3. Better docs, infographic e.g. HMR
+
+Info about ...
+
 Register a real Custom Element using Vue.js.
 
 ## Requirements
