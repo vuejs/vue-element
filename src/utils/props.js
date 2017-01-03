@@ -70,21 +70,21 @@ export function reactiveProps(element, props) {
   });
 }
 
-// /**
-//  * In root Vue instance we should pass props as 'propsData'.
-//  * That's why we get element attributes and set proper propsData
-//  * @param element
-//  * @param instanceOptions
-//  * @param props
-//  */
-// export function getPropsData(element, instanceOptions, props) {
-//   const propsData = instanceOptions.propsData || {};
-//
-//   props.forEach((name) => {
-//       value = attribute.nodeValue;
-//
-//     if (value !== '' && propsHash[name]) {
-//       instanceOptions.propsData[nameCamelCase] = convertProp(value);
-//     }
-//   });
-// }
+/**
+ * In root Vue instance we should initialize props as 'propsData'.
+ * @param instanceOptions
+ * @param props
+ */
+export function getPropsData(element, instanceOptions, props) {
+  const propsData = instanceOptions.propsData || {};
+
+  props.hyphenate.forEach((name, index) => {
+    const value = element.attributes[name] && element.attributes[name].nodeValue;
+
+    if (value !== '') {
+      propsData[props.camelCase[index]] = convertProp(value);
+    }
+  });
+
+  return propsData;
+}
