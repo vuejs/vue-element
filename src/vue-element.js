@@ -1,22 +1,20 @@
 import registerCustomElement from './utils/registerCustomElement';
 import createVueInstance from './utils/createVueInstance';
-import { convertProp } from './utils/props';
+import { getProps, convertProp } from './utils/props';
 
 function install(Vue) {
   Vue.element = function vueElement(tag, component, options = {}) {
-    const propsHash = {};
-
     // register Custom Element
     registerCustomElement('app-drawer', {
       constructorCallback() {
         typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
-        createVueInstance(this, Vue, component, propsHash);
+        createVueInstance(this, Vue, component);
       },
 
       connectedCallback() {
         typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
         if (!this.__detached__) {
-          createVueInstance(this, Vue, component, propsHash);
+          createVueInstance(this, Vue, component);
         }
 
         this.__detached__ = false;
@@ -45,12 +43,13 @@ function install(Vue) {
        * @param value
        */
       attributeChangedCallback(name, oldValue, value) {
-        if (this.__vue__ && propsHash[name] && typeof value !== 'undefined' && value !== null) {
+        if (this.__vue__ && typeof value !== 'undefined') {
+          typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
           this.__vue__[name] = convertProp(value);
         }
       },
 
-      observedAttributes: ['cool']
+      observedAttributes: getProps(component)
     });
   };
 }

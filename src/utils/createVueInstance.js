@@ -1,4 +1,4 @@
-import { reactiveProps, initProps } from './props';
+import { reactiveProps } from './props';
 
 /**
  * Create new Vue instance if it's not already created
@@ -20,7 +20,6 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     instanceOptions.el.setAttribute('v-cloak', '');
 
     reactiveProps(element, instanceOptions, propsHash);
-    initProps(element, instanceOptions, propsHash);
 
     // Define the Vue constructor to manage the element
     element.__vue__ = new Vue(instanceOptions); // eslint-disable-line no-new

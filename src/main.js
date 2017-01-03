@@ -40,11 +40,9 @@ const options = {
     console.warn('disconnectedCallback', this);
   },
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    console.info('attributeChangedCallback', name, oldValue, newValue);
-  },
-
-  observedAttributes: ['cool']
+  attributeChangedCallback(name, oldValue, value) {
+    console.info('attributeChangedCallback', name, oldValue, value);
+  }
 };
 //
 // registerCustomElement('app-drawer', options);

@@ -20,14 +20,10 @@ export function convertProp(value) {
 }
 
 /**
- * If we get DOM node of element we could use it like this:
- * document.querySelector('widget-vue1').prop1 <-- get prop
- * document.querySelector('widget-vue1').prop1 = 'new Value' <-- set prop
- * @param element
+ * Extract props from component definition, no matter if it's array or object
  * @param component
- * @param propsHash
  */
-export function reactiveProps(element, component, propsHash) {
+export function getProps(component) {
   let props = [];
   if (component.props && component.props.length) {
     props = component.props;
@@ -39,9 +35,21 @@ export function reactiveProps(element, component, propsHash) {
     }
   }
 
+  return props;
+}
+
+/**
+ * If we get DOM node of element we could use it like this:
+ * document.querySelector('widget-vue1').prop1 <-- get prop
+ * document.querySelector('widget-vue1').prop1 = 'new Value' <-- set prop
+ * @param element
+ * @param component
+ */
+export function reactiveProps(element, component) {
+  const props = getProps(component);
+
   // Handle param attributes
   props.forEach((name) => {
-    propsHash[name] = true;
     Object.defineProperty(element, name, {
       get() {
         return this.__vue__[name];
@@ -51,15 +59,4 @@ export function reactiveProps(element, component, propsHash) {
       }
     });
   });
-}
-
-
-/**
- * In root Vue instance we should pass props as 'propsData'.
- * That's why we get element attributes and set proper propsData
- * @param element
- * @param instanceOptions
- */
-export function initProps(/* element, instanceOptions, propsHash */) {
-
 }
