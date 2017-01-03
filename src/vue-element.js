@@ -4,34 +4,22 @@ import { convertProp } from './utils/props';
 
 function install(Vue) {
   Vue.element = function vueElement(tag, component, options = {}) {
-    let propsHash = Object.create(null);
-
-    /**
-     * When attribute changes we should update Vue instance
-     * @param name
-     * @param oldVal
-     * @param value
-     */
-    p.attributeChangedCallback = function (name, oldVal, value) {
-      if (this.__vue__ && propsHash[name] && typeof value !== 'undefined' && value !== null) {
-        this.__vue__[name] = convertProp(value);
-      }
-    };
+    const propsHash = {};
 
     // register Custom Element
     registerCustomElement('app-drawer', {
       constructorCallback() {
-        createVueInstance(this, Vue, component, propsHash);
         typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
+        createVueInstance(this, Vue, component, propsHash);
       },
 
       connectedCallback() {
-        if (!this.__detached) {
+        typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
+        if (!this.__detached__) {
           createVueInstance(this, Vue, component, propsHash);
         }
-        typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
 
-        this.__detached = false;
+        this.__detached__ = false;
       },
 
       /**
@@ -40,11 +28,11 @@ function install(Vue) {
        *  That's why we detect if it's permament using setTimeout
        */
       disconnectedCallback() {
-        this.__detached = true;
+        this.__detached__ = true;
+        typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
 
-        setTimeout(function() {
-          if (this.__detached && this.__vue__) {
-            typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
+        setTimeout(function detachtedTimeout() {
+          if (this.__detached__ && this.__vue__) {
             this.__vue__.$destroy(true);
           }
         }, 3000);
@@ -67,10 +55,11 @@ function install(Vue) {
   };
 }
 
+/*eslint-disable */
 if (typeof exports == "object") {
   module.exports = install
 } else if (typeof define == "function" && define.amd) {
-  define([], function(){ return install })
+  define([], function (){ return install })
 } else if (window.Vue) {
   Vue.use(install)
 }

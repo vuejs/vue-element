@@ -12,8 +12,8 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
   entry: {
-    'vue-element': './src/vue-element.js',
-    app: './src/main.js'
+    app: './src/main.js',
+    'vue-element': ['./src/vue-element.js']
   },
   output: {
     path: config.build.assetsRoot,

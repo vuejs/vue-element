@@ -6,9 +6,9 @@
  */
 export function convertProp(value) {
   let propsValue = value;
-  const isBoolean = ['true', 'false'].indexOf(value) > -1,
-    valueParsed = parseFloat(propsValue, 10),
-    isNumber = !isNaN(valueParsed) && isFinite(propsValue);
+  const isBoolean = ['true', 'false'].indexOf(value) > -1;
+  const valueParsed = parseFloat(propsValue, 10);
+  const isNumber = !isNaN(valueParsed) && isFinite(propsValue);
 
   if (isBoolean) {
     propsValue = propsValue === 'true';
@@ -32,13 +32,15 @@ export function reactiveProps(element, component, propsHash) {
   if (component.props && component.props.length) {
     props = component.props;
   } else if (component.props && typeof component.props === 'object') {
-    for (var prop in component.props) {
-      props.push(prop);
+    for (const prop in component.props) { // eslint-disable-line no-restricted-syntax
+      if ({}.prototype.hasOwnProperty.call(component.props, prop)) {
+        props.push(prop);
+      }
     }
   }
 
   // Handle param attributes
-  props.forEach(function (name) {
+  props.forEach((name) => {
     propsHash[name] = true;
     Object.defineProperty(element, name, {
       get() {
@@ -58,19 +60,6 @@ export function reactiveProps(element, component, propsHash) {
  * @param element
  * @param instanceOptions
  */
-export function initProps(element, instanceOptions, propsHash) {
-  const attributes = Vue.util.toArray(element.attributes);
-  instanceOptions.propsData = instanceOptions.propsData || {};
+export function initProps(/* element, instanceOptions, propsHash */) {
 
-  attributes.forEach(function(attribute) {
-    if (typeof attribute.nodeValue === 'string') {
-      var name = attribute.nodeName,
-        nameCamelCase = Vue.util.camelize(name),
-        value = attribute.nodeValue;
-
-      if (value !== '' && propsHash[name]) {
-        instanceOptions.propsData[nameCamelCase] = convertProp(value);
-      }
-    }
-  });
 }

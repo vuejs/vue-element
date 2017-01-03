@@ -28,6 +28,9 @@ module.exports = {
       'vue': 'never'
     }],
     "comma-dangle": ["error", "never"],
+    "no-unused-expressions": ["error", { "allowShortCircuit": true }],
+    "no-param-reassign": ["error", { "props": false }],
+    "no-underscore-dangle": ["error", { "allow": ["__vue__", "__detached__"] }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     "class-methods-use-this": 0

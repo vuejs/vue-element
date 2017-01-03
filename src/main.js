@@ -1,7 +1,8 @@
-/*eslint-disable */
+import 'document-register-element/build/document-register-element';
+import Vue from 'vue';
+import vueElement from './vue-element';
 
-import 'document-register-element/build/document-register-element.js';
-import registerCustomElement from './utils/registerCustomElement';
+Vue.use(vueElement);
 
 // // The Vue build version to load with the `import` command
 // // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
@@ -15,6 +16,7 @@ import registerCustomElement from './utils/registerCustomElement';
 //   components: { App },
 // });
 
+/* eslint-disable no-console */
 const options = {
   constructorCallback() {
     this.setAttribute('cool', 'true');
@@ -44,10 +46,23 @@ const options = {
 
   observedAttributes: ['cool']
 };
+//
+// registerCustomElement('app-drawer', options);
 
-registerCustomElement('app-drawer', options);
-
-
-
-
-
+Vue.element('app-drawer', {
+  props: [
+    'prop1',
+    'prop2',
+    'prop3'
+  ],
+  data() {
+    return {
+      message: 'Hello Vue!'
+    };
+  },
+  template: '<p>{{ message }}, {{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}})</p>',
+  created() {
+    console.info('created', this);
+    console.info(this.prop1, this.prop2, this.prop3);
+  }
+}, options);
