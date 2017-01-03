@@ -23,6 +23,7 @@ const options = {
     this.textContent = 'click me'; // eslint-disable-line
     this.addEventListener('click', () => {
       console.log('clicked!');
+      this.setAttribute('prop1', Math.random());
     });
 
     document.body.appendChild(
@@ -44,21 +45,20 @@ const options = {
     console.info('attributeChangedCallback', name, oldValue, value);
   }
 };
-//
-// registerCustomElement('app-drawer', options);
 
 Vue.element('app-drawer', {
   props: [
     'prop1',
     'prop2',
-    'prop3'
+    'prop3',
+    'longProp'
   ],
   data() {
     return {
       message: 'Hello Vue!'
     };
   },
-  template: '<p>{{ message }}, {{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}})</p>',
+  template: '<p>{{ message }}, {{longProp}}, {{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}})</p>',
   created() {
     console.info('created', this);
     console.info(this.prop1, this.prop2, this.prop3);

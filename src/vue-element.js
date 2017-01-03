@@ -4,17 +4,17 @@ import { getProps, convertProp } from './utils/props';
 
 function install(Vue) {
   Vue.element = function vueElement(tag, component, options = {}) {
+    const props = getProps(component, Vue);
     // register Custom Element
     registerCustomElement('app-drawer', {
       constructorCallback() {
         typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
-        createVueInstance(this, Vue, component);
       },
 
       connectedCallback() {
         typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
         if (!this.__detached__) {
-          createVueInstance(this, Vue, component);
+          createVueInstance(this, Vue, component, props);
         }
 
         this.__detached__ = false;
@@ -44,12 +44,13 @@ function install(Vue) {
        */
       attributeChangedCallback(name, oldValue, value) {
         if (this.__vue__ && typeof value !== 'undefined') {
+          const nameCamelCase = Vue.util.camelize(name);
           typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
-          this.__vue__[name] = convertProp(value);
+          this.__vue__[nameCamelCase] = convertProp(value);
         }
       },
 
-      observedAttributes: getProps(component)
+      observedAttributes: props.hyphenate
     });
   };
 }

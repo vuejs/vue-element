@@ -6,12 +6,11 @@ import { reactiveProps } from './props';
  * @param element
  * @param Vue
  * @param componentDefinition
- * @param propsHash
+ * @param props
  */
-export default function createVueInstance(element, Vue, componentDefinition, propsHash) {
+export default function createVueInstance(element, Vue, componentDefinition, props) {
   if (!element.__vue__) {
     const instanceOptions = Vue.util.extend({}, componentDefinition);
-    // const attributesList = Vue.util.toArray(element.attributes);
 
     element.innerHTML = '<div class="vue-element-target"></div>';
     instanceOptions.el = element.children[0];
@@ -19,7 +18,8 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     // add v-cloak
     instanceOptions.el.setAttribute('v-cloak', '');
 
-    reactiveProps(element, instanceOptions, propsHash);
+    // initProps(instanceOptions, props);
+    reactiveProps(element, props);
 
     // Define the Vue constructor to manage the element
     element.__vue__ = new Vue(instanceOptions); // eslint-disable-line no-new

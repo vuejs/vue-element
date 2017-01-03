@@ -22,18 +22,29 @@ export function convertProp(value) {
 /**
  * Extract props from component definition, no matter if it's array or object
  * @param component
+ * @param Vue
  */
-export function getProps(component) {
-  let props = [];
+export function getProps(component, Vue) {
+  const props = {
+    camelCase: [],
+    hyphenate: []
+  };
+
   if (component.props && component.props.length) {
-    props = component.props;
+    component.props.forEach((prop) => {
+      props.camelCase.push(Vue.util.camelize(prop));
+    });
   } else if (component.props && typeof component.props === 'object') {
     for (const prop in component.props) { // eslint-disable-line no-restricted-syntax
       if ({}.prototype.hasOwnProperty.call(component.props, prop)) {
-        props.push(prop);
+        props.camelCase.push(Vue.util.camelize(prop));
       }
     }
   }
+
+  props.camelCase.forEach((prop) => {
+    props.hyphenate.push(Vue.util.hyphenate(prop));
+  });
 
   return props;
 }
@@ -43,20 +54,37 @@ export function getProps(component) {
  * document.querySelector('widget-vue1').prop1 <-- get prop
  * document.querySelector('widget-vue1').prop1 = 'new Value' <-- set prop
  * @param element
- * @param component
+ * @param props
  */
-export function reactiveProps(element, component) {
-  const props = getProps(component);
-
+export function reactiveProps(element, props) {
   // Handle param attributes
-  props.forEach((name) => {
+  props.camelCase.forEach((name, index) => {
     Object.defineProperty(element, name, {
       get() {
         return this.__vue__[name];
       },
       set(value) {
-        this.setAttribute(name, convertProp(value));
+        this.setAttribute(props.hyphenate[index], convertProp(value));
       }
     });
   });
 }
+
+// /**
+//  * In root Vue instance we should pass props as 'propsData'.
+//  * That's why we get element attributes and set proper propsData
+//  * @param element
+//  * @param instanceOptions
+//  * @param props
+//  */
+// export function getPropsData(element, instanceOptions, props) {
+//   const propsData = instanceOptions.propsData || {};
+//
+//   props.forEach((name) => {
+//       value = attribute.nodeValue;
+//
+//     if (value !== '' && propsHash[name]) {
+//       instanceOptions.propsData[nameCamelCase] = convertProp(value);
+//     }
+//   });
+// }
