@@ -35,10 +35,8 @@ export function getProps(component, Vue) {
       props.camelCase.push(Vue.util.camelize(prop));
     });
   } else if (component.props && typeof component.props === 'object') {
-    for (const prop in component.props) { // eslint-disable-line no-restricted-syntax
-      if ({}.prototype.hasOwnProperty.call(component.props, prop)) {
-        props.camelCase.push(Vue.util.camelize(prop));
-      }
+    for (const prop in component.props) { // eslint-disable-line no-restricted-syntax, guard-for-in
+      props.camelCase.push(Vue.util.camelize(prop));
     }
   }
 

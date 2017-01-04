@@ -2,6 +2,8 @@ import 'document-register-element/build/document-register-element';
 import Vue from 'vue';
 import vueElement from './vue-element';
 
+import AppDrawer from './demo/components/AppDrawer';
+
 Vue.use(vueElement);
 
 // // The Vue build version to load with the `import` command
@@ -44,26 +46,4 @@ const options = {
   }
 };
 
-Vue.element('app-drawer', {
-  props: [
-    'prop1',
-    'prop2',
-    'prop3',
-    'longProp'
-  ],
-  data() {
-    return {
-      message: 'Hello Vue!'
-    };
-  },
-  template: `<div class="app-drawer">
-              <p>{{ message }}, {{longProp}}, {{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}})</p>
-              <slot>
-                This will only be displayed if there is no content to be distributed.
-              </slot>
-            </div>`,
-  created() {
-    console.info('created', this);
-    console.info(this.prop1, this.prop2, this.prop3);
-  }
-}, options);
+Vue.element('app-drawer', AppDrawer, options);

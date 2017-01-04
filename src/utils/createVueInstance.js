@@ -12,19 +12,18 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
   if (!element.__vue__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
     const elementOriginalInnerHtml = element.innerHTML;
-    const componentProps = ComponentDefinition.props || [];
     const propsData = getPropsData(element, ComponentDefinition, props);
 
     const rootElement = {
       propsData,
-      props: componentProps,
+      props: props.camelCase,
       components: {
         'vue-element-component': ComponentDefinition
       },
       computed: {
         reactiveProps() {
           const reactivePropsList = {};
-          componentProps.forEach((prop) => {
+          props.camelCase.forEach((prop) => {
             reactivePropsList[prop] = this[prop];
           });
 
