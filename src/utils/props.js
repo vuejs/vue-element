@@ -21,21 +21,21 @@ export function convertAttributeValue(value) {
 
 /**
  * Extract props from component definition, no matter if it's array or object
- * @param component
+ * @param componentDefinition
  * @param Vue
  */
-export function getProps(component, Vue) {
+export function getProps(componentDefinition, Vue) {
   const props = {
     camelCase: [],
     hyphenate: []
   };
 
-  if (component.props && component.props.length) {
-    component.props.forEach((prop) => {
+  if (componentDefinition.props && componentDefinition.props.length) {
+    componentDefinition.props.forEach((prop) => {
       props.camelCase.push(Vue.util.camelize(prop));
     });
-  } else if (component.props && typeof component.props === 'object') {
-    for (const prop in component.props) { // eslint-disable-line no-restricted-syntax, guard-for-in
+  } else if (componentDefinition.props && typeof componentDefinition.props === 'object') {
+    for (const prop in componentDefinition.props) { // eslint-disable-line no-restricted-syntax, guard-for-in
       props.camelCase.push(Vue.util.camelize(prop));
     }
   }

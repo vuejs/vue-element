@@ -3,8 +3,8 @@ import createVueInstance from './utils/createVueInstance';
 import { getProps, convertAttributeValue } from './utils/props';
 
 function install(Vue) {
-  Vue.element = function vueElement(tag, component, options = {}) {
-    const props = getProps(component, Vue);
+  Vue.element = function vueElement(tag, componentDefinition, options = {}) {
+    const props = getProps(componentDefinition, Vue);
     // register Custom Element
     registerCustomElement('app-drawer', {
       constructorCallback() {
@@ -14,7 +14,7 @@ function install(Vue) {
       connectedCallback() {
         typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
         if (!this.__detached__) {
-          createVueInstance(this, Vue, component, props);
+          createVueInstance(this, Vue, componentDefinition, props);
         }
 
         this.__detached__ = false;
