@@ -1,6 +1,6 @@
 import registerCustomElement from './utils/registerCustomElement';
 import createVueInstance from './utils/createVueInstance';
-import { getProps, convertProp } from './utils/props';
+import { getProps, convertAttributeValue } from './utils/props';
 
 function install(Vue) {
   Vue.element = function vueElement(tag, component, options = {}) {
@@ -46,7 +46,7 @@ function install(Vue) {
         if (this.__vue__ && typeof value !== 'undefined') {
           const nameCamelCase = Vue.util.camelize(name);
           typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
-          this.__vue__[nameCamelCase] = convertProp(value);
+          this.__vue__[nameCamelCase] = convertAttributeValue(value);
         }
       },
 

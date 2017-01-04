@@ -4,7 +4,7 @@
  * @param value
  * @returns {*}
  */
-export function convertProp(value) {
+export function convertAttributeValue(value) {
   let propsValue = value;
   const isBoolean = ['true', 'false'].indexOf(value) > -1;
   const valueParsed = parseFloat(propsValue, 10);
@@ -64,7 +64,7 @@ export function reactiveProps(element, props) {
         return this.__vue__[name];
       },
       set(value) {
-        this.setAttribute(props.hyphenate[index], convertProp(value));
+        this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
       }
     });
   });
@@ -82,7 +82,7 @@ export function getPropsData(element, instanceOptions, props) {
     const value = element.attributes[name] && element.attributes[name].nodeValue;
 
     if (value !== '') {
-      propsData[props.camelCase[index]] = convertProp(value);
+      propsData[props.camelCase[index]] = convertAttributeValue(value);
     }
   });
 
