@@ -73,15 +73,16 @@ export function reactiveProps(element, props) {
 /**
  * In root Vue instance we should initialize props as 'propsData'.
  * @param instanceOptions
+ * @param componentDefinition
  * @param props
  */
-export function getPropsData(element, instanceOptions, props) {
-  const propsData = instanceOptions.propsData || {};
+export function getPropsData(element, componentDefinition, props) {
+  const propsData = componentDefinition.propsData || {};
 
   props.hyphenate.forEach((name, index) => {
     const value = element.attributes[name] && element.attributes[name].nodeValue;
 
-    if (value !== '') {
+    if (value !== undefined && value !== '') {
       propsData[props.camelCase[index]] = convertAttributeValue(value);
     }
   });

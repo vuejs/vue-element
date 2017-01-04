@@ -10,18 +10,53 @@ import { getPropsData, reactiveProps } from './props';
  */
 export default function createVueInstance(element, Vue, componentDefinition, props) {
   if (!element.__vue__) {
-    const instanceOptions = Vue.util.extend({}, componentDefinition);
+    const ComponentDefinition = Vue.util.extend({}, componentDefinition);
+    const elementOriginalInnerHtml = element.innerHTML;
+    const componentProps = ComponentDefinition.props || [];
+    const propsData = getPropsData(element, ComponentDefinition, props);
 
-    element.innerHTML = '<div class="vue-element-target"></div>';
-    instanceOptions.el = element.children[0];
+    const rootElement = {
+      propsData,
+      props: componentProps,
+      components: {
+        'vue-element-component': ComponentDefinition
+      },
+      computed: {
+        reactiveProps() {
+          const reactivePropsList = {};
+          componentProps.forEach((prop) => {
+            reactivePropsList[prop] = this[prop];
+          });
 
-    // add v-cloak
-    instanceOptions.el.setAttribute('v-cloak', '');
+          return reactivePropsList;
+        }
+      },
+      /* eslint-disable */
+      render(h) {
+        const data = {
+          props: this.reactiveProps
+        };
 
-    instanceOptions.propsData = getPropsData(element, instanceOptions, props);
+        return (
+          <ComponentDefinition {...data}>
+            {elementOriginalInnerHtml}
+          </ComponentDefinition>
+        )
+      },
+      /* eslint-enable */
+      mounted() {
+        this.$nextTick(() => {
+          console.info('vue-element-component mounted', this); // eslint-disable-line
+        });
+      }
+    };
+
+    element.innerHTML = '<div></div>';
+    rootElement.el = element.children[0];
+
     reactiveProps(element, props);
 
     // Define the Vue constructor to manage the element
-    element.__vue__ = new Vue(instanceOptions); // eslint-disable-line no-new
+    element.__vue__ = new Vue(rootElement); // eslint-disable-line no-new
   }
 }

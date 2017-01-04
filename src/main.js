@@ -19,8 +19,6 @@ Vue.use(vueElement);
 /* eslint-disable no-console */
 const options = {
   constructorCallback() {
-    this.setAttribute('cool', 'true');
-    this.textContent = 'click me'; // eslint-disable-line
     this.addEventListener('click', () => {
       console.log('clicked!');
       this.setAttribute('prop1', Math.random());
@@ -58,7 +56,12 @@ Vue.element('app-drawer', {
       message: 'Hello Vue!'
     };
   },
-  template: '<p>{{ message }}, {{longProp}}, {{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}})</p>',
+  template: `<div class="app-drawer">
+              <p>{{ message }}, {{longProp}}, {{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}})</p>
+              <slot>
+                This will only be displayed if there is no content to be distributed.
+              </slot>
+            </div>`,
   created() {
     console.info('created', this);
     console.info(this.prop1, this.prop2, this.prop3);
