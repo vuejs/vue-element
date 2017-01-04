@@ -30,6 +30,12 @@ module.exports = {
     "comma-dangle": ["error", "never"],
     "no-unused-expressions": ["error", { "allowShortCircuit": true }],
     "no-param-reassign": ["error", { "props": false }],
+    'max-len': ['error', 100, 2, {
+      ignoreUrls: true,
+      ignoreComments: true,
+      ignoreStrings: true,
+      ignoreTemplateLiterals: true,
+    }],
     "no-underscore-dangle": ["error", { "allow": ["__vue__", "__detached__"] }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
