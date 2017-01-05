@@ -2,6 +2,8 @@ import 'set-prototype-of'; // polyfill for older browsers (IE < 11) that do not 
 import isES2015 from './isES2015';
 
 export default function registerCustomElement(tag, options = {}) {
+  if (typeof customElements === 'undefined') { return; } // eslint-disable-line
+
   function connectedCallback() {
     typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
   }
