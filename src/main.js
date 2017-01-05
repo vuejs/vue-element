@@ -44,6 +44,7 @@ const options = {
   attributeChangedCallback(name, oldValue, value) {
     console.info('attributeChangedCallback', name, oldValue, value);
   }
+
 };
 
 Vue.element('app-drawer', AppDrawer, options);

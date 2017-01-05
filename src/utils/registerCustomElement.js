@@ -4,6 +4,12 @@ import isES2015 from './isES2015';
 export default function registerCustomElement(tag, options = {}) {
   if (typeof customElements === 'undefined') { return; } // eslint-disable-line
 
+  function constructorCallback() {
+    if (options.shadow === true && HTMLElement.prototype.attachShadow) {
+      this.attachShadow({ mode: 'open' });
+    }
+    typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
+  }
   function connectedCallback() {
     typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
   }
@@ -26,7 +32,7 @@ export default function registerCustomElement(tag, options = {}) {
 
         const me = self ? HTMLElement.call(self) : this;
 
-        typeof options.constructorCallback === 'function' && options.constructorCallback.call(me);
+        constructorCallback.call(me);
         return me;
       }
 
@@ -46,7 +52,7 @@ export default function registerCustomElement(tag, options = {}) {
     function myCustomElement(self) { // eslint-disable-line no-inner-declarations
       const me = self ? HTMLElement.call(self) : this;
 
-      typeof options.constructorCallback === 'function' && options.constructorCallback.call(me);
+      constructorCallback.call(me);
       return me;
     }
 

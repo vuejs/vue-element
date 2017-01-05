@@ -50,7 +50,9 @@ function install(Vue) {
         }
       },
 
-      observedAttributes: props.hyphenate
+      observedAttributes: props.hyphenate,
+
+      shadow: !!options.shadow
     });
   };
 }
