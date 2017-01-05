@@ -17,9 +17,6 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     const rootElement = {
       propsData,
       props: props.camelCase,
-      components: {
-        'vue-element-component': ComponentDefinition
-      },
       computed: {
         reactiveProps() {
           const reactivePropsList = {};
@@ -31,16 +28,18 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
         }
       },
       /* eslint-disable */
-      render(h) {
+      render(createElement) {
         const data = {
           props: this.reactiveProps
         };
 
-        return (
-          <ComponentDefinition {...data}>
-            {elementOriginalInnerHtml}
-          </ComponentDefinition>
-        )
+        return createElement(ComponentDefinition, data, [
+          createElement('div', {
+            domProps: {
+              innerHTML: elementOriginalInnerHtml
+            }
+          })
+        ]);
       },
       /* eslint-enable */
       mounted() {
