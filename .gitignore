@@ -20,7 +20,6 @@ report/
 bower_component
 docs/bower_components
 libs/
-dist
 coverage
 *.log
 docs/esdoc/
