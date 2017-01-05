@@ -6,7 +6,7 @@ function install(Vue) {
   Vue.element = function vueElement(tag, componentDefinition, options = {}) {
     const props = getProps(componentDefinition, Vue);
     // register Custom Element
-    registerCustomElement('app-drawer', {
+    registerCustomElement(tag, {
       constructorCallback() {
         typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
       },
