@@ -14,7 +14,7 @@ function install(Vue) {
       connectedCallback() {
         typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
         if (!this.__detached__) {
-          createVueInstance(this, Vue, componentDefinition, props);
+          createVueInstance(this, Vue, componentDefinition, props, options);
         }
 
         this.__detached__ = false;
@@ -52,7 +52,7 @@ function install(Vue) {
 
       observedAttributes: props.hyphenate,
 
-      shadow: !!options.shadow
+      shadow: !!options.shadow && !!HTMLElement.prototype.attachShadow
     });
   };
 }

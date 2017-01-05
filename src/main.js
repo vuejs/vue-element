@@ -43,8 +43,9 @@ const options = {
 
   attributeChangedCallback(name, oldValue, value) {
     console.info('attributeChangedCallback', name, oldValue, value);
-  }
+  },
 
+  shadow: true
 };
 
-Vue.element('app-drawer', AppDrawer, options);
+Vue.element('my-drawer', AppDrawer, options);

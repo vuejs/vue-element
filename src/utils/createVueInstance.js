@@ -7,8 +7,9 @@ import { getPropsData, reactiveProps } from './props';
  * @param Vue
  * @param componentDefinition
  * @param props
+ * @param options
  */
-export default function createVueInstance(element, Vue, componentDefinition, props) {
+export default function createVueInstance(element, Vue, componentDefinition, props, options) {
   if (!element.__vue__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
     const elementOriginalInnerHtml = element.innerHTML;
@@ -42,15 +43,15 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
         ]);
       },
       /* eslint-enable */
-      mounted() {
-        this.$nextTick(() => {
-          console.info('vue-element-component mounted', this); // eslint-disable-line
-        });
-      }
     };
 
-    element.innerHTML = '<div></div>';
-    rootElement.el = element.children[0];
+    if (options.shadow && element.shadowRoot) {
+      element.shadowRoot.innerHTML = '<div></div>';
+      rootElement.el = element.shadowRoot.children[0];
+    } else {
+      element.innerHTML = '<div></div>';
+      rootElement.el = element.children[0];
+    }
 
     reactiveProps(element, props);
 
