@@ -29,21 +29,19 @@
       <div id="highlights">
         <div class="inner">
           <div class="point">
-            <h2>Approachable</h2>
-            <p>Already know HTML, CSS and JavaScript? Read the guide and start building things in no time!</p>
+            <h2>Custom Elements v1</h2>
+            <p>Compatible with latest specification. Vue-element will use native implementation if supported.</p>
           </div>
 
           <div class="point">
-            <h2>Versatile</h2>
-            <p>Simple, minimal core with an incrementally adoptable stack that can handle apps of any scale.</p>
+            <h2>Compatibility</h2>
+            <p>Using polyfill we can support wide range of browsers, including IE9+, Android and IOS.</p>
           </div>
 
           <div class="point">
-            <h2>Performant</h2>
+            <h2>Full featured</h2>
             <p>
-              17kb min+gzip Runtime<br>
-              Blazing Fast Virtual DOM<br>
-              Minimal Optimization Efforts
+              You can use nesting, HMR, default slots, lazy-loading, native Custom Elements callbacks.
             </p>
           </div>
         </div>
@@ -52,6 +50,10 @@
     <div id="demos">
       <div class="inner">
         <h3>Demos</h3>
+
+        <ul>
+          <li><a href="#">Basic demo</a></li>
+        </ul>
 
       </div>
     </div>

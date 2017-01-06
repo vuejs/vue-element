@@ -12,7 +12,7 @@ import { getPropsData, reactiveProps } from './props';
 export default function createVueInstance(element, Vue, componentDefinition, props, options) {
   if (!element.__vue_element__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
-    const elementOriginalInnerHtml = element.innerHTML;
+    const elementOriginalInnerHtml = element.innerHTML.replace(/ vue-slot="/g, ' slot="');
     const propsData = getPropsData(element, ComponentDefinition, props);
 
     const rootElement = {
