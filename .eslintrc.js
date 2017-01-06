@@ -37,6 +37,7 @@ module.exports = {
       ignoreTemplateLiterals: true,
     }],
     "no-underscore-dangle": ["error", { "allow": ["__vue_element__", "__detached__"] }],
+    "spaced-comment": ["error", "always", { "exceptions": ["/"] }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     "class-methods-use-this": 0

@@ -17,42 +17,44 @@
         message: 'Hello Vue!'
       };
     },
-    created() {
-      /* eslint-disable no-console */
-      let eventListener;
-      const options = {
-        constructorCallback() {
-          eventListener = this.addEventListener('click', () => {
-            console.log('clicked custom element!');
-            this.setAttribute('prop1', Math.random());
-          });
+    methods: {
+      registerCustomElement() {
+        /* eslint-disable no-console */
+        let eventListener;
+        const options = {
+          constructorCallback() {
+            eventListener = this.addEventListener('click', () => {
+              console.log('clicked custom element!');
+              this.setAttribute('prop1', Math.random());
+            });
 
-          document.body.appendChild(
-            document.createElement('p')
-          ).textContent = 'Custom Element created';
-        },
+            document.body.appendChild(
+              document.createElement('p')
+            ).textContent = 'Custom Element created';
+          },
 
-        connectedCallback() {
-          document.body.appendChild(
-            document.createElement('p')
-          ).textContent = 'Custom Element attached';
-        },
+          connectedCallback() {
+            document.body.appendChild(
+              document.createElement('p')
+            ).textContent = 'Custom Element attached';
+          },
 
-        disconnectedCallback() {
-          this.removeEventListener('click',
-            eventListener
-          );
-          console.warn('disconnectedCallback', this);
-        },
+          disconnectedCallback() {
+            this.removeEventListener('click',
+              eventListener
+            );
+            console.warn('disconnectedCallback', this);
+          },
 
-        attributeChangedCallback(name, oldValue, value) {
-          console.info('attributeChangedCallback', name, oldValue, value);
-        }
+          attributeChangedCallback(name, oldValue, value) {
+            console.info('attributeChangedCallback', name, oldValue, value);
+          }
 
 //        shadow: true
-      };
+        };
 
-      Vue.element('my-drawer', AppDrawer, options);
+        Vue.element('my-drawer', AppDrawer, options);
+      }
     }
   };
 </script>

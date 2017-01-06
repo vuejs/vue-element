@@ -7,9 +7,6 @@
     </div>
 
     <div id="hero">
-
-      <demo-basic></demo-basic>
-
       <div class="inner">
         <div class="left">
           <div class="logo"></div>
@@ -41,7 +38,7 @@
           <div class="point">
             <h2>Full featured</h2>
             <p>
-              You can use nesting, HMR, default slots, lazy-loading, native Custom Elements callbacks.
+              You can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
             </p>
           </div>
         </div>
@@ -52,7 +49,15 @@
         <h3>Demos</h3>
 
         <ul>
-          <li><a href="#">Basic demo</a></li>
+          <li>
+            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
+          </li>
+          <li>
+            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
+          </li>
+          <li>
+            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
+          </li>
         </ul>
 
       </div>
@@ -160,13 +165,20 @@
   pre .xml .cdata {
     opacity: 0.5;
   }
+  html {
+    height: 100%;
+  }
+  body {
+    min-height: 100%;
+  }
+
   body {
     font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
     font-size: 15px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #34495e;
-    background-color: #fff;
+    background-color: #f6f6f6;
     margin: 0;
   }
   body.docs {
@@ -288,41 +300,6 @@
     padding: 0 60px 30px;
     overflow-x: hidden;
   }
-  #ad {
-    width: 125px;
-    position: fixed;
-    z-index: 99;
-    bottom: 10px;
-    right: 10px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 3px;
-    font-size: 13px;
-  }
-  #ad a {
-    display: inline-block;
-    color: #7f8c8d;
-    font-weight: normal;
-  }
-  #ad span {
-    color: #7f8c8d;
-    display: inline-block;
-    margin-bottom: 5px;
-  }
-  #ad img {
-    width: 125px;
-  }
-  #ad .carbon-img,
-  #ad .carbon-text {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: normal;
-    color: #34495e;
-  }
-  #ad .carbon-poweredby {
-    color: #aaa;
-    font-weight: normal;
-  }
   #nav .nav-link {
     cursor: pointer;
   }
@@ -398,7 +375,6 @@
   }
   #header {
     background-color: #fff;
-    height: $heading-inner-height;
     padding: 10px 60px;
     position: relative;
     z-index: 2;
@@ -437,24 +413,23 @@
     border-bottom: 3px solid #42b983;
   }
   #logo {
-    display: inline-block;
-    font-size: 1.5em;
+    display: block;
+    text-align: center;
+    font-size: 2em;
     line-height: 40px;
     color: #2c3e50;
     font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 500;
+    padding-top: 50px;
   }
   .logo {
     height: 215px;
     background: url(assets/images/vue-element-logo.png) no-repeat center;
     background-size: contain;
-
-  }
-  body {
-    background-color: #fff;
   }
   #logo span {
     font-size: 1.2em;
+    text-transform: uppercase;
   }
   #logo img {
     display: none;
@@ -553,19 +528,24 @@
     margin: 0px auto;
   }
   #demos h3 {
-    color: #999;
-    font-size: 1.6em;
+    color: #3ab882;
+    font-size: 1.8em;
     margin: 0 0 10px;
   }
-  #demos a {
-    margin: 20px 15px 0;
-    position: relative;
+  #demos ul,
+  #demos li {
+    padding: 0;
+    margin: 0;
   }
-  #demos a,
-  #demos img {
-    width: 100px;
+  #demos li {
     display: inline-block;
-    vertical-align: middle;
+    width: 33%;
+  }
+  #demos li a {
+    display: block;
+    margin: .6em 0 0;
+    position: relative;
+    font-size: 1.4em;
   }
   #demos img {
     transition: all 0.3s ease;
@@ -624,5 +604,99 @@
       content: "—";
       color: #42b983;
     }
+
+    .logo {
+      margin-bottom: 2em;
+    }
+
+    #demos li {
+      width: 100%;
+    }
   }
+  /* standalone - .bttn-stretch */
+  .bttn-default {
+    color: #34495d;
+  }
+  .bttn-primary,
+  .bttn,
+  .bttn-lg,
+  .bttn-md,
+  .bttn-sm,
+  .bttn-xs {
+    color: #3ab882;
+  }
+  .bttn-warning {
+    color: #fcb738;
+  }
+  .bttn-danger {
+    color: #da5961;
+  }
+  .bttn-success {
+    color: #3ab882;
+  }
+  .bttn,
+  .bttn-lg,
+  .bttn-md,
+  .bttn-sm,
+  .bttn-xs {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-color: transparent;
+    background: transparent;
+    font-weight: 400;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .bttn-jelly {
+    margin: 0;
+    border-width: 0;
+    border-color: transparent;
+    background: transparent;
+    font-weight: 400;
+    cursor: pointer;
+    position: relative;
+    font-size: 20px;
+    font-family: inherit;
+    padding: 5px 12px;
+    border-radius: 50px;
+    -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+  }
+  .bttn-jelly:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    /*background: #3ab882;*/
+    border: 1px solid #3ab882;
+    content: '';
+    z-index: -1;
+    opacity: 0;
+    -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  .bttn-jelly:hover,
+  .bttn-jelly:focus {
+    color: #3ab882;
+    /*box-shadow: 0 1px 8px rgba(58,51,53,0.4);*/
+    -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  .bttn-jelly:hover:before,
+  .bttn-jelly:focus:before {
+    opacity: 1;
+    -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
 </style>
