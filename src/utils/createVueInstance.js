@@ -1,4 +1,5 @@
 import { getPropsData, reactiveProps } from './props';
+import { getSlots } from './slots';
 
 /**
  * Create new Vue instance if it's not already created
@@ -12,7 +13,7 @@ import { getPropsData, reactiveProps } from './props';
 export default function createVueInstance(element, Vue, componentDefinition, props, options) {
   if (!element.__vue_element__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
-    const elementOriginalInnerHtml = element.innerHTML.replace(/ vue-slot="/g, ' slot="');
+    const elementOriginalChildren = element.cloneNode(true).childNodes; // clone hack due to IE compatibility
     const propsData = getPropsData(element, ComponentDefinition, props);
 
     const rootElement = {
@@ -34,13 +35,11 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
           props: this.reactiveProps
         };
 
-        return createElement(ComponentDefinition, data, [
-          createElement('div', {
-            domProps: {
-              innerHTML: elementOriginalInnerHtml
-            }
-          })
-        ]);
+        return createElement(
+          ComponentDefinition,
+          data,
+          getSlots(elementOriginalChildren, createElement, Vue)
+        );
       },
       /* eslint-enable */
     };

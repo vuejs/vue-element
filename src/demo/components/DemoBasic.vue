@@ -1,8 +1,9 @@
 <template>
   <my-drawer prop1="1" long-prop="aaa" prop2="some text" prop3="true" class="widget">
-    <h1 vue-slot="header">Here might be a page title</h1>
     <p>app-drawer text from outside</p>
     <p>second slot text</p>
+    test text node
+    <h1 vue-slot="header">Here might be a page title</h1>
   </my-drawer>
 </template>
 
