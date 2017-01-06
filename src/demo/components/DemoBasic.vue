@@ -28,26 +28,23 @@
               this.setAttribute('prop1', Math.random());
             });
 
-            document.body.appendChild(
-              document.createElement('p')
-            ).textContent = 'Custom Element created';
+              // Note that this callback might be eexecuted multiple times when using e.g. vue-router
+//            console.info('Custom Element constructorCallback'); // eslint-disable-line no-console
           },
 
           connectedCallback() {
-            document.body.appendChild(
-              document.createElement('p')
-            ).textContent = 'Custom Element attached';
+            console.info('Custom Element connectedCallback'); // eslint-disable-line no-console
           },
 
           disconnectedCallback() {
             this.removeEventListener('click',
               eventListener
             );
-            console.warn('disconnectedCallback', this);
+            console.warn('Custom Element disconnectedCallback'); // eslint-disable-line no-console
           },
 
           attributeChangedCallback(name, oldValue, value) {
-            console.info('attributeChangedCallback', name, oldValue, value);
+            console.info('Custom Element attributeChangedCallback', name, oldValue, value);
           }
 
 //        shadow: true

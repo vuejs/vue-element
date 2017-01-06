@@ -23,8 +23,7 @@
     },
     created() {
       /* eslint-disable no-console */
-      console.info('created', this);
-      console.info(this.prop1, this.prop2, this.prop3);
+      console.info('app-drawer created()', this);
     }
   };
 </script>

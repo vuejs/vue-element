@@ -1,77 +1,57 @@
 <template>
-  <div>
+  <div :class="[routePath]">
+    <div id="mobile-bar" class="top">
+      <a class="menu-button" @click="toggleSidebarOpen()"></a>
+      <a class="logo" href="/"></a>
+    </div>
     <div id="header">
-      <a id="logo" href="/">
+      <a class="menu-button" @click="toggleSidebarOpen()"></a>
+      <router-link :to="{ path: '/' }" id="logo">
         <span>Vue-element</span>
-      </a>
+      </router-link>
     </div>
 
-    <div id="hero">
-      <div class="inner">
-        <div class="left">
-          <div class="logo"></div>
-        </div><div class="right">
-        <h2 class="vue">Vue-element</h2>
-        <h1>
-          Custom Elements<br>for Vue.js
-        </h1>
-        <p>
-          <!--<a class="button" href="/v2/guide/">GET STARTED</a>-->
-          <a class="button white" href="https://github.com/vuejs/vue-element" target="_blank">GITHUB</a>
-        </p>
-      </div>
-      </div>
-    </div>
+    <sidebar :is-open="isSidebarOpen"></sidebar>
 
-      <div id="highlights">
-        <div class="inner">
-          <div class="point">
-            <h2>Custom Elements v1</h2>
-            <p>Compatible with latest specification. Vue-element will use native implementation if supported.</p>
-          </div>
+    <router-view></router-view>
 
-          <div class="point">
-            <h2>Compatibility</h2>
-            <p>Using polyfill we can support wide range of browsers, including IE9+, Android and IOS.</p>
-          </div>
-
-          <div class="point">
-            <h2>Full featured</h2>
-            <p>
-              You can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
-            </p>
-          </div>
-        </div>
-      </div>
-
-    <div id="demos">
-      <div class="inner">
-        <h3>Demos</h3>
-
-        <ul>
-          <li>
-            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
-          </li>
-          <li>
-            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
-          </li>
-          <li>
-            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
-          </li>
-        </ul>
-
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-  import DemoBasic from './components/DemoBasic';
+  import Sidebar from './components/Sidebar';
 
   export default {
     name: 'demo',
+    data() {
+      return {
+        isSidebarOpen: false
+      };
+    },
+    computed: {
+      routePath() { // eslint-disable-line
+        const routes = this.$route.path
+          .split('/')
+          .filter(slice => !!slice);
+
+        return routes.length ? routes.reduce((a, b) => `${a}-${b}`) : 'home';
+      },
+      routeCurrent() {
+        return this.$route.matched[this.$route.matched.length - 1];
+      }
+    },
+    methods: {
+      toggleSidebarOpen() {
+        this.isSidebarOpen = !this.isSidebarOpen;
+      }
+    },
     components: {
-      DemoBasic
+      Sidebar
+    },
+    watch: {
+      routePath() {
+        this.isSidebarOpen = false;
+      }
     }
   };
 </script>
@@ -387,44 +367,72 @@
   body.docs #nav {
     position: fixed;
   }
-  #nav {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 60px;
-    top: 10px;
+
+  #mobile-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 40px;
-    line-height: 40px;
+    background-color: #fff;
+    z-index: 9;
+    display: none;
+    box-shadow: 0 0 2px rgba(0,0,0,0.25);
   }
-  #nav .break {
+  a.menu-button {
+    top: 20px;
+  }
+
+  .menu-button,
+  #mobile-bar .menu-button {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 8px;
+    left: 12px;
+    background: url("assets/images/menu.png") center center no-repeat;
+    background-size: 24px;
+  }
+  .home .menu-button {
     display: none;
   }
-  #nav li {
-    display: inline-block;
-    position: relative;
-    margin: 0 0.6em;
+  .home #mobile-bar .menu-button {
+    display: block;
   }
-  .nav-link {
-    padding-bottom: 3px;
+
+  #mobile-bar .logo {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url("assets/images/vue-element-logo.png") center center no-repeat;
+    top: 5px;
+    left: 50%;
+    margin-left: -15px;
+    background-size: 30px;
   }
-  .nav-link:hover,
-  .nav-link.current {
-    border-bottom: 3px solid #42b983;
+
+  .home #mobile-bar .logo {
+    display: none;
   }
+
   #logo {
     display: block;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.2em;
     line-height: 40px;
     color: #2c3e50;
     font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 500;
+  }
+
+  .home #logo {
+    font-size: 2em;
     padding-top: 50px;
   }
+
   .logo {
     height: 215px;
-    background: url(assets/images/vue-element-logo.png) no-repeat center;
+    background: url("assets/images/vue-element-logo.png") no-repeat center;
     background-size: contain;
   }
   #logo span {
@@ -436,6 +444,110 @@
   }
   .sidebar {
     display: none;
+  }
+  .sidebar {
+    position: absolute;
+    z-index: 0;
+    top: 61px;
+    left: 0;
+    bottom: 0;
+    padding: 40px 0 30px 60px;
+    width: 260px;
+    margin-right: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+  }
+  .sidebar h2 {
+    margin-top: 0.2em;
+  }
+  .sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    line-height: 1.8em;
+    padding-left: 1em;
+  }
+  .sidebar .version-select {
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+  .sidebar .menu-root {
+    padding-left: 0;
+  }
+  .sidebar .menu-sub {
+    font-size: 0.85em;
+  }
+  .sidebar .sidebar-link {
+    color: #7f8c8d;
+  }
+  .sidebar .sidebar-link.current {
+    font-weight: 600;
+    color: #42b983;
+  }
+  .sidebar .sidebar-link.new:after {
+    content: "NEW";
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #42b983;
+    line-height: 14px;
+    padding: 0 4px;
+    border-radius: 3px;
+    margin-left: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+  .sidebar .sidebar-link:hover {
+    border-bottom: 2px solid #42b983;
+  }
+  .sidebar .section-link.active {
+    font-weight: bold;
+    color: #42b983;
+  }
+  .sidebar .main-menu {
+    margin-bottom: 20px;
+    display: block;
+    padding-left: 0;
+  }
+  .sidebar h4 {
+    margin: .2em 0;
+  }
+  .sidebar .nav-dropdown h4 {
+    font-weight: normal;
+    margin: 0;
+  }
+  .sidebar.open {
+    display: block;
+  }
+  .home .sidebar.open {
+    display: none;
+  }
+  @media screen and (max-width: 900px) {
+    .sidebar {
+      position: fixed;
+      z-index: 8;
+      height: 100%;
+      top: 0;
+      left: 0;
+      padding: 60px 30px 20px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0, 1);
+      -webkit-transform: translate(-280px, 0);
+      transform: translate(-280px, 0);
+    }
+    .sidebar.open {
+      display: block;
+      -webkit-transform: translate(0, 0);
+      transform: translate(0, 0);
+    }
+    .home .sidebar.open {
+      display: block;
+    }
   }
   #hero {
     padding: 50px 40px;
@@ -570,6 +682,9 @@
     }
     #header {
       display: none;
+    }
+    #mobile-bar {
+      display: block;
     }
     #hero {
       padding: 50px 40px 30px;

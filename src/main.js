@@ -3,7 +3,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import vueElement from './vue-element';
 
-import Demo from './demo/Demo';
+import App from './demo/App';
+import Home from './demo/Home';
 import DemoBasic from './demo/components/DemoBasic';
 
 ///////////////////////
@@ -21,8 +22,14 @@ DemoBasic.methods.registerCustomElement();
 //  Config and init router  //
 //////////////////////////////
 const routes = [
-  { path: '/', component: Demo },
-  { path: '/demo-basic', component: DemoBasic }
+  {
+    path: '/',
+    component: App,
+    children: [
+      { path: '/', component: Home },
+      { path: '/demo-basic', component: DemoBasic }
+    ]
+  }
 ];
 
 const router = new VueRouter({
