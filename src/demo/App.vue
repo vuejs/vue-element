@@ -14,7 +14,6 @@
     <sidebar :is-open="isSidebarOpen"></sidebar>
 
     <router-view></router-view>
-
   </div>
 </template>
 
@@ -34,7 +33,7 @@
           .split('/')
           .filter(slice => !!slice);
 
-        return routes.length ? routes.reduce((a, b) => `${a}-${b}`) : 'home';
+        return routes.length ? routes.reduce((a, b) => `path-${a}-${b}`) : 'path-home';
       },
       routeCurrent() {
         return this.$route.matched[this.$route.matched.length - 1];
@@ -393,10 +392,10 @@
     background: url("assets/images/menu.png") center center no-repeat;
     background-size: 24px;
   }
-  .home .menu-button {
+  .path-home .menu-button {
     display: none;
   }
-  .home #mobile-bar .menu-button {
+  .path-home #mobile-bar .menu-button {
     display: block;
   }
 
@@ -411,7 +410,7 @@
     background-size: 30px;
   }
 
-  .home #mobile-bar .logo {
+  .path-home #mobile-bar .logo {
     display: none;
   }
 
@@ -425,7 +424,7 @@
     font-weight: 500;
   }
 
-  .home #logo {
+  .path-home #logo {
     font-size: 2em;
     padding-top: 50px;
   }
@@ -461,6 +460,11 @@
     background-color: #f9f9f9;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     box-sizing: border-box;
+
+
+    transition: all 0.4s cubic-bezier(0.4, 0, 0, 1);
+    -webkit-transform: translate(-280px, 0);
+    transform: translate(-280px, 0);
   }
   .sidebar h2 {
     margin-top: 0.2em;
@@ -524,8 +528,10 @@
   }
   .sidebar.open {
     display: block;
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
   }
-  .home .sidebar.open {
+  .path-home .sidebar.open {
     display: none;
   }
   @media screen and (max-width: 900px) {
@@ -536,22 +542,20 @@
       top: 0;
       left: 0;
       padding: 60px 30px 20px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0, 1);
-      -webkit-transform: translate(-280px, 0);
-      transform: translate(-280px, 0);
     }
     .sidebar.open {
       display: block;
-      -webkit-transform: translate(0, 0);
-      transform: translate(0, 0);
     }
-    .home .sidebar.open {
+    .path-home .sidebar.open {
       display: block;
     }
   }
   #hero {
     padding: 50px 40px;
     background-color: #fff;
+  }
+  .demos.inner {
+    padding: 0 20px;
   }
   #hero .inner {
     max-width: 900px;
@@ -608,9 +612,12 @@
     background-color: #fff;
     padding-bottom: 70px;
   }
+  .demos.inner,
   #highlights .inner {
     max-width: 900px;
     margin: 0 auto;
+  }
+  #highlights .inner {
     text-align: center;
   }
   #highlights .point {
@@ -679,6 +686,7 @@
     body {
       -webkit-text-size-adjust: none;
       font-size: 14px;
+      padding-top: 40px;
     }
     #header {
       display: none;

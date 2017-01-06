@@ -1,6 +1,6 @@
 <template>
-  <div>
-
+  <div class="demos inner">
+    <router-view></router-view>
   </div>
 </template>
 

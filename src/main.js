@@ -5,6 +5,7 @@ import vueElement from './vue-element';
 
 import App from './demo/App';
 import Home from './demo/Home';
+import Demos from './demo/Demos';
 import DemoBasic from './demo/components/DemoBasic';
 
 ///////////////////////
@@ -27,7 +28,13 @@ const routes = [
     component: App,
     children: [
       { path: '/', component: Home },
-      { path: '/demo-basic', component: DemoBasic }
+      {
+        path: '/demos',
+        component: Demos,
+        children: [
+          { path: 'basic', component: DemoBasic }
+        ]
+      }
     ]
   }
 ];

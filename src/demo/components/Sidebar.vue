@@ -5,7 +5,7 @@
       <li class="nav-dropdown-container">
         <h4>Demos</h4>
         <ul class="nav-dropdown">
-          <li><router-link to="demo-basic" class="nav-link">Basic demo</router-link></li>
+          <li><router-link to="/demos/basic" class="nav-link">Basic demo</router-link></li>
         </ul>
       </li>
     </ul>

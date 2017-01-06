@@ -44,13 +44,13 @@
 
         <ul>
           <li>
-            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
+            <router-link to="demos/basic" class="bttn-jelly">Basic demo</router-link>
           </li>
           <li>
-            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
+            <router-link to="demos/basic" class="bttn-jelly">Basic demo</router-link>
           </li>
           <li>
-            <router-link to="demo-basic" class="bttn-jelly">Basic demo</router-link>
+            <router-link to="demos/basic" class="bttn-jelly">Basic demo</router-link>
           </li>
         </ul>
 
