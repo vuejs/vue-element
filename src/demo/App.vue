@@ -446,7 +446,7 @@
   }
   .sidebar {
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     top: 61px;
     left: 0;
     bottom: 0;
@@ -820,6 +820,15 @@
     transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
     -webkit-transform: scale(1);
     transform: scale(1);
+  }
+
+  :not(pre) > code[class*="language-"], pre[class*="language-"] {
+    background-color: transparent;
+    font-size: 1.2em;
+  }
+
+  .el-collapse pre[class*="language-"] {
+    margin: 0;
   }
 
 </style>
