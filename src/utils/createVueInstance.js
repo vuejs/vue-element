@@ -10,7 +10,7 @@ import { getPropsData, reactiveProps } from './props';
  * @param options
  */
 export default function createVueInstance(element, Vue, componentDefinition, props, options) {
-  if (!element.__vue__) {
+  if (!element.__vue_element__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
     const elementOriginalInnerHtml = element.innerHTML;
     const propsData = getPropsData(element, ComponentDefinition, props);
@@ -56,6 +56,6 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     reactiveProps(element, props);
 
     // Define the Vue constructor to manage the element
-    element.__vue__ = new Vue(rootElement); // eslint-disable-line no-new
+    element.__vue_element__ = new Vue(rootElement); // eslint-disable-line no-new
   }
 }

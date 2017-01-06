@@ -30,8 +30,8 @@ function install(Vue) {
         typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
 
         setTimeout(function detachtedTimeout() {
-          if (this.__detached__ && this.__vue__) {
-            this.__vue__.$destroy(true);
+          if (this.__detached__ && this.__vue_element__) {
+            this.__vue_element__.$destroy(true);
           }
         }, 3000);
       },
@@ -43,10 +43,10 @@ function install(Vue) {
        * @param value
        */
       attributeChangedCallback(name, oldValue, value) {
-        if (this.__vue__ && typeof value !== 'undefined') {
+        if (this.__vue_element__ && typeof value !== 'undefined') {
           const nameCamelCase = Vue.util.camelize(name);
           typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
-          this.__vue__[nameCamelCase] = convertAttributeValue(value);
+          this.__vue_element__[nameCamelCase] = convertAttributeValue(value);
         }
       },
 

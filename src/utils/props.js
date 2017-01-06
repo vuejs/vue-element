@@ -59,7 +59,7 @@ export function reactiveProps(element, props) {
   props.camelCase.forEach((name, index) => {
     Object.defineProperty(element, name, {
       get() {
-        return this.__vue__[name];
+        return this.__vue_element__[name];
       },
       set(value) {
         this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
