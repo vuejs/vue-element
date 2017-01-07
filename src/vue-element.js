@@ -12,9 +12,21 @@ function install(Vue) {
       },
 
       connectedCallback() {
-        typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
+        let lazyLoadingPromise;
+        let isLazyLoading;
+        if (typeof options.connectedCallback === 'function') {
+          lazyLoadingPromise = options.connectedCallback.call(this);
+          isLazyLoading = lazyLoadingPromise && lazyLoadingPromise.then && typeof lazyLoadingPromise.then === 'function';
+        }
         if (!this.__detached__) {
-          createVueInstance(this, Vue, componentDefinition, props, options);
+          if (isLazyLoading) {
+            lazyLoadingPromise.then((lazyLoadedComponent) => {
+              const lazyLoadedComponentProps = getProps(lazyLoadedComponent, Vue);
+              createVueInstance(this, Vue, lazyLoadedComponent, lazyLoadedComponentProps, options);
+            });
+          } else {
+            createVueInstance(this, Vue, componentDefinition, props, options);
+          }
         }
 
         this.__detached__ = false;

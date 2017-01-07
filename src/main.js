@@ -1,4 +1,5 @@
 import 'document-register-element/build/document-register-element';
+import Promise from 'es6-promise';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
@@ -14,6 +15,8 @@ import Home from './demo/Home';
 import Demos from './demo/Demos';
 
 import demos from './demo/services/demos';
+
+Promise.polyfill();
 
 ///////////////////////
 //  Use Vue plugins  //
