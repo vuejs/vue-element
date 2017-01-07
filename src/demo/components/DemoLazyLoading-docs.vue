@@ -3,23 +3,24 @@
     <h2>Lazy loading demo</h2>
 
     <div class="demo-card">
-      <div class="el-form-item">
-        <label class="el-form-item__label">prop</label>
-        <div class="el-form-item__content">
-          <el-input v-model="prop"></el-input>
-        </div>
-      </div>
+      <p class="demo-lazy__buttons">
+        <el-button type="primary" :loading="loadStatus.loading" @click="addElement">
+          Add lazy loaded element to page
+        </el-button>
+      </p>
 
-      <br />
-
-      <demo-lazy-loading :prop="prop">
-        <p class="loading" v-loading="true"></p>
-      </demo-lazy-loading>
+      <p v-for="index in showElements">
+        <demo-lazy-loading :prop="'Lazy loaded prop value #' + index">
+          <p class="loading" v-loading="true"></p>
+        </demo-lazy-loading>
+      </p>
     </div>
 
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
-        <p>Imagine</p>
+        <p>Imagine preparing a bunch of Vue components that are heavy in size and you don't want to force user to download them all at once - e.g. ui libraries like "Element UI" that is used across demos.</p>
+        <p>You can load individual components only when you need them - when user add it to page. We will use <code>connectedCallback()</code> when registering with Vue-element and return Promise from that callback. You can use Webpack's <code>require.ensure()</code> or any other async method inside a Promise to async load component.</p>
+        <p>One note - Custom Elements v1 spec require defining observed props on registration. That's why if you omit them, attributes woun't be reactive, and changing them from outside (HTML attributes or JavaScript) won't work.</p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
         <pre><code class="language-html">
@@ -58,10 +59,16 @@ Vue.element('demo-lazy-loading', { props: ['prop'] }, {
   import Vue from 'vue';
   import DemoElement from 'demo/components/DemoLazyLoading-component';
 
+  const loadStatus = {
+    loading: false,
+    loaded: false
+  };
+
   export default {
     data() {
       return {
-        prop: 'Lazy loaded prop value',
+        loadStatus,
+        showElements: 0,
         activeNames: ['1'],
         HTML: (
 `<demo-lazy-loading :prop="prop">
@@ -99,10 +106,22 @@ Vue.element('demo-lazy-loading', { props: ['prop'] }, {
         Vue.element('demo-lazy-loading', { props: ['prop'] }, {
           connectedCallback() {
             return new Promise((resolve) => {
-              setTimeout(() => resolve(DemoElement), 2000);
+              if (loadStatus.loaded) {
+                resolve(resolve(DemoElement));
+              } else {
+                loadStatus.loading = true;
+                setTimeout(() => {
+                  loadStatus.loaded = true;
+                  loadStatus.loading = false;
+                  resolve(DemoElement);
+                }, 1500);
+              }
             });
           }
         });
+      },
+      addElement() {
+        this.showElements = this.showElements + 1;
       }
     }
   };
@@ -112,6 +131,10 @@ Vue.element('demo-lazy-loading', { props: ['prop'] }, {
   demo-lazy-loading > .loading {
     display: block;
     min-height: 50px;
+  }
+
+  .demo-lazy__buttons {
+    text-align: center;
   }
 
 </style>
