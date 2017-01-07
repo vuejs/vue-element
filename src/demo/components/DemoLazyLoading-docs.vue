@@ -12,7 +12,9 @@
 
       <br />
 
-      <demo-lazy-loading :prop="prop"></demo-lazy-loading>
+      <demo-lazy-loading :prop="prop">
+        <p class="loading" v-loading="true"></p>
+      </demo-lazy-loading>
     </div>
 
     <el-collapse v-model="activeNames">
@@ -35,16 +37,14 @@
 &#x3C;/script&#x3E;
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="JavaScript - registering element using Vue-element" name="4">
+      <el-collapse-item title="JavaScript - register with Vue-element" name="4">
         <pre><code class="language-javascript">
 import DemoElement from 'DemoElement.vue';
 
-Vue.element('demo-lazy-loading', {}, {
+Vue.element('demo-lazy-loading', { props: ['prop'] }, {
   connectedCallback() {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(DemoElement);
-      }, 2000);
+      setTimeout(() => resolve(DemoElement), 2000);
     });
   }
 });
@@ -63,13 +63,35 @@ Vue.element('demo-lazy-loading', {}, {
       return {
         prop: 'Lazy loaded prop value',
         activeNames: ['1'],
-        HTML: '<demo-lazy-loading></demo-lazy-loading>',
+        HTML: (
+`<demo-lazy-loading :prop="prop">
+  <p class="loading" v-loading="true"></p>
+</demo-lazy-loading>`
+        ),
         vueTemplate: (
 `<div>
-    <i class="el-icon-check"></i> Lazy loaded component
+    <p><i class="el-icon-check"></i> Lazy loaded component.</p>
+
+    <el-table :data="tableData">
+      <el-table-column prop="prop" label="Prop name"></el-table-column>
+      <el-table-column prop="value" label="Value"></el-table-column>
+      <el-table-column prop="type" label="typeof"></el-table-column>
+    </el-table>
   </div>`
         ),
-        vueScript: 'export default {};'
+        vueScript:
+`export default {
+    props: ['prop'],
+    computed: {
+      tableData() {
+        return [{
+          prop: 'prop',
+          value: this.prop,
+          type: typeof this.prop
+        }];
+      }
+    }
+  };`
       };
     },
     methods: {
@@ -86,3 +108,10 @@ Vue.element('demo-lazy-loading', {}, {
   };
 </script>
 
+<style>
+  demo-lazy-loading > .loading {
+    display: block;
+    min-height: 50px;
+  }
+
+</style>

@@ -42,7 +42,6 @@
   export default {
     data() {
       return {
-        message: 'Hello Vue!',
         activeNames: ['1'],
         vueTemplate: (
 `<demo-basic

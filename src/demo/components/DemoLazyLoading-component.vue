@@ -1,8 +1,9 @@
 <template>
   <div class="card card--primary">
-    <i class="el-icon-check"></i> &nbsp;Lazy loaded component.
-    <br />
-    <br />
+    <p>
+      <i class="el-icon-check"></i> &nbsp;Lazy loaded component.
+    </p>
+
     <el-table
       :data="tableData"
       style="width: 100%">

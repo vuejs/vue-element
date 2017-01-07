@@ -61,9 +61,19 @@
     display: block;
     transition: opacity .2s;
   }
+  .card h1,
+  .card h2,
+  .card h3,
+  .card h4,
+  .card h5,
+  .card > p:first-child {
+    margin-top: 0;
+  }
+  .card > p:last-child {
+    margin-bottom: 0;
+  }
   .card h4 {
     color: #fff;
-    margin-top: 0;
   }
   .el-alert--success,
   .card--primary {
