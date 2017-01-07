@@ -824,7 +824,7 @@
 
   :not(pre) > code[class*="language-"], pre[class*="language-"] {
     background-color: transparent;
-    font-size: 1.2em;
+    font-size: .95em;
   }
 
   .el-collapse pre[class*="language-"] {

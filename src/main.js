@@ -5,6 +5,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
 import Prism from 'prismjs/prism';
 import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-css';
 import 'prismjs/themes/prism.css';
 import vueElement from './vue-element';
