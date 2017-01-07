@@ -36,7 +36,7 @@
         <pre><code class="language-javascript">
 import DemoElement from 'DemoElement.vue';
 
-Vue.element('demo-basic', DemoElement);
+Vue.element('demo-slots', DemoElement);
         </code></pre>
       </el-collapse-item>
     </el-collapse>
