@@ -12,7 +12,7 @@
 
         <p>After registering <strong>"demo-basic"</strong> tag, you can insert that tag into standard HTML, SPA's, React, Angulat or Vue projects without the hassle and further initialization.</p>
 
-        <p>Examples are written in ES2015 version of JavaScript, but feel free to use ES5.</p>
+        <p>Code examples below are written in ES2015 version of JavaScript, but feel free to use ES5.</p>
 
       </el-collapse-item>
       <el-collapse-item title="HTML" name="2">
@@ -61,8 +61,22 @@ Vue.element('demo-basic', DemoBasic);
         ),
         vueTemplate: (
 `<div>
-    <p>{{ message }}</p>
-    <p>{{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}}), {{longPropName}}({{typeof longPropName}})</p>
+    <h4>{{ message }}</h4>
+    <el-table
+      :data="tableData">
+      <el-table-column
+        prop="prop"
+        label="Prop name">
+      </el-table-column>
+      <el-table-column
+        prop="value"
+        label="Value">
+      </el-table-column>
+      <el-table-column
+        prop="type"
+        label="typeof">
+      </el-table-column>
+    </el-table>
   </div>`
         ),
         vueScript: (
@@ -77,6 +91,26 @@ Vue.element('demo-basic', DemoBasic);
       return {
         message: 'Hello Vue-element!'
       };
+    },
+    computed: {
+      tableData() {
+        return [{
+          prop: 'prop1',
+          value: this.prop1,
+          type: typeof this.prop1
+        }, {
+          prop: 'prop2',
+          value: this.prop2,
+          type: typeof this.prop2
+        }, {
+          prop: 'prop3',
+          value: this.prop3,
+          type: typeof this.prop3
+        }, {
+          prop: 'long-prop-name',
+          value: this.longPropName,
+          type: typeof this.longPropName
+        }];
     },
     created() {
       console.info('demo-basic created()');

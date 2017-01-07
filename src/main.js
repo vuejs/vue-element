@@ -16,10 +16,6 @@ import Demos from './demo/Demos';
 
 import demos from './demo/services/demos';
 
-//
-// import DemoBasicDocs from './demo/components/DemoBasic-docs';
-// import DemoBindingDocs from './demo/components/DemoBinding-docs';
-
 ///////////////////////
 //  Use Vue plugins  //
 ///////////////////////
@@ -32,8 +28,11 @@ Vue.use(ElementUI);
 ///////////////////////////////////////////////////////
 const demosDocs = {};
 Object.keys(demos).forEach((demo) => {
-  demosDocs[demo] = require(`./demo/components/Demo${demo.charAt(0).toUpperCase()}${demo.slice(1)}-docs`); // eslint-disable-line
-  demosDocs[demo].methods.registerCustomElement();
+  demosDocs[demo] = require(`./demo/components/Demo${demos[demo]}-docs`); // eslint-disable-line
+  const register = demosDocs[demo].methods && demosDocs[demo].methods.registerCustomElement;
+  if (typeof register === 'function') {
+    register();
+  }
 });
 
 //////////////////////////////

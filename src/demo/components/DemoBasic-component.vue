@@ -1,7 +1,33 @@
 <template>
   <div class="card card--primary">
-    <p><strong>{{ message }}</strong></p>
-    <p>{{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}}), {{longPropName}}({{typeof longPropName}})</p>
+    <h4>{{ message }}</h4>
+
+    <el-table
+      :data="tableData"
+      style="width: 100%">
+      <el-table-column
+        prop="prop"
+        label="Prop name">
+      </el-table-column>
+      <el-table-column
+        prop="value"
+        label="Value">
+        <template scope="scope">
+          <div slot="reference">
+            <strong>{{ scope.row.value }}</strong>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="type"
+        label="typeof">
+        <template scope="scope">
+          <div slot="reference">
+            <el-tag type="gray">{{ scope.row.type }}</el-tag>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -17,6 +43,27 @@
       return {
         message: 'Hello Vue-element!'
       };
+    },
+    computed: {
+      tableData() {
+        return [{
+          prop: 'prop1',
+          value: JSON.stringify(this.prop1),
+          type: typeof this.prop1
+        }, {
+          prop: 'prop2',
+          value: JSON.stringify(this.prop2),
+          type: typeof this.prop2
+        }, {
+          prop: 'prop3',
+          value: JSON.stringify(this.prop3),
+          type: typeof this.prop3
+        }, {
+          prop: 'long-prop-name',
+          value: JSON.stringify(this.longPropName),
+          type: typeof this.longPropName
+        }];
+      }
     },
     created() {
       /* eslint-disable no-console */

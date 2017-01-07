@@ -26,6 +26,20 @@
     font-size: 1.6em;
   }
 
+  .demos .el-form-item {
+    margin-bottom: 10px;
+  }
+  .demos .el-form-item__label {
+    width: 120px;
+    text-align: left;
+  }
+  .demos .el-form-item__content {
+    margin-left: 120px;
+  }
+  .demos .el-input-number {
+    width: 100%;
+  }
+
   .demo-card {
     border: 1px solid #e0e6ed;
     border-radius: 2px;
@@ -40,19 +54,19 @@
   }
 
   .card {
-    padding: 8px 16px;
+    padding: 1em 1em;
     margin: 0;
     border-radius: 5px;
     opacity: 1;
     display: block;
     transition: opacity .2s;
   }
+  .card h4 {
+    color: #fff;
+    margin-top: 0;
+  }
   .card--primary {
     background-color: #3ab882;
-    color: #fff;
-  }
-
-  .card strong {
     color: #fff;
   }
 
