@@ -65,6 +65,7 @@
     color: #fff;
     margin-top: 0;
   }
+  .el-alert--success,
   .card--primary {
     background-color: #3ab882;
     color: #fff;

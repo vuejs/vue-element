@@ -15,13 +15,13 @@
         <p>Code examples below are written in ES2015 version of JavaScript, but feel free to use ES5.</p>
 
       </el-collapse-item>
-      <el-collapse-item title="HTML" name="2">
+      <el-collapse-item title="Custom Element HTML" name="2">
         <pre><code class="language-html">
 {{HTML}}
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="Vue" name="3">
-        <pre><code class="language-jsx">
+      <el-collapse-item title="Vue component passed to Vue-element" name="3">
+        <pre><code class="language-html">
 &#x3C;template&#x3E;
   {{vueTemplate}}
 &#x3C;/template&#x3E;
@@ -31,11 +31,11 @@
 &#x3C;/script&#x3E;
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="JS" name="4">
+      <el-collapse-item title="JavaScript - registering element using Vue-element" name="4">
         <pre><code class="language-javascript">
-import DemoBasic from 'DemoBasic.vue';
+import DemoElement from 'DemoElement.vue';
 
-Vue.element('demo-basic', DemoBasic);
+Vue.element('demo-basic', DemoElement);
         </code></pre>
       </el-collapse-item>
     </el-collapse>

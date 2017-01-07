@@ -72,20 +72,3 @@
   };
 </script>
 
-<style>
-  .demo__basic {
-    padding: 8px 16px;
-    margin: 0;
-    border-radius: 5px;
-    background-color: #3ab882;
-    color: #fff;
-    opacity: 1;
-    display: block;
-    transition: opacity .2s;
-  }
-
-  .demo__basic strong {
-    color: #fff;
-  }
-</style>
-

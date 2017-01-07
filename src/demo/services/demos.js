@@ -1,4 +1,5 @@
 export default {
   basic: 'Basic',
-  binding: 'Binding'
+  binding: 'Binding',
+  slots: 'Slots'
 };

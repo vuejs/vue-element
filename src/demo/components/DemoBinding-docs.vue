@@ -17,7 +17,7 @@
         </p>
       </el-collapse-item>
       <el-collapse-item title="Vue binding usage" name="2">
-        <pre><code class="language-jsx">
+        <pre><code class="language-html">
 &#x3C;template&#x3E;
   {{vueTemplate}}
 &#x3C;/template&#x3E;
