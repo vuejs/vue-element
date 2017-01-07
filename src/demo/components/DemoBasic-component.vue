@@ -1,5 +1,5 @@
 <template>
-  <div class="demo__basic">
+  <div class="card card--primary">
     <p><strong>{{ message }}</strong></p>
     <p>{{ prop1 }}({{typeof prop1}}), {{prop2}}({{typeof prop2}}), {{prop3}}({{typeof prop3}}), {{longPropName}}({{typeof longPropName}})</p>
   </div>

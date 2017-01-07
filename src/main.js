@@ -13,7 +13,12 @@ import vueElement from './vue-element';
 import App from './demo/App';
 import Home from './demo/Home';
 import Demos from './demo/Demos';
-import DemoBasic from './demo/components/DemoBasic';
+
+import demos from './demo/services/demos';
+
+//
+// import DemoBasicDocs from './demo/components/DemoBasic-docs';
+// import DemoBindingDocs from './demo/components/DemoBinding-docs';
 
 ///////////////////////
 //  Use Vue plugins  //
@@ -22,14 +27,26 @@ Vue.use(vueElement);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 
-////////////////////////////////
-//  Register Custom Elements  //
-////////////////////////////////
-DemoBasic.methods.registerCustomElement();
+///////////////////////////////////////////////////////
+//  Get docs components and Register Custom Elements //
+///////////////////////////////////////////////////////
+const demosDocs = {};
+Object.keys(demos).forEach((demo) => {
+  demosDocs[demo] = require(`./demo/components/Demo${demo.charAt(0).toUpperCase()}${demo.slice(1)}-docs`); // eslint-disable-line
+  demosDocs[demo].methods.registerCustomElement();
+});
 
 //////////////////////////////
 //  Config and init router  //
 //////////////////////////////
+const demosRoutes = [];
+Object.keys(demosDocs).forEach((demo) => {
+  demosRoutes.push({
+    path: demo,
+    component: demosDocs[demo]
+  });
+});
+
 const routes = [
   {
     path: '/',
@@ -39,9 +56,7 @@ const routes = [
       {
         path: '/demos',
         component: Demos,
-        children: [
-          { path: 'basic', component: DemoBasic }
-        ]
+        children: demosRoutes
       }
     ]
   }

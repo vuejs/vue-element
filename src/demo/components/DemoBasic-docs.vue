@@ -8,7 +8,9 @@
 
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
-        <p>Let's add basic component to see if values from HTML attributes are visible inside Vue instance. We will also check if numbers and booleans are properly detected.</p>
+        <p>Let's add basic component to see if values from HTML attributes are visible inside Vue component. We will also check if numbers and booleans are properly detected.</p>
+
+        <p>After registering <strong>"demo-basic"</strong> tag, you can insert that tag into standard HTML, SPA's, React, Angulat or Vue projects without the hassle and further initialization.</p>
 
         <p>Examples are written in ES2015 version of JavaScript, but feel free to use ES5.</p>
 
@@ -42,7 +44,7 @@ Vue.element('demo-basic', DemoBasic);
 
 <script>
   import Vue from 'vue';
-  import DemoBasicCE from 'demo/components/DemoBasic-custom-element';
+  import DemoElement from 'demo/components/DemoBasic-component';
 
   export default {
     data() {
@@ -85,7 +87,7 @@ Vue.element('demo-basic', DemoBasic);
     },
     methods: {
       registerCustomElement() {
-        Vue.element('demo-basic', DemoBasicCE);
+        Vue.element('demo-basic', DemoElement);
       }
     }
   };

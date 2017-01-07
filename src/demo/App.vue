@@ -2,7 +2,7 @@
   <div :class="[routePath]">
     <div id="mobile-bar" class="top">
       <a class="menu-button" @click="toggleSidebarOpen()"></a>
-      <a class="logo" href="/"></a>
+      <router-link :to="{ path: '/' }" class="logo"></router-link>
     </div>
     <div id="header">
       <a class="menu-button" @click="toggleSidebarOpen()"></a>
@@ -11,20 +11,21 @@
       </router-link>
     </div>
 
-    <sidebar :is-open="isSidebarOpen"></sidebar>
+    <sidebar :is-open="isSidebarOpen" :demos="demos"></sidebar>
 
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import demos from './services/demos';
   import Sidebar from './components/Sidebar';
 
   export default {
-    name: 'demo',
     data() {
       return {
-        isSidebarOpen: false
+        isSidebarOpen: false,
+        demos
       };
     },
     computed: {
@@ -146,6 +147,10 @@
   }
   html {
     height: 100%;
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
   body {
     min-height: 100%;

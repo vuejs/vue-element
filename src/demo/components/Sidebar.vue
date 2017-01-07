@@ -5,7 +5,9 @@
       <li class="nav-dropdown-container">
         <h4>Demos</h4>
         <ul class="nav-dropdown">
-          <li><router-link to="/demos/basic" class="nav-link">Basic demo</router-link></li>
+          <li v-for="(label, url) in demos">
+            <router-link :to="'/demos/' + url" class="nav-link">{{label}}</router-link>
+          </li>
         </ul>
       </li>
     </ul>
@@ -15,7 +17,8 @@
 <script>
   export default {
     props: [
-      'isOpen'
+      'isOpen',
+      'demos'
     ]
   };
 </script>

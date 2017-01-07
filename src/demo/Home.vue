@@ -43,14 +43,8 @@
         <h3>Demos</h3>
 
         <ul>
-          <li>
-            <router-link to="demos/basic" class="bttn-jelly">Basic demo</router-link>
-          </li>
-          <li>
-            <router-link to="demos/basic" class="bttn-jelly">Basic demo</router-link>
-          </li>
-          <li>
-            <router-link to="demos/basic" class="bttn-jelly">Basic demo</router-link>
+          <li v-for="(label, url) in demos">
+            <router-link :to="'/demos/' + url" class="bttn-jelly">{{label}}</router-link>
           </li>
         </ul>
 
@@ -60,6 +54,14 @@
 </template>
 
 <script>
-  export default {};
+  import demos from './services/demos';
+
+  export default {
+    data() {
+      return {
+        demos
+      };
+    }
+  };
 </script>
 
