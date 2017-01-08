@@ -13,7 +13,7 @@
 - [Caveats](#caveats)
 
 ## Demo
-You can check Vue-element demos at https://karol-f.github.io/vue-element/
+You can check Vue-element demos at **https://karol-f.github.io/vue-element/**
 
 ## Installation
 
