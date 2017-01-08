@@ -1,12 +1,13 @@
 # ![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
 
-# Vue.element plugin
+Take your Vue components to the next level using Custom Elements.
 
-1. Examples, e.g. Lazy loading (opts callback) 
-2. spa/lazy adding
-3. Better docs, infographic e.g. HMR
+## Demo
+You can test Vue-element demo at https://
 
-Info about ...
+
+
+infographic
 
 Register a real Custom Element using Vue.js.
 
