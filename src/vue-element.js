@@ -41,7 +41,7 @@ function install(Vue) {
         this.__detached__ = true;
         typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
 
-        setTimeout(function detachtedTimeout() {
+        setTimeout(() => {
           if (this.__detached__ && this.__vue_element__) {
             this.__vue_element__.$destroy(true);
           }
