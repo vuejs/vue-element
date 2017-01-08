@@ -26,7 +26,7 @@
 
         <div class="point">
           <h2>Compatibility</h2>
-          <p>Using polyfill we can support wide range of browsers, including IE9+, Android and IOS.</p>
+          <p>Vue 0.12+. Using polyfill we can support wide range of browsers, including IE9+, Android and IOS.</p>
         </div>
 
         <div class="point">
