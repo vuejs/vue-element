@@ -1,9 +1,21 @@
 ![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
 
+## Table of content
+
+- [Demo](#demo)
+- [Installation](#installation)
+- [Description](#description)
+- [Example](#example)
+- [Browsers support](#browsers-support)
+- [Options](#options)
+- [How does it work?](#how-does-it-work)
+- [Testing](#testing)
+- [Caveats](#caveats)
+
 ## Demo
 You can check Vue-element demos at https://karol-f.github.io/vue-element/
 
-## Install
+## Installation
 
 ####NPM
 ```bash
@@ -32,16 +44,22 @@ For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
 ## Description
 
-Take your Vue components to the next level using Custom Elements.
+Take your Vue components, powered by Custom Elements, to the next level. Seamlessly use created elements in HTML, plain JavaScript, Vue, React, Angular etc.
 
 * Works with Vue 0.12.x, 1.x and 2.x
-* Small - 2.5 kb min+gzip + optional polyfill - 5,1 kb min+gzip
+* Small - 2.5 kb min+gzip, optional polyfill - 5,1 kb min+gzip
 
 ### Features
 
 * **Custom Elements v1** - compatible with latest specification. Vue-element will use native implementation if supported
-* **Compatibility** - Using optional polyfill we can support wide range of browsers, including IE9+, Android and IOS
-* **Full featured** - You can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
+* **Compatibility** - using optional polyfill we can support wide range of browsers, including IE9+, Android and IOS
+* **Full featured** - you can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
+	* reactive props and HTML attributes
+	* automatic props casting (numbers, booleans) so they won't be available as strings but proper data types
+	* 'default' and 'named' slots are available, check demo for example
+	* Hot Module Replacement for seamless developer experience (Vue 2.x+)
+	* lazy-loading - you can download component after it's attached to document. Useful for e.g. UI library authors. Check demo for example
+	* detecting if detached callback is not invoked due to opening vue-element in modal - element is then detached and attached to DOM again. It would be undesirable to destroy it immediately
 
 Check demos site to see features in action. 
 
@@ -138,7 +156,7 @@ Inside HTML tag of defined custom element, Vue-element will create:
 * Proxy component for seamless Hot Module Replacement, using render function for great performance (Vue 2.x+) 
 * Vue component passed to Vue-element
 
-HTML tag of custom element will expose API to interact with underlying Vue component - you can change HTML attributes or props, using JavaScript. 
+Custom Element HTML tag will expose API to interact with underlying Vue component - you can change HTML attributes or props, using JavaScript. 
 
 ## Testing
 
@@ -147,6 +165,10 @@ For advanced access, when exposed API is not enough, defined custom element will
 ```javascript
 console.info(document.querySelector('widget-vue').__vue_element__)
 ```
+## Caveats
+
+* custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not.
+* in dev mode Vue will output warning in console
 
 ## Contribute
 
