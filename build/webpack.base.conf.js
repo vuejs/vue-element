@@ -12,7 +12,7 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
   entry: {
-    app: './src/main.js',
+    demo: './src/main.js',
     'vue-element': ['./src/vue-element.js']
   },
   output: {
