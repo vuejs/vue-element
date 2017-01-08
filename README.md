@@ -137,7 +137,7 @@ Additional, optional, third parameter to `Vue.element()` is options object. You 
     console.info('attributeChangedCallback', name, oldValue, value);
   },
   
-  // only needed when lazy loading, when 'props' are not accessible on Custom Element registration
+  // only needed when using lazy-loading - when 'props' are not accessible on Custom Element registration
   props: [],
 
   // you can set shadow root for element. Only works if native implementation is available.
