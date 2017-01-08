@@ -24,7 +24,7 @@ export function convertAttributeValue(value) {
  * @param componentDefinition
  * @param Vue
  */
-export function getProps(componentDefinition, Vue) {
+export function getProps(componentDefinition = {}, Vue) {
   const props = {
     camelCase: [],
     hyphenate: []

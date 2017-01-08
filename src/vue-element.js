@@ -4,7 +4,9 @@ import { getProps, convertAttributeValue } from './utils/props';
 
 function install(Vue) {
   Vue.element = function vueElement(tag, componentDefinition, options = {}) {
-    const props = getProps(componentDefinition, Vue);
+    const isAsyncComponent = typeof componentDefinition === 'function';
+    const optionsProps = isAsyncComponent && { props: options.props || [] };
+    const props = getProps(isAsyncComponent ? optionsProps : componentDefinition, Vue);
     // register Custom Element
     registerCustomElement(tag, {
       constructorCallback() {
@@ -12,15 +14,15 @@ function install(Vue) {
       },
 
       connectedCallback() {
-        let lazyLoadingPromise;
-        let isLazyLoading;
-        if (typeof options.connectedCallback === 'function') {
-          lazyLoadingPromise = options.connectedCallback.call(this);
-          isLazyLoading = lazyLoadingPromise && lazyLoadingPromise.then && typeof lazyLoadingPromise.then === 'function';
+        const asyncComponentPromise = isAsyncComponent && componentDefinition();
+        const isAsyncComponentPromise = asyncComponentPromise && asyncComponentPromise.then && typeof asyncComponentPromise.then === 'function';
+
+        if (isAsyncComponent && !isAsyncComponentPromise) {
+          throw new Error(`Async component ${tag} do not returns Promise`);
         }
         if (!this.__detached__) {
-          if (isLazyLoading) {
-            lazyLoadingPromise.then((lazyLoadedComponent) => {
+          if (isAsyncComponentPromise) {
+            asyncComponentPromise.then((lazyLoadedComponent) => {
               const lazyLoadedComponentProps = getProps(lazyLoadedComponent, Vue);
               createVueInstance(this, Vue, lazyLoadedComponent, lazyLoadedComponentProps, options);
             });

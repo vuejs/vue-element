@@ -4,7 +4,7 @@
 
     <div class="demo-card">
       <p class="demo-lazy__buttons">
-        <el-button type="primary" :loading="loadStatus.loading" @click="addElement">
+        <el-button type="primary" @click="addElement">
           Add lazy loaded element to page
         </el-button>
       </p>
@@ -18,9 +18,12 @@
 
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
-        <p>Imagine preparing a bunch of Vue components that are heavy in size and you don't want to force user to download them all at once - e.g. ui libraries like "Element UI" that is used across demos.</p>
-        <p>You can load individual components only when you need them - when user add it to page. We will use <code>connectedCallback()</code> when registering with Vue-element and return Promise from that callback. You can use Webpack's <code>require.ensure()</code> or any other async method to async load component.</p>
-        <p>One note - Custom Elements v1 spec require defining observed props on registration. That's why if you omit them, attributes woun't be reactive, and changing them from outside (HTML attributes or JavaScript) won't work.</p>
+        <p>Imagine preparing a bunch of Vue components that are heavy in size and you don't want to force users to download them all at once - e.g. when creating ui libraries like "Element UI" (that is used across our demos).</p>
+        <p>You can load individual components only when you need them - when user attach it to the document.</p>
+
+        <p>Instead of component object we will use function with returned Promise. You can use Webpack's <code>require.ensure()</code> or any other async method to load component.</p>
+
+        <p>One note - Custom Elements v1 spec require defining observed props on registration. That's why if you omit them, attributes won't be reactive, and changing them from outside (HTML attributes or JavaScript) won't work.</p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
         <pre><code class="language-html">
@@ -40,15 +43,9 @@
       </el-collapse-item>
       <el-collapse-item title="JavaScript - register with Vue-element" name="4">
         <pre><code class="language-javascript">
-import DemoElement from 'DemoElement.vue';
-
-Vue.element('demo-lazy-loading', { props: ['prop'] }, {
-  connectedCallback() {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(DemoElement), 2000);
-    });
-  }
-});
+Vue.element('demo-lazy-loading', () => new Promise((resolve) => {
+  require(['path/to/lazy-loaded-component'], resolve);
+}), { props: ['prop'] });
         </code></pre>
       </el-collapse-item>
     </el-collapse>
@@ -57,17 +54,10 @@ Vue.element('demo-lazy-loading', { props: ['prop'] }, {
 
 <script>
   import Vue from 'vue';
-  import DemoElement from 'demo/components/DemoLazyLoading-component';
-
-  const loadStatus = {
-    loading: false,
-    loaded: false
-  };
 
   export default {
     data() {
       return {
-        loadStatus,
         showElements: 0,
         activeNames: ['1'],
         HTML: (
@@ -103,22 +93,9 @@ Vue.element('demo-lazy-loading', { props: ['prop'] }, {
     },
     methods: {
       registerCustomElement() {
-        Vue.element('demo-lazy-loading', { props: ['prop'] }, {
-          connectedCallback() {
-            return new Promise((resolve) => {
-              if (loadStatus.loaded) {
-                resolve(resolve(DemoElement));
-              } else {
-                loadStatus.loading = true;
-                setTimeout(() => {
-                  loadStatus.loaded = true;
-                  loadStatus.loading = false;
-                  resolve(DemoElement);
-                }, 1500);
-              }
-            });
-          }
-        });
+        Vue.element('demo-lazy-loading', () => new Promise((resolve) => {
+          require(['demo/components/DemoLazyLoading-component'], resolve); // eslint-disable-line
+        }), { props: ['prop'] });
       },
       addElement() {
         this.showElements = this.showElements + 1;
