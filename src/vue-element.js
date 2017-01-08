@@ -69,11 +69,8 @@ function install(Vue) {
   };
 }
 
-/*eslint-disable */
-if (typeof exports == "object") {
-  module.exports = install
-} else if (typeof define == "function" && define.amd) {
-  define([], function (){ return install })
-} else if (window.Vue) {
-  Vue.use(install)
+export default install;
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(install);
 }
