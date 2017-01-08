@@ -10,7 +10,7 @@
       <el-collapse-item title="Description" name="1">
         <p>We can access underlying Vue component using it's props by using custom element's HTML attributes (e.g. just by changing it using browser's console) or in JavaScript (example below).</p>
         <p>
-          As our custom element is just HTML tag with API exposed via HTML and JavaScript, we can easily use it in Vue, React, Angular or plain Javascript projects.
+          As our custom element is just HTML tag with API exposed via HTML and JavaScript, we can easily use it in Vue, React, Angular or plain JavaScript projects.
         </p>
         <p>
           It's easy to nest elements. In this example we've used <code>&#x3C;demo-basic&#x3E;</code> component created in previous example, inside a newly created <code>&#x3C;demo-binding&#x3E;</code> one.
