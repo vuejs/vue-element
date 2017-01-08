@@ -7,7 +7,8 @@
         </div><div class="right">
         <h2 class="vue">Vue-element</h2>
         <h1>
-          Custom Elements<br>for Vue.js
+          <span class="logo-vue">Vue-element</span>
+          <div class="subtext">Custom Elements for Vue.js</div>
         </h1>
         <p>
           <!--<a class="button" href="/v2/guide/">GET STARTED</a>-->
@@ -64,4 +65,3 @@
     }
   };
 </script>
-

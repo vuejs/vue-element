@@ -363,6 +363,9 @@
     position: relative;
     z-index: 2;
   }
+  .path-home #header {
+    display: none;
+  }
   body.docs #header {
     position: fixed;
     width: 100%;
@@ -440,8 +443,7 @@
     background-size: contain;
   }
   #logo span {
-    font-size: 1.2em;
-    text-transform: uppercase;
+    font-size: 1.3em;
   }
   #logo img {
     display: none;
@@ -556,7 +558,7 @@
     }
   }
   #hero {
-    padding: 50px 40px;
+    padding: 100px 40px 50px 40px;
     background-color: #fff;
   }
   .demos.inner {
@@ -586,7 +588,11 @@
   #hero h1 {
     font-weight: 300;
     margin: 0;
-    font-size: 3.2em;
+    font-size: 4.4em;
+    margin-top: 4px;
+  }
+  #hero .subtext {
+    font-size: .465em;
   }
   #hero h2 {
     font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
@@ -596,7 +602,8 @@
     display: none;
   }
   #hero .button {
-    margin: 1em 0;
+    margin: 0;
+    margin-top: .3em;
     font-size: 1.05em;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -721,6 +728,12 @@
     }
     #hero .button {
       font-size: 0.9em;
+    }
+    #hero .logo-vue {
+      display: none;
+    }
+    #hero .subtext {
+      font-size: .7em;
     }
     #highlights .point {
       display: block;
