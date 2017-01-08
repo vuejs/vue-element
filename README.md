@@ -51,7 +51,7 @@ Take your Vue components, powered by Custom Elements, to the next level. Seamles
 
 ### Features
 
-* **Custom Elements v1** - compatible with latest specification. Vue-element will use native implementation if supported
+* **Simplicity** - only `tag-name` and Vue component `object` is needed for `Vue.element()` usage
 * **Compatibility** - using optional polyfill we can support wide range of browsers, including IE9+, Android and IOS
 * **Full featured** - you can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
 	* reactive props and HTML attributes
@@ -60,12 +60,11 @@ Take your Vue components, powered by Custom Elements, to the next level. Seamles
 	* Hot Module Replacement for seamless developer experience (Vue 2.x+)
 	* lazy-loading - you can download component after it's attached to document. Useful for e.g. UI library authors. Check demo for example
 	* detecting if detached callback is not invoked due to opening vue-element in modal - element is then detached and attached to DOM again. It would be undesirable to destroy it immediately
+* **Custom Elements v1** - compatible with latest specification. Vue-element will use native implementation if supported
 
-Check demos site to see features in action. 
+Check demos site to see it in action. 
 
 ## Example
-`Vue-element()` usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. 
-
 For additional examples and detailed description check the demos page.
 
 ###### Custom Element HTML
@@ -90,8 +89,8 @@ Vue.element('widget-vue', {
 
 ###### JavaScript - element API usage
 ``` js
-document.querySelector('widget-vue').prop2 // get prop value
-document.querySelector('widget-vue').prop2 = 'another string' // set prop value
+document.querySelector('widget-vue')[0].prop2 // get prop value
+document.querySelector('widget-vue')[0].prop2 = 'another string' // set prop value
 ```
 
 You can also change `<widget-vue>` HTML attributes and changes will be instantly reflected.
@@ -99,7 +98,7 @@ You can also change `<widget-vue>` HTML attributes and changes will be instantly
 
 ## Browsers support
 
-| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome-android.png" alt="Chrome for Android" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome for Android |
+| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome-android.png" alt="Chrome for Android" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Android |
 |:---------:|:---------:|:---------:|:---------:|:---------:|
 | behind --flag| 54+ | Technology Preview| 42+| 55+
 
@@ -167,8 +166,8 @@ console.info(document.querySelector('widget-vue').__vue_element__)
 ```
 ## Caveats
 
-* custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not.
-* in dev mode Vue will output warning in console
+* custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not
+* in dev mode Vue will display console warning about element not being registered. It's desirable behaviour as we want to use browser's Custom Elements registration
 
 ## Contribute
 
