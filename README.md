@@ -1,11 +1,13 @@
 ![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
 
 ## Demo
-You can test Vue-element demo at https://
+You can test Vue-element demo at https://karol-f.github.io/vue-element/
 
 ## Description
 
 Take your Vue components to the next level using Custom Elements.
+
+![Vue-element](src/demo/assets/images/vue-element-schema.png)
 
 
 infographic
