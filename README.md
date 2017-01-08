@@ -1,7 +1,7 @@
 ![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
 
 ## Demo
-You can test Vue-element demo at https://karol-f.github.io/vue-element/
+You can check Vue-element demos at https://karol-f.github.io/vue-element/
 
 ## Install
 
@@ -24,7 +24,7 @@ If you are using Vue globally, just include `vue-element.js` and it will automat
 <script src="path/to/vue-element.js"></script>
 ```
 ####Optional polyfill
-For cross-browser compatibility use Custom Elements polyfill.
+For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.3.0/document-register-element.js"></script>
@@ -40,9 +40,10 @@ Take your Vue components to the next level using Custom Elements.
 ### Features
 
 * **Custom Elements v1** - compatible with latest specification. Vue-element will use native implementation if supported
-* **Compatibility** - Using polyfill we can support wide range of browsers, including IE9+, Android and IOS
+* **Compatibility** - Using optional polyfill we can support wide range of browsers, including IE9+, Android and IOS
 * **Full featured** - You can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
 
+Check demos site to see features in action. 
 
 ## Example
 `Vue-element()` usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. 
@@ -134,12 +135,10 @@ Callbacks are executed before lifecycle hooks from Vue component passed to Vue-e
 
 Inside HTML tag of defined custom element, Vue-element will create:
 
-* Proxy components for seamless Hot Module Replacement (only for Vue 2.x)
+* Proxy component for seamless Hot Module Replacement, using render function for great performance (Vue 2.x+) 
 * Vue component passed to Vue-element
 
 HTML tag of custom element will expose API to interact with underlying Vue component - you can change HTML attributes or props, using JavaScript. 
-
-Check demos to check it in action.
 
 ## Testing
 
@@ -147,6 +146,13 @@ For advanced access, when exposed API is not enough, defined custom element will
 
 ```javascript
 console.info(document.querySelector('widget-vue').__vue_element__)
+```
+
+## Contribute
+
+```
+npm install
+npm run dev
 ```
 
 ## License
