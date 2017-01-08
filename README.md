@@ -34,13 +34,20 @@ For cross-browser compatibility use Custom Elements polyfill.
 
 Take your Vue components to the next level using Custom Elements.
 
-* Work with Vue 0.12.x, 1.x and 2.x
+* Works with Vue 0.12.x, 1.x and 2.x
 * Small - 2.5 kb min+gzip + optional polyfill - 5,1 kb min+gzip
 
-## Example
-Usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. 
+### Features
 
-For additional examples and detailed description check the demo page.
+* **Custom Elements v1** - compatible with latest specification. Vue-element will use native implementation if supported
+* **Compatibility** - Using polyfill we can support wide range of browsers, including IE9+, Android and IOS
+* **Full featured** - You can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
+
+
+## Example
+`Vue-element()` usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. 
+
+For additional examples and detailed description check the demos page.
 
 ###### Custom Element HTML
 ``` html
@@ -86,10 +93,41 @@ You can also change `<widget-vue>` HTML attributes and changes will be instantly
 | IE9+, Edge| &check;| &check; | &check; | &check; | &check; | &check;
 
 ## Options
+Additional, optional, third parameter to `Vue.element()` is options object. You can pass following methods.
+
+'This' in callbacks points to Custom Element's DOM Node.
 
 ```javascript
-{}
+{
+  // 'constructorCallback' can be triggered multiple times when e.g. vue-router is used
+  constructorCallback() {
+      console.info('constructorCallback', this);
+  },
+
+  // element is mounted/inserted into document
+  connectedCallback() {
+    console.info('connectedCallback', this);
+  },
+
+  // element is removed from document
+  disconnectedCallback() {
+    console.warn('disconnectedCallback', this);
+  },
+
+  // one of element's attributes (Vue instance props) is changed 
+  attributeChangedCallback(name, oldValue, value) {
+    console.info('attributeChangedCallback', name, oldValue, value);
+  },
+  
+  // only needed when lazy loading, when 'props' are not accessible on Custom Element registration
+  props: [],
+
+  // you can set shadow root for element. Only works if native implementation is available.
+  shadow: false
+}
 ```
+
+Callbacks are executed before lifecycle hooks from Vue component passed to Vue-element. It's better idea just to use Vue component lifecycle hooks (e.g. `created`, `mounted`, `beforeDestroy`).
 
 ## How does it work?
 ![Vue-element](src/demo/assets/images/vue-element-schema.png)
@@ -105,7 +143,7 @@ Check demos to check it in action.
 
 ## Testing
 
-If you need advanced access, when exposed API is not enough, defined custom element will expose Vue instance via `__vue_element__` prop.
+For advanced access, when exposed API is not enough, defined custom element will expose Vue instance via `__vue_element__` prop.
 
 ```javascript
 console.info(document.querySelector('widget-vue').__vue_element__)
