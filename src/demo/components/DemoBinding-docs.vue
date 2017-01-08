@@ -13,7 +13,7 @@
           As our custom element is just HTML tag with API exposed via HTML and JavaScript, we can easily use it in Vue, React, Angular or plain Javascript projects.
         </p>
         <p>
-          It's easy to nest elements. In this example we've used <code>&#x3C;demo-basic&#x3E;</code> component created in previous example, inside newly created <code>&#x3C;demo-binding&#x3E;</code> one.
+          It's easy to nest elements. In this example we've used <code>&#x3C;demo-basic&#x3E;</code> component created in previous example, inside a newly created <code>&#x3C;demo-binding&#x3E;</code> one.
         </p>
       </el-collapse-item>
       <el-collapse-item title="Vue binding usage" name="2">

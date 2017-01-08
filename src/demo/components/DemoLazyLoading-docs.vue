@@ -19,7 +19,7 @@
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
         <p>Imagine preparing a bunch of Vue components that are heavy in size and you don't want to force user to download them all at once - e.g. ui libraries like "Element UI" that is used across demos.</p>
-        <p>You can load individual components only when you need them - when user add it to page. We will use <code>connectedCallback()</code> when registering with Vue-element and return Promise from that callback. You can use Webpack's <code>require.ensure()</code> or any other async method inside a Promise to async load component.</p>
+        <p>You can load individual components only when you need them - when user add it to page. We will use <code>connectedCallback()</code> when registering with Vue-element and return Promise from that callback. You can use Webpack's <code>require.ensure()</code> or any other async method to async load component.</p>
         <p>One note - Custom Elements v1 spec require defining observed props on registration. That's why if you omit them, attributes woun't be reactive, and changing them from outside (HTML attributes or JavaScript) won't work.</p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
