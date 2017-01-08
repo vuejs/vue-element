@@ -558,7 +558,7 @@
     }
   }
   #hero {
-    padding: 100px 40px 50px 40px;
+    padding: 150px 40px 50px 40px;
     background-color: #fff;
   }
   .demos.inner {
