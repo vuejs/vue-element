@@ -75,6 +75,8 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     reactiveProps(element, props);
 
     // Define the Vue constructor to manage the element
-    element.__vue_element__ = new Vue(rootElement); // eslint-disable-line no-new
+    element.__vue_element__ = new Vue(rootElement);
+    element.removeAttribute('ve-cloak');
+    element.setAttribute('ve-ready', '');
   }
 }
