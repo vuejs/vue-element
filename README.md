@@ -1,3 +1,5 @@
+# ![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
+
 # Vue.element plugin
 
 1. Examples, e.g. Lazy loading (opts callback) 
