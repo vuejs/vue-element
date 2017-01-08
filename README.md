@@ -1,10 +1,11 @@
-# ![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
-
-Take your Vue components to the next level using Custom Elements.
+![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
 
 ## Demo
 You can test Vue-element demo at https://
 
+## Description
+
+Take your Vue components to the next level using Custom Elements.
 
 
 infographic
