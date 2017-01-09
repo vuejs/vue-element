@@ -25,7 +25,7 @@ export default function registerCustomElement(tag, options = {}) {
   if (isES2015) {
     // ES2015 detected. We will use "class" based Custom Elements V1 specification.
     // If it's natively supported it will run without polyfill
-    class myCustomElement extends HTMLElement {
+    class CustomElement extends HTMLElement {
       // Can define constructor arguments if you wish.
       constructor(self) {
         super();
@@ -41,37 +41,39 @@ export default function registerCustomElement(tag, options = {}) {
       }
     }
 
-    myCustomElement.prototype.connectedCallback = connectedCallback;
-    myCustomElement.prototype.disconnectedCallback = disconnectedCallback;
-    myCustomElement.prototype.attributeChangedCallback = attributeChangedCallback;
+    CustomElement.prototype.connectedCallback = connectedCallback;
+    CustomElement.prototype.disconnectedCallback = disconnectedCallback;
+    CustomElement.prototype.attributeChangedCallback = attributeChangedCallback;
 
-    customElements.define(tag, myCustomElement);
-  } else {
+    customElements.define(tag, CustomElement);
+    return CustomElement; // eslint-disable-line consistent-return
+  } else { // eslint-disable-line no-else-return
     // not ES2015. We will use polyfill supported version of registering Custom Elements
     // so older browsers could handle it
-    function myCustomElement(self) { // eslint-disable-line no-inner-declarations
+    function CustomElement(self) { // eslint-disable-line no-inner-declarations
       const me = self ? HTMLElement.call(self) : this;
 
       constructorCallback.call(me);
       return me;
     }
 
-    myCustomElement.observedAttributes = options.observedAttributes || [];
+    CustomElement.observedAttributes = options.observedAttributes || [];
 
-    myCustomElement.prototype = Object.create(
+    CustomElement.prototype = Object.create(
       HTMLElement.prototype, {
         constructor: {
           configurable: true,
           writable: true,
-          value: myCustomElement
+          value: CustomElement
         }
       }
     );
 
-    myCustomElement.prototype.connectedCallback = connectedCallback;
-    myCustomElement.prototype.disconnectedCallback = disconnectedCallback;
-    myCustomElement.prototype.attributeChangedCallback = attributeChangedCallback;
+    CustomElement.prototype.connectedCallback = connectedCallback;
+    CustomElement.prototype.disconnectedCallback = disconnectedCallback;
+    CustomElement.prototype.attributeChangedCallback = attributeChangedCallback;
 
-    customElements.define(tag, myCustomElement);
+    customElements.define(tag, CustomElement);
+    return CustomElement; // eslint-disable-line consistent-return
   }
 }

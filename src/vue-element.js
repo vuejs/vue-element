@@ -8,7 +8,7 @@ function install(Vue) {
     const optionsProps = isAsyncComponent && { props: options.props || [] };
     const props = getProps(isAsyncComponent ? optionsProps : componentDefinition, Vue);
     // register Custom Element
-    registerCustomElement(tag, {
+    const CustomElement = registerCustomElement(tag, {
       constructorCallback() {
         typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
       },
@@ -68,6 +68,8 @@ function install(Vue) {
 
       shadow: !!options.shadow && !!HTMLElement.prototype.attachShadow
     });
+
+    return CustomElement;
   };
 }
 
