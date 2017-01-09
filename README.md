@@ -17,7 +17,7 @@ You can check Vue-element demos at **https://karol-f.github.io/vue-element/**
 
 ## Installation
 
-####NPM
+#### NPM
 ```bash
 npm install vue-element --save
 ```
@@ -40,6 +40,12 @@ For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.3.0/document-register-element.js"></script>
+```
+
+or 
+
+```
+import 'document-register-element/build/document-register-element';
 ```
 
 ## Description
@@ -171,10 +177,19 @@ console.info(document.querySelector('widget-vue').__vue_element__)
 
 ## Contribute
 
+#### Developement
 ```
 npm install
 npm run dev
 ```
+
+#### Release
+```
+npm run build
+```
+This command will compile `vue-element.js` and docs files (handled by `.gitignore`) to `dist` folder. You have to manually copy it to `docs` folder.
+
+Please take a note that `npm run build` will use `config.build.assetsPublicPath`, which is set to Github Pages path in `config/index.js`.
 
 ## License
 
