@@ -55,6 +55,17 @@ Take your Vue components, powered by Custom Elements, to the next level. Seamles
 * Works with Vue 0.12.x, 1.x and 2.x
 * Small - 2.5 kb min+gzip, optional polyfill - 5,1 kb min+gzip
 
+### Why you might need `Vue-element`?
+![Vue-element](src/demo/assets/images/vue-element-why.png)
+
+It might be confusing for users to understand difference between Vue components, Custom Elements and it's use cases.
+ 
+Why you might need `Vue-element`? Simply, for your your Vue components user's convinience. All they would need to do is include your JavaScript file and then they can:
+
+* include HTML tag (e.g. `<my-component><my-component />`) in any time of document lifecycle. You can use your elements in e.g. SPA application just by including HTML tag - no Vue initialization or JavaScript usage is needed. Custom Elements will auto initialize when mounted into document. You can include them in e.g. Vue, Angular or React projects and browser will take care of detecting it and initialization
+* use simple API that allows for interacting with underlaying Vue instance by changing attributes or props
+* take advantage of features like lazy-loading, that allows for loading components on demand, only when user add them to document
+
 ### Features
 
 * **Simplicity** - only `tag-name` and Vue component `object` is needed for `Vue.element()` usage
@@ -158,7 +169,7 @@ Callbacks are executed before lifecycle hooks from Vue component passed to Vue-e
 
 Inside HTML tag of defined custom element, Vue-element will create:
 
-* Proxy component for seamless Hot Module Replacement, using render function for great performance (Vue 2.x+) 
+* Proxy component for seamless Hot Module Replacement, using render function for performance (Vue 2.x+) 
 * Vue component passed to Vue-element
 
 Custom Element HTML tag will expose API to interact with underlying Vue component - you can change HTML attributes or props, using JavaScript. 
