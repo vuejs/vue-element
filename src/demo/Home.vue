@@ -33,7 +33,7 @@
         <div class="point">
           <h2>Full featured</h2>
           <p>
-            You can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
+            You can use nesting, HMR, slots, lazy loading, native Custom Elements callbacks.
           </p>
         </div>
       </div>

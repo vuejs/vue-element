@@ -63,7 +63,7 @@ It might be confusing for users to understand difference between Vue components,
 Why you might need `Vue-element`? Simply, for your your Vue components user's convinience. All they would need to do is include your JavaScript file and then they can:
 
 * include HTML tag (e.g. `<my-component><my-component />`) in any time of document lifecycle. You can use your elements in e.g. SPA application just by including HTML tag - no Vue initialization or JavaScript usage is needed. Custom Elements will auto initialize when mounted into document. You can include them in e.g. Vue, Angular or React projects and browser will take care of detecting it and initialization
-* use simple API that allows for interacting with underlaying Vue instance by changing attributes or props
+* use simple API that allows for interacting with underlaying Vue instance by changing attributes, props or callback functions
 * take advantage of features like lazy-loading, that allows for loading components on demand, only when user add them to document
 
 ### Features
@@ -73,6 +73,7 @@ Why you might need `Vue-element`? Simply, for your your Vue components user's co
 * **Full featured** - you can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
 	* reactive props and HTML attributes
 	* automatic props casting (numbers, booleans) so they won't be available as strings but proper data types
+	* passing callback functions to props via JavaScript
 	* 'default' and 'named' slots are available, check demo for example
 	* Hot Module Replacement for seamless developer experience (Vue 2.x+)
 	* lazy-loading - you can download component after it's attached to document. Useful for e.g. UI library authors. Check demo for example
