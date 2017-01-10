@@ -62,7 +62,12 @@ export function reactiveProps(element, props) {
         return this.__vue_element__[name];
       },
       set(value) {
-        this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
+        if (typeof value === 'function' && this.__vue_element__) {
+          const propName = props.camelCase[index];
+          this.__vue_element__[propName] = value.bind(this.__vue_element__);
+        } else {
+          this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
+        }
       }
     });
   });
