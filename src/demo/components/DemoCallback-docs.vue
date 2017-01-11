@@ -4,14 +4,16 @@
 
     <div class="demo-card demo-callback-docs">
       <h4>Choose rating</h4>
-      <demo-callback initial-rating="3" ref="demo"></demo-callback>
+      <demo-callback :initial-rating="rating" ref="demo"></demo-callback>
+
+      <p>Current rating: <strong>{{rating}}</strong></p>
     </div>
 
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
         <p>Passing strings, numbers and booleans is useful, but component's possibility to trigger passed functions allows for a whole lot new possibilities.</p>
         <p>
-          In above demo, after changing rating, you'll see the current value in browser's console. This value is passed to callback function.
+          In above demo, after changing rating, the current value will be displayed. This value is passed to callback function from Custom Element <code>&#x3C;demo-callback&#x3E;&#x3C;/demo-callback&#x3E;</code> created by <code>Vue-element</code>.
         </p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
@@ -40,6 +42,9 @@ demoCallbackElement.changeCallback = function(value) {
       </el-collapse-item>
       <el-collapse-item title="Vue - passing callback functions" name="5">
         <pre><code class="language-html">
+&#x3C;template&#x3E;
+  {{vueTemplateUsage}}
+&#x3C;/template&#x3E;
 &#x3C;script&#x3E;
   {{vueScriptUsage}}
 &#x3C;/script&#x3E;
@@ -55,9 +60,10 @@ demoCallbackElement.changeCallback = function(value) {
   export default {
     data() {
       return {
+        rating: 3,
         activeNames: ['1'],
         HTML: (
-'<demo-callbacks initial-rating="3" ref="demo"></demo-callbacks>'
+'<demo-callbacks initial-rating="3"></demo-callbacks>'
         ),
         vueTemplate: (
 `<div class="card">
@@ -75,16 +81,24 @@ demoCallbackElement.changeCallback = function(value) {
     },
     data() {
       return {
-        rate: this.initialRating || 1
+        rate: this.initialRating
       };
     }
   };`
         ),
+        vueTemplateUsage: (
+'<demo-callback :initial-rating="rating" ref="demo"></demo-callback>'
+        ),
         vueScriptUsage: (
 `export default {
+    data() {
+      return {
+        rating: 3
+      };
+    },
     methods: {
       changeCallback(value) {
-        console.info('changeCallback callback with value:', value);
+        this.rating = value;
       }
     },
     mounted() {
@@ -101,7 +115,7 @@ demoCallbackElement.changeCallback = function(value) {
         Vue.element('demo-callback', DemoElement);
       },
       changeCallback(value) {
-          console.info('changeCallback callback with value:', value); // eslint-disable-line
+        this.rating = value;
       }
     },
     mounted() {

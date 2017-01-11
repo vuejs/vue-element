@@ -11,11 +11,12 @@
       'changeCallback'
     ],
     propsData: {
+      initialRating: 1,
       changeCallback: () => {}
     },
     data() {
       return {
-        rate: this.initialRating || 1
+        rate: this.initialRating
       };
     }
   };
