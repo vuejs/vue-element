@@ -1,6 +1,9 @@
 <template>
-  <div class="card demo-callback">
-    <el-rate v-model="rate" @change="changeCallback"></el-rate>
+  <div class="card card--primary demo-callback">
+    <h4>Choose rating</h4>
+    <p>
+      <el-rate v-model="rate" @change="changeCallback"></el-rate>
+    </p>
   </div>
 </template>
 
@@ -25,5 +28,11 @@
 <style>
   .demo-callback {
     text-align: center;
+  }
+  .demo-callback h4 {
+    margin-bottom: 10px;
+  }
+  .demo-callback .el-icon-star-off {
+    color: #fff !important;
   }
 </style>

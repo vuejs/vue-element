@@ -3,7 +3,6 @@
     <h2>Passing callback functions to props</h2>
 
     <div class="demo-card demo-callback-docs">
-      <h4>Choose rating</h4>
       <demo-callback :initial-rating="rating" ref="demo"></demo-callback>
 
       <p>Current rating: <strong>{{rating}}</strong></p>
@@ -67,6 +66,7 @@ demoCallbackElement.changeCallback = function(value) {
         ),
         vueTemplate: (
 `<div class="card">
+    <h4>Choose rating</h4>
     <el-rate v-model="rate" @change="changeCallback"></el-rate>
   </div>`
         ),
@@ -77,6 +77,7 @@ demoCallbackElement.changeCallback = function(value) {
       'changeCallback'
     ],
     propsData: {
+      initialRating: 1,
       changeCallback: () => {}
     },
     data() {
@@ -87,7 +88,8 @@ demoCallbackElement.changeCallback = function(value) {
   };`
         ),
         vueTemplateUsage: (
-'<demo-callback :initial-rating="rating" ref="demo"></demo-callback>'
+`<demo-callback :initial-rating="rating" ref="demo"></demo-callback>
+  <p>Current rating: <strong>{{rating}}</strong></p>`
         ),
         vueScriptUsage: (
 `export default {
@@ -131,7 +133,7 @@ demoCallbackElement.changeCallback = function(value) {
     text-align: center;
   }
 
-  .demo-callback-docs h4 {
+  .demo-callback-docs p:last-child {
     margin-bottom: 0;
   }
 </style>
