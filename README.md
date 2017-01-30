@@ -1,41 +1,206 @@
-# Vue.element plugin
+![Vue-element](src/demo/assets/images/vue-element-logo-text.png)
 
-Register a real Custom Element using Vue.js.
+## Table of content
 
-## Requirements
+- [Demo](#demo)
+- [Installation](#installation)
+- [Description](#description)
+- [Example](#example)
+- [Browsers support](#browsers-support)
+- [Options](#options)
+- [How does it work?](#how-does-it-work)
+- [Testing](#testing)
+- [Caveats](#caveats)
 
-- Does not work with Vue 2.0 yet
-- Only works with Vue ^0.11.0
-- The browser must support the Custom Element API (currently Chrome only), or you need to include the [Web Components polyfill](https://github.com/webcomponents/webcomponentsjs).
+## Demo
+You can check Vue-element demos at **https://karol-f.github.io/vue-element/**
 
 ## Installation
 
-Available through npm, Component, Duo or Bower.
+#### NPM
+```bash
+npm install vue-element --save
+```
 
-### Direct include
+```javascript
+import vueElement from 'vue-element'
+
+Vue.use(vueElement);
+```
+
+#### Direct include
 
 If you are using Vue globally, just include `vue-element.js` and it will automatically install the `Vue.element` method.
 
-### CommonJS
+```html
+<script src="path/to/vue-element.js"></script>
+```
+####Optional polyfill
+For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
-``` js
-Vue.use(require('vue-element')) // installed
-Vue.element('my-element', { /* ... */ })
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.3.0/document-register-element.js"></script>
 ```
 
-## Usage
+or 
 
-Usage is the same as `Vue.component()` - you pass in exactly the same options as if you are defining a Vue component. A few things to note:
+```
+import 'document-register-element/build/document-register-element';
+```
 
-- Nested Vue custom elements are not supported - it is recommended to use Vue's own component system inside a custom element; The custom element interface is intended for inter-op with other libraries (e.g. Polymer).
+## Description
 
-- You don't need to manually instantiate a root level Vue instance. Custom Elements get auto-promoted when `document.registerElement` is called. You can also freely define the element before or after the markup.
+`Vue-element` is a tiny wrapper around Vue components. It provide seamless way to use it in HTML, plain JavaScript, Vue, React, Angular etc., using power of Custom Elements.
+* Works with Vue 0.12.x, 1.x and 2.x
+* Small - 2.5 kb min+gzip, optional polyfill - 5,1 kb min+gzip
 
-- Real custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not.
+### Why you might need `Vue-element`?
+![Vue-element](src/demo/assets/images/vue-element-why.png)
 
-- You can expose attributes with Vue's `props` (0.12) or `paramAttributes` (0.11) option, but you can only pass in literal values (no dynamic bindings). See the example folder to see it in action.
+It might be confusing for users to understand difference between Vue components, Custom Elements and it's use cases.
+ 
+Why you might need `Vue-element`? Simply, for your Vue components user's convinience. All they would need to do is include your JavaScript file and then they can:
 
-- By default the element does not use Shadow DOM. If you want to enable Shadow DOM encapsulation, pass in `shadow: true` in your component options.
+* include HTML tag (e.g. `<my-component><my-component />`) in any time of document lifecycle. You can use your elements in e.g. SPA application just by including HTML tag - no Vue initialization or JavaScript usage is needed. Custom Elements will auto initialize when mounted into document. You can include them in e.g. Vue, Angular or React projects and browser will take care of detecting it and initialization
+* use simple API that allows for interacting with underlaying Vue instance by changing attributes, props or passing callback functions
+* take advantage of features like lazy-loading, that allows for loading components on demand, only when user add them to document
+
+### Features
+
+* **Simplicity** - only `tag-name` and Vue component `object` is needed for `Vue.element()` usage
+* **Compatibility** - using optional polyfill we can support wide range of browsers, including IE9+, Android and IOS
+* **Full featured** - you can use nesting, HMR, slots, lazy-loading, native Custom Elements callbacks.
+	* reactive props and HTML attributes
+	* automatic props casting (numbers, booleans) so they won't be available as strings but proper data types
+	* passing callback functions to props via JavaScript
+	* 'default' and 'named' slots are available, check demo for example
+	* Hot Module Replacement for seamless developer experience (Vue 2.x+)
+	* lazy-loading - you can download component after it's attached to document. Useful for e.g. UI library authors. Check demo for example
+	* detecting if detached callback is not invoked due to opening vue-element in modal - element is then detached and attached to DOM again. It would be undesirable to destroy it immediately
+* **Custom Elements v1** - compatible with latest specification. Vue-element will use native implementation if supported
+
+Check demos site to see it in action. 
+
+## Example
+For additional examples and detailed description check the demos page.
+
+###### Custom Element HTML
+``` html
+<widget-vue prop1="1" prop2="string" prop3="true"></widget-vue>
+```
+
+###### JavaScript - register with Vue-element
+``` js
+Vue.element('widget-vue', {
+  props: [
+    'prop1',
+    'prop2',
+    'prop3'
+  ],
+  data: {
+    message: 'Hello Vue!'
+  },
+  template: '<p>{{ message }}, {{ prop1  }}, {{prop2}}, {{prop3}}</p>'
+});
+```
+
+###### JavaScript - element API usage
+``` js
+document.querySelector('widget-vue')[0].prop2 // get prop value
+document.querySelector('widget-vue')[0].prop2 = 'another string' // set prop value
+```
+
+You can also change `<widget-vue>` HTML attributes and changes will be instantly reflected.
+
+
+## Browsers support
+
+| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome-android.png" alt="Chrome for Android" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Android |
+|:---------:|:---------:|:---------:|:---------:|:---------:|
+| behind --flag| 54+ | Technology Preview| 42+| 55+
+
+[Custom Elements v1 support](http://caniuse.com/#feat=custom-elementsv1)
+
+#### With optional polyfill
+
+| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/opera.png" alt="Opera" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari-ios.png" alt="iOS Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>iOS | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome-android.png" alt="Chrome for Android" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Android |
+|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+| IE9+, Edge| &check;| &check; | &check; | &check; | &check; | &check;
+
+## Options
+Additional, optional, third parameter to `Vue.element()` is options object. You can pass following methods.
+
+'This' in callbacks points to Custom Element's DOM Node.
+
+```javascript
+{
+  // 'constructorCallback' can be triggered multiple times when e.g. vue-router is used
+  constructorCallback() {
+      console.info('constructorCallback', this);
+  },
+
+  // element is mounted/inserted into document
+  connectedCallback() {
+    console.info('connectedCallback', this);
+  },
+
+  // element is removed from document
+  disconnectedCallback() {
+    console.warn('disconnectedCallback', this);
+  },
+
+  // one of element's attributes (Vue instance props) is changed 
+  attributeChangedCallback(name, oldValue, value) {
+    console.info('attributeChangedCallback', name, oldValue, value);
+  },
+  
+  // only needed when using lazy-loading - when 'props' are not accessible on Custom Element registration
+  props: [],
+
+  // you can set shadow root for element. Only works if native implementation is available.
+  shadow: false
+}
+```
+
+Callbacks are executed before lifecycle hooks from Vue component passed to Vue-element. It's better idea just to use Vue component lifecycle hooks (e.g. `created`, `mounted`, `beforeDestroy`).
+
+## How does it work?
+![Vue-element](src/demo/assets/images/vue-element-schema.png)
+
+Inside HTML tag of defined custom element, Vue-element will create:
+
+* Proxy component for seamless Hot Module Replacement, using render function for performance (Vue 2.x+) 
+* Vue component passed to Vue-element
+
+Custom Element HTML tag will expose API to interact with underlying Vue component - you can change HTML attributes or props, using JavaScript. 
+
+## Testing
+
+For advanced access, when exposed API is not enough, defined custom element will expose Vue instance via `__vue_element__` prop.
+
+```javascript
+console.info(document.querySelector('widget-vue').__vue_element__)
+```
+## Caveats
+
+* custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not
+* in dev mode Vue will display console warning about element not being registered. It's desirable behaviour as we want to use browser's Custom Elements registration
+
+## Contribute
+
+#### Developement
+```
+npm install
+npm run dev
+```
+
+#### Release
+```
+npm run build
+```
+This command will compile `vue-element.js` and docs files (handled by `.gitignore`) to `dist` folder. You have to manually copy it to `docs` folder.
+
+Please take a note that `npm run build` will use `config.build.assetsPublicPath`, which is set to Github Pages path in `config/index.js`.
 
 ## License
 
