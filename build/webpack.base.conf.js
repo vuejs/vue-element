@@ -13,7 +13,7 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 module.exports = {
   entry: {
     demo: './src/main.js',
-    'vue-element': ['./src/vue-element.js']
+    'vue-custom-element': ['./src/vue-custom-element.js']
   },
   output: {
     path: config.build.assetsRoot,

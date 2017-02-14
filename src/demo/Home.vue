@@ -5,14 +5,14 @@
         <div class="left">
           <div class="logo"></div>
         </div><div class="right">
-        <h2 class="vue">Vue-element</h2>
+        <h2 class="vue">vue-custom-element</h2>
         <h1>
-          <span class="logo-vue">Vue-element</span>
+          <span class="logo-vue">Vue Custom Element</span>
           <div class="subtext">Custom Elements for Vue.js</div>
         </h1>
         <p>
           <!--<a class="button" href="/v2/guide/">GET STARTED</a>-->
-          <a class="button white" href="https://github.com/vuejs/vue-element" target="_blank">GITHUB</a>
+          <a class="button white" href="https://github.com/karol-f/vue-custom-element" target="_blank">GITHUB</a>
         </p>
       </div>
       </div>
@@ -22,7 +22,7 @@
       <div class="inner">
         <div class="point">
           <h2>Custom Elements v1</h2>
-          <p>Compatible with latest specification. Vue-element will use native implementation if supported.</p>
+          <p>Compatible with latest specification. vue-custom-element will use native implementation if supported.</p>
         </div>
 
         <div class="point">

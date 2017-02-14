@@ -3,7 +3,7 @@ import createVueInstance from './utils/createVueInstance';
 import { getProps, convertAttributeValue } from './utils/props';
 
 function install(Vue) {
-  Vue.element = function vueElement(tag, componentDefinition, options = {}) {
+  Vue.customElement = function vueCustomElement(tag, componentDefinition, options = {}) {
     const isAsyncComponent = typeof componentDefinition === 'function';
     const optionsProps = isAsyncComponent && { props: options.props || [] };
     const props = getProps(isAsyncComponent ? optionsProps : componentDefinition, Vue);
@@ -44,10 +44,10 @@ function install(Vue) {
         typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
 
         setTimeout(() => {
-          if (this.__detached__ && this.__vue_element__) {
-            this.__vue_element__.$destroy(true);
+          if (this.__detached__ && this.__vue_custom_element__) {
+            this.__vue_custom_element__.$destroy(true);
           }
-        }, 3000);
+        }, options.destroyTimeout || 3000);
       },
 
       /**
@@ -57,10 +57,10 @@ function install(Vue) {
        * @param value
        */
       attributeChangedCallback(name, oldValue, value) {
-        if (this.__vue_element__ && typeof value !== 'undefined') {
+        if (this.__vue_custom_element__ && typeof value !== 'undefined') {
           const nameCamelCase = Vue.util.camelize(name);
           typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
-          this.__vue_element__[nameCamelCase] = convertAttributeValue(value);
+          this.__vue_custom_element__[nameCamelCase] = convertAttributeValue(value);
         }
       },
 

@@ -59,12 +59,12 @@ export function reactiveProps(element, props) {
   props.camelCase.forEach((name, index) => {
     Object.defineProperty(element, name, {
       get() {
-        return this.__vue_element__[name];
+        return this.__vue_custom_element__[name];
       },
       set(value) {
-        if (typeof value === 'function' && this.__vue_element__) {
+        if (typeof value === 'function' && this.__vue_custom_element__) {
           const propName = props.camelCase[index];
-          this.__vue_element__[propName] = value.bind(this.__vue_element__);
+          this.__vue_custom_element__[propName] = value.bind(this.__vue_custom_element__);
         } else {
           this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
         }

@@ -12,7 +12,7 @@
       <el-collapse-item title="Description" name="1">
         <p>Passing strings, numbers and booleans is useful, but component's possibility to trigger passed functions allows for a whole lot new possibilities.</p>
         <p>
-          In above demo, after changing rating, the current value will be displayed. This value is passed to callback function from Custom Element <code>&#x3C;demo-callback&#x3E;&#x3C;/demo-callback&#x3E;</code> created by <code>Vue-element</code>.
+          In above demo, after changing rating, the current value will be displayed. This value is passed to callback function from Custom Element <code>&#x3C;demo-callback&#x3E;&#x3C;/demo-callback&#x3E;</code> created by <code>Vue-custom-element</code>.
         </p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
@@ -20,7 +20,7 @@
   {{HTML}}
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="Vue component passed to Vue-element" name="3">
+      <el-collapse-item title="Vue component passed to Vue-custom-element" name="3">
         <pre><code class="language-html">
 &#x3C;template&#x3E;
   {{vueTemplate}}
@@ -114,7 +114,7 @@ demoCallbackElement.changeCallback = function(value) {
     },
     methods: {
       registerCustomElement() {
-        Vue.element('demo-callback', DemoElement);
+        Vue.customElement('demo-callback', DemoElement);
       },
       changeCallback(value) {
         this.rating = value;

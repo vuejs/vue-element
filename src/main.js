@@ -8,7 +8,7 @@ import Prism from 'prismjs/prism';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';
 import 'prismjs/themes/prism.css';
-import vueElement from './vue-element';
+import vueCustomElement from './vue-custom-element';
 
 import App from './demo/App';
 import Home from './demo/Home';
@@ -21,7 +21,7 @@ Promise.polyfill();
 ///////////////////////
 //  Use Vue plugins  //
 ///////////////////////
-Vue.use(vueElement);
+Vue.use(vueCustomElement);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 

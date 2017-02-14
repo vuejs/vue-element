@@ -41,7 +41,7 @@
     ],
     data() {
       return {
-        message: 'Hello Vue-element!'
+        message: 'Hello Vue-custom-element!'
       };
     },
     computed: {

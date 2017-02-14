@@ -11,7 +11,7 @@ import { getSlots } from './slots';
  * @param options
  */
 export default function createVueInstance(element, Vue, componentDefinition, props, options) {
-  if (!element.__vue_element__) {
+  if (!element.__vue_custom_element__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
     const elementOriginalChildren = element.cloneNode(true).childNodes; // clone hack due to IE compatibility
     const propsData = getPropsData(element, ComponentDefinition, props);
@@ -75,7 +75,7 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     reactiveProps(element, props);
 
     // Define the Vue constructor to manage the element
-    element.__vue_element__ = new Vue(rootElement);
+    element.__vue_custom_element__ = new Vue(rootElement);
     element.removeAttribute('ve-cloak');
     element.setAttribute('ve-ready', '');
   }

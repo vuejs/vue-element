@@ -7,7 +7,7 @@
     <div id="header">
       <a class="menu-button" @click="toggleSidebarOpen()"></a>
       <router-link :to="{ path: '/' }" id="logo">
-        <span>Vue-element</span>
+        <span>vue-custom-element</span>
       </router-link>
     </div>
 
@@ -411,7 +411,7 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    background: url("assets/images/vue-element-logo.png") center center no-repeat;
+    background: url("assets/images/vue-custom-element-logo.png") center center no-repeat;
     top: 5px;
     left: 50%;
     margin-left: -15px;
@@ -439,7 +439,7 @@
 
   .logo {
     height: 215px;
-    background: url("assets/images/vue-element-logo.png") no-repeat center;
+    background: url("assets/images/vue-custom-element-logo.png") no-repeat center;
     background-size: contain;
   }
   #logo span {

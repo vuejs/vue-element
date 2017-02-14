@@ -32,5 +32,5 @@ test/e2e/reports
 selenium-debug.log
 
 dist/*
-!dist/vue-element*
+!dist/vue-custom-element*
 

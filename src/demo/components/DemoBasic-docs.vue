@@ -20,7 +20,7 @@
 {{HTML}}
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="Vue component passed to Vue-element" name="3">
+      <el-collapse-item title="Vue component passed to Vue-custom-element" name="3">
         <pre><code class="language-html">
 &#x3C;template&#x3E;
   {{vueTemplate}}
@@ -31,11 +31,11 @@
 &#x3C;/script&#x3E;
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="JavaScript - register with Vue-element" name="4">
+      <el-collapse-item title="JavaScript - register with Vue-custom-element" name="4">
         <pre><code class="language-javascript">
 import DemoElement from 'DemoElement.vue';
 
-Vue.element('demo-basic', DemoElement);
+Vue.customElement('demo-basic', DemoElement);
         </code></pre>
       </el-collapse-item>
     </el-collapse>
@@ -80,7 +80,7 @@ Vue.element('demo-basic', DemoElement);
     ],
     data() {
       return {
-        message: 'Hello Vue-element!'
+        message: 'Hello Vue-custom-element!'
       };
     },
     computed: {
@@ -112,7 +112,7 @@ Vue.element('demo-basic', DemoElement);
     },
     methods: {
       registerCustomElement() {
-        Vue.element('demo-basic', DemoElement);
+        Vue.customElement('demo-basic', DemoElement);
       }
     }
   };

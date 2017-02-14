@@ -60,7 +60,7 @@ document.getElementsByTagName('demo-basic')[0].prop2 = 'Text from JavaScript'
     },
     methods: {
       registerCustomElement() {
-        Vue.element('demo-binding', DemoElement);
+        Vue.customElement('demo-binding', DemoElement);
       }
     }
   };
