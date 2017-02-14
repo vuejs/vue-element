@@ -5,7 +5,7 @@
         <div class="left">
           <div class="logo"></div>
         </div><div class="right">
-        <h2 class="vue">vue-custom-element</h2>
+        <h2 class="vue">Vue Custom Element</h2>
         <h1>
           <span class="logo-vue">Vue Custom Element</span>
           <div class="subtext">Custom Elements for Vue.js</div>

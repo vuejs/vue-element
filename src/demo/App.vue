@@ -7,7 +7,7 @@
     <div id="header">
       <a class="menu-button" @click="toggleSidebarOpen()"></a>
       <router-link :to="{ path: '/' }" id="logo">
-        <span>vue-custom-element</span>
+        <span>Vue Custom Element</span>
       </router-link>
     </div>
 
