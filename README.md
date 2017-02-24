@@ -194,7 +194,7 @@ console.info(document.querySelector('widget-vue').__vue_custom_element__)
 #### Developement
 ```
 npm install
-npm run dev
+npm run dev:demo
 ```
 
 #### Release
