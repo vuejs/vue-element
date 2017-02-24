@@ -201,7 +201,7 @@ npm run dev:demo
 ```
 npm run build
 ```
-This command will compile `vue-custom-element.js` and docs files (handled by `.gitignore`) to `dist` folder. You have to manually copy it to `docs` folder.
+This command will compile `vue-custom-element.js` and docs files.
 
 Please take a note that `npm run build` will use `config.build.assetsPublicPath`, which is set to Github Pages path in `config/index.js`.
 
