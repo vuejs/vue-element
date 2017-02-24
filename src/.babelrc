@@ -1,0 +1,22 @@
+{
+  "presets": [
+//    "es2015",
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
+    "stage-2"
+  ],
+  "plugins": [
+    "transform-custom-element-classes",
+    "external-helpers"
+  ],
+  "comments": false,
+  "env": {
+    "test": {
+      "plugins": [ "istanbul" ]
+    }
+  }
+}
