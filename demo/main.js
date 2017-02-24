@@ -8,13 +8,13 @@ import Prism from 'prismjs/prism';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';
 import 'prismjs/themes/prism.css';
-import vueCustomElement from './vue-custom-element';
+import vueCustomElement from '../src/vue-custom-element';
 
-import App from './demo/App';
-import Home from './demo/Home';
-import Demos from './demo/Demos';
+import App from './App';
+import Home from './Home';
+import Demos from './Demos';
 
-import demos from './demo/services/demos';
+import demos from './services/demos';
 
 Promise.polyfill();
 
