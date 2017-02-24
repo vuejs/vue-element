@@ -32,7 +32,7 @@ const demosDocs = {};
 Object.keys(demos).forEach((demo) => {
   const demoName = `${demo.charAt(0).toUpperCase()}${Vue.util.camelize(demo.slice(1))}`;
 
-  demosDocs[demo] = require(`./demo/components/Demo${demoName}-docs`); // eslint-disable-line
+  demosDocs[demo] = require(`./components/Demo${demoName}-docs`); // eslint-disable-line
   const register = demosDocs[demo].methods && demosDocs[demo].methods.registerCustomElement;
   if (typeof register === 'function') {
     register();
