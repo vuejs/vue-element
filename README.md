@@ -39,7 +39,7 @@ If you are using Vue globally, just include `vue-custom-element.js` and it will 
 For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.3.0/document-register-element.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.4.1/document-register-element.js"></script>
 ```
 
 or 
