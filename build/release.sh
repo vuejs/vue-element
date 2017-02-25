@@ -7,7 +7,7 @@ echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   echo "Releasing $VERSION ..."
-  npm test
+#  npm test
   VERSION=$VERSION npm run build
 
   # commit
