@@ -1,7 +1,7 @@
 export default {
   basic: 'Basic',
   binding: 'Binding',
-  callback: 'Callbacks',
+  events: 'Events',
   slots: 'Slots',
   'lazy-loading': 'Lazy loading'
 };

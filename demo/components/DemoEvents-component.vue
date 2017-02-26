@@ -1,5 +1,5 @@
 <template>
-  <div class="card card--primary demo-callback">
+  <div class="card card--primary demo-events">
     <h4>Choose rating</h4>
     <p>
       <el-rate v-model="rate" @change="onChangeCallback"></el-rate>
@@ -10,8 +10,7 @@
 <script>
   export default {
     props: [
-      'initialRating',
-      'changeCallback'
+      'initialRating'
     ],
     data() {
       return {
@@ -20,22 +19,20 @@
     },
     methods: {
       onChangeCallback(...args) {
-        if (typeof this.changeCallback === 'function') {
-          this.changeCallback(...args);
-        }
+        this.$emit('change', ...args);
       }
     }
   };
 </script>
 
 <style>
-  .demo-callback {
+  .demo-events {
     text-align: center;
   }
-  .demo-callback h4 {
+  .demo-events h4 {
     margin-bottom: 10px;
   }
-  .demo-callback .el-icon-star-off {
+  .demo-events .el-icon-star-off {
     color: #fff !important;
   }
 </style>

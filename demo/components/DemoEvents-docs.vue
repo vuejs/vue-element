@@ -1,18 +1,18 @@
 <template>
   <div>
-    <h2>Passing callback functions to props</h2>
+    <h2>Events demo</h2>
 
-    <div class="demo-card demo-callback-docs">
-      <demo-callback :initial-rating="rating" ref="demo"></demo-callback>
+    <div class="demo-card demo-events-docs">
+      <demo-events :initial-rating="rating" @change="changeCallback"></demo-events>
 
       <p>Current rating: <strong>{{rating}}</strong></p>
     </div>
 
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
-        <p>Passing strings, numbers and booleans is useful, but component's possibility to trigger passed functions allows for a whole lot new possibilities.</p>
+        <p>Passing strings, numbers and booleans is useful, but component's possibility to trigger events allows for a whole lot new possibilities.</p>
         <p>
-          In above demo, after changing rating, the current value will be displayed. This value is passed to callback function from Custom Element <code>&#x3C;demo-callback&#x3E;&#x3C;/demo-callback&#x3E;</code> created by <code>Vue-custom-element</code>.
+          In above demo, after changing rating, the current value will be displayed. This value is passed using event from Vue components $emit.
         </p>
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">
@@ -31,15 +31,13 @@
 &#x3C;/script&#x3E;
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="JavaScript - passing callback functions" name="4">
+      <el-collapse-item title="JavaScript - listening to element's event" name="4">
         <pre><code class="language-javascript">
-const demoCallbackElement = document.getElementsByTagName('demo-callback')[0];
-demoCallbackElement.changeCallback = function(value) {
-  console.info('changeCallback callback with value:', value);
-}
+const demoEventElement = document.getElementsByTagName('demo-events')[0];
+demoEventElement.addEventListener('change', (event) => { console.info('[Event]', event.detail); });
         </code></pre>
       </el-collapse-item>
-      <el-collapse-item title="Vue - passing callback functions" name="5">
+      <el-collapse-item title="Vue - listening to element's event" name="5">
         <pre><code class="language-html">
 &#x3C;template&#x3E;
   {{vueTemplateUsage}}
@@ -54,7 +52,7 @@ demoCallbackElement.changeCallback = function(value) {
 
 <script>
   import Vue from 'vue';
-  import DemoElement from 'demo/components/DemoCallback-component';
+  import DemoElement from 'demo/components/DemoEvents-component';
 
   export default {
     data() {
@@ -62,7 +60,7 @@ demoCallbackElement.changeCallback = function(value) {
         rating: 3,
         activeNames: ['1'],
         HTML: (
-'<demo-callbacks initial-rating="3"></demo-callbacks>'
+'<demo-events initial-rating="3" @change="changeCallback"></demo-events>'
         ),
         vueTemplate: (
 `<div class="card">
@@ -73,22 +71,22 @@ demoCallbackElement.changeCallback = function(value) {
         vueScript: (
 `export default {
     props: [
-      'initialRating',
-      'changeCallback'
+      'initialRating'
     ],
-    propsData: {
-      initialRating: 1,
-      changeCallback: () => {}
-    },
     data() {
       return {
         rate: this.initialRating
       };
+    },
+    methods: {
+      onChangeCallback(...args) {
+        this.$emit('change', ...args);
+      }
     }
   };`
         ),
         vueTemplateUsage: (
-`<demo-callback :initial-rating="rating" ref="demo"></demo-callback>
+`<demo-events :initial-rating="rating" @change="changeCallback"></demo-events>
   <p>Current rating: <strong>{{rating}}</strong></p>`
         ),
         vueScriptUsage: (
@@ -99,14 +97,9 @@ demoCallbackElement.changeCallback = function(value) {
       };
     },
     methods: {
-      changeCallback(value) {
-        this.rating = value;
-      }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.$refs.demo.changeCallback = this.changeCallback;
-      });
+      changeCallback(event) {
+        this.rating = event.detail[0];
+
     }
   };`
         )
@@ -114,26 +107,21 @@ demoCallbackElement.changeCallback = function(value) {
     },
     methods: {
       registerCustomElement() {
-        Vue.customElement('demo-callback', DemoElement);
+        Vue.customElement('demo-events', DemoElement);
       },
-      changeCallback(value) {
-        this.rating = value;
+      changeCallback(event) {
+        this.rating = event.detail[0];
       }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.$refs.demo.changeCallback = this.changeCallback;
-      });
     }
   };
 </script>
 
 <style>
-  .demo-callback-docs {
+  .demo-events-docs {
     text-align: center;
   }
 
-  .demo-callback-docs p:last-child {
+  .demo-events-docs p:last-child {
     margin-bottom: 0;
   }
 </style>

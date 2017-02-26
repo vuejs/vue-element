@@ -68,7 +68,6 @@
     created() {
       /* eslint-disable no-console */
       console.log('demo-basic created()');
-      this.$emit('change-event', 'basic');
     }
   };
 </script>
