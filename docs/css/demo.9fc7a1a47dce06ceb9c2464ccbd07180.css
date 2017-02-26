@@ -980,20 +980,20 @@ body {
   background-size: contain;
 }
 
-.demo-callback-docs {
+.demo-events-docs {
   text-align: center;
 }
-.demo-callback-docs p:last-child {
+.demo-events-docs p:last-child {
   margin-bottom: 0;
 }
 
-.demo-callback {
+.demo-events {
   text-align: center;
 }
-.demo-callback h4 {
+.demo-events h4 {
   margin-bottom: 10px;
 }
-.demo-callback .el-icon-star-off {
+.demo-events .el-icon-star-off {
   color: #fff !important;
 }
 
@@ -1006,4 +1006,4 @@ demo-lazy-loading > .loading {
 }
 
 
-/*# sourceMappingURL=demo.5ef84fc4cf921b1380dcc5bce4fdbf95.css.map*/
+/*# sourceMappingURL=demo.9fc7a1a47dce06ceb9c2464ccbd07180.css.map*/
