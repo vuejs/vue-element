@@ -3,7 +3,7 @@
     <h2>Basic demo</h2>
 
     <div class="demo-card">
-      <demo-basic prop1="1" prop2="example text" prop3="true" long-prop-name="long name"></demo-basic>
+      <demo-basic prop1="1" prop2="example text" prop3="true" long-prop-name="long name" @change-event="onChangeEvent"></demo-basic>
     </div>
 
     <el-collapse v-model="activeNames">
@@ -113,6 +113,9 @@ Vue.customElement('demo-basic', DemoElement);
     methods: {
       registerCustomElement() {
         Vue.customElement('demo-basic', DemoElement);
+      },
+      onChangeEvent() {
+          console.info('onChangeEvent!'); // eslint-disable-line
       }
     }
   };

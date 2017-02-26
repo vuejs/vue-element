@@ -1,5 +1,6 @@
 import { getPropsData, reactiveProps } from './props';
 import { getSlots } from './slots';
+import { customEmit } from './customEvent';
 
 /**
  * Create new Vue instance if it's not already created
@@ -16,6 +17,16 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     const elementOriginalChildren = element.cloneNode(true).childNodes; // clone hack due to IE compatibility
     const propsData = getPropsData(element, ComponentDefinition, props);
     const vueVersion = (Vue.version && parseInt(Vue.version.split('.')[0], 10)) || 0;
+
+    // element.addEventListener('change-event', (event) => { console.info('[Custom Event]', event.detail); }); // eslint-disable-line
+
+    // Auto event handling based on $emit
+    let ctorOptions = {}; // adjust vue-loader cache object if necessary
+    if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
+      ctorOptions = ComponentDefinition._Ctor[0].options;  // eslint-disable-line no-underscore-dangle
+    }
+    ComponentDefinition.methods = ctorOptions.methods = ComponentDefinition.methods || {}; // eslint-disable-line no-multi-assign
+    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = (...args) => customEmit(element, ...args); // eslint-disable-line no-multi-assign, max-len
 
     let rootElement;
 
@@ -45,7 +56,7 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
             data,
             getSlots(elementOriginalChildren, createElement, Vue)
           );
-        },
+        }
         /* eslint-enable */
       };
     } else if (vueVersion === 1) {

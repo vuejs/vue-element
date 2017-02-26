@@ -2,7 +2,7 @@
   <div class="card card--primary demo-callback">
     <h4>Choose rating</h4>
     <p>
-      <el-rate v-model="rate" @change="changeCallback"></el-rate>
+      <el-rate v-model="rate" @change="onChangeCallback"></el-rate>
     </p>
   </div>
 </template>
@@ -13,14 +13,17 @@
       'initialRating',
       'changeCallback'
     ],
-    propsData: {
-      initialRating: 1,
-      changeCallback: () => {}
-    },
     data() {
       return {
         rate: this.initialRating
       };
+    },
+    methods: {
+      onChangeCallback(...args) {
+        if (typeof this.changeCallback === 'function') {
+          this.changeCallback(...args);
+        }
+      }
     }
   };
 </script>
