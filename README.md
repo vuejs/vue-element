@@ -1,4 +1,4 @@
-![Vue-custom-element](src/demo/assets/images/vue-custom-element-logo-text.png)
+![Vue-custom-element](demo/assets/images/vue-custom-element-logo-text.png)
 
 ## Table of content
 
@@ -52,10 +52,10 @@ import 'document-register-element/build/document-register-element';
 
 `Vue-custom-element` is a tiny wrapper around Vue components. It provide seamless way to use it in HTML, plain JavaScript, Vue, React, Angular etc., using power of Custom Elements.
 * Works with Vue 0.12.x, 1.x and 2.x
-* Small - 2.5 kb min+gzip, optional polyfill - 5,1 kb min+gzip
+* Small - 2.7 kb min+gzip, optional polyfill - 5 kb min+gzip
 
 ### Why you might need `Vue-custom-element`?
-![Vue-custom-element](src/demo/assets/images/vue-custom-element-why.png)
+![Vue-custom-element](demo/assets/images/vue-custom-element-why.png)
 
 It might be confusing for users to understand difference between Vue components, Custom Elements and it's use cases.
  
@@ -168,7 +168,7 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
 Callbacks are executed before lifecycle hooks from Vue component passed to Vue-custom-element. It's better idea just to use Vue component lifecycle hooks (e.g. `created`, `mounted`, `beforeDestroy`).
 
 ## How does it work?
-![Vue-custom-element](src/demo/assets/images/vue-custom-element-schema.png)
+![Vue-custom-element](demo/assets/images/vue-custom-element-schema.png)
 
 Inside HTML tag of defined custom element, Vue-custom-element will create:
 
@@ -187,7 +187,7 @@ console.info(document.querySelector('widget-vue').__vue_custom_element__)
 ## Caveats
 
 * custom elements **must** contain a hyphen in its tag name. For example, `my-element` is valid, but `myelement` is not
-* in dev mode Vue will display console warning about element not being registered. It's desirable behaviour as we want to use browser's Custom Elements registration
+* in dev mode Vue will display console warning about element not being registered. It's desirable behaviour as we want to use browser's Custom Elements registration. You can use https://vuejs.org/v2/api/#ignoredElements to get rid of this warnings.
 
 ## Contribute
 
