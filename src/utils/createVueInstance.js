@@ -21,7 +21,7 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
     // element.addEventListener('change-event', (event) => { console.info('[Custom Event]', event.detail); }); // eslint-disable-line
 
     // Auto event handling based on $emit
-    let ctorOptions = {}; // adjust vue-loader cache object if necessary
+    let ctorOptions = {}; // adjust vue-loader cache object if necessary - https://github.com/vuejs/vue-loader/issues/83
     if (ComponentDefinition._Ctor) { // eslint-disable-line no-underscore-dangle
       ctorOptions = ComponentDefinition._Ctor[0].options;  // eslint-disable-line no-underscore-dangle
     }
