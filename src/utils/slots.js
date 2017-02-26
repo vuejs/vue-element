@@ -1,13 +1,15 @@
+import { toArray } from './helpers';
+
 /**
  * Get attributes of given node
  * @param children
  * @param Vue
  * @returns {*}
  */
-export function getAttributes(children, Vue) {
+export function getAttributes(children) {
   const attributes = {};
 
-  Vue.util.toArray(children.attributes).forEach((attribute) => {
+  toArray(children.attributes).forEach((attribute) => {
     attributes[attribute.nodeName === 'vue-slot' ? 'slot' : attribute.nodeName] = attribute.nodeValue;
   });
 
@@ -20,15 +22,15 @@ export function getAttributes(children, Vue) {
  * @param createElement
  * @param Vue
  */
-export function getSlots(children = [], createElement, Vue) {
+export function getSlots(children = [], createElement) {
   const slots = [];
-  Vue.util.toArray(children).forEach((child) => {
+  toArray(children).forEach((child) => {
     if (child.nodeName === '#text') {
       if (child.nodeValue.trim()) {
         slots.push(createElement('span', child.nodeValue));
       }
     } else {
-      const attributes = getAttributes(child, Vue);
+      const attributes = getAttributes(child);
       const elementOptions = {
         attrs: attributes,
         domProps: {

@@ -47,6 +47,7 @@ demoEventElement.addEventListener('change', (event) => { console.info('[Event]',
 &#x3C;/script&#x3E;
         </code></pre>
       </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 

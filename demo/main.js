@@ -8,6 +8,7 @@ import Prism from 'prismjs/prism';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';
 import 'prismjs/themes/prism.css';
+import { camelize } from '../src/utils/helpers';
 import vueCustomElement from '../src/vue-custom-element';
 
 import App from './App';
@@ -30,7 +31,7 @@ Vue.use(ElementUI);
 ///////////////////////////////////////////////////////
 const demosDocs = {};
 Object.keys(demos).forEach((demo) => {
-  const demoName = `${demo.charAt(0).toUpperCase()}${Vue.util.camelize(demo.slice(1))}`;
+  const demoName = `${demo.charAt(0).toUpperCase()}${camelize(demo.slice(1))}`;
 
   demosDocs[demo] = require(`./components/Demo${demoName}-docs`); // eslint-disable-line
   const register = demosDocs[demo].methods && demosDocs[demo].methods.registerCustomElement;

@@ -1,3 +1,5 @@
+import { camelize, hyphenate } from './helpers';
+
 /**
  * Number and Boolean props are treated as strings
  * We should convert it so props will behave as intended
@@ -24,7 +26,7 @@ export function convertAttributeValue(value) {
  * @param componentDefinition
  * @param Vue
  */
-export function getProps(componentDefinition = {}, Vue) {
+export function getProps(componentDefinition = {}) {
   const props = {
     camelCase: [],
     hyphenate: []
@@ -32,16 +34,16 @@ export function getProps(componentDefinition = {}, Vue) {
 
   if (componentDefinition.props && componentDefinition.props.length) {
     componentDefinition.props.forEach((prop) => {
-      props.camelCase.push(Vue.util.camelize(prop));
+      props.camelCase.push(camelize(prop));
     });
   } else if (componentDefinition.props && typeof componentDefinition.props === 'object') {
     for (const prop in componentDefinition.props) { // eslint-disable-line no-restricted-syntax, guard-for-in
-      props.camelCase.push(Vue.util.camelize(prop));
+      props.camelCase.push(camelize(prop));
     }
   }
 
   props.camelCase.forEach((prop) => {
-    props.hyphenate.push(Vue.util.hyphenate(prop));
+    props.hyphenate.push(hyphenate(prop));
   });
 
   return props;

@@ -1,12 +1,13 @@
 import registerCustomElement from './utils/registerCustomElement';
 import createVueInstance from './utils/createVueInstance';
 import { getProps, convertAttributeValue } from './utils/props';
+import { camelize } from './utils/helpers';
 
 function install(Vue) {
   Vue.customElement = function vueCustomElement(tag, componentDefinition, options = {}) {
     const isAsyncComponent = typeof componentDefinition === 'function';
     const optionsProps = isAsyncComponent && { props: options.props || [] };
-    const props = getProps(isAsyncComponent ? optionsProps : componentDefinition, Vue);
+    const props = getProps(isAsyncComponent ? optionsProps : componentDefinition);
     // register Custom Element
     const CustomElement = registerCustomElement(tag, {
       constructorCallback() {
@@ -23,7 +24,7 @@ function install(Vue) {
         if (!this.__detached__) {
           if (isAsyncComponentPromise) {
             asyncComponentPromise.then((lazyLoadedComponent) => {
-              const lazyLoadedComponentProps = getProps(lazyLoadedComponent, Vue);
+              const lazyLoadedComponentProps = getProps(lazyLoadedComponent);
               createVueInstance(this, Vue, lazyLoadedComponent, lazyLoadedComponentProps, options);
             });
           } else {
@@ -58,7 +59,7 @@ function install(Vue) {
        */
       attributeChangedCallback(name, oldValue, value) {
         if (this.__vue_custom_element__ && typeof value !== 'undefined') {
-          const nameCamelCase = Vue.util.camelize(name);
+          const nameCamelCase = camelize(name);
           typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
           this.__vue_custom_element__[nameCamelCase] = convertAttributeValue(value);
         }

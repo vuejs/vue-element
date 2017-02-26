@@ -54,7 +54,7 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
           return createElement(
             ComponentDefinition,
             data,
-            getSlots(elementOriginalChildren, createElement, Vue)
+            getSlots(elementOriginalChildren, createElement)
           );
         }
         /* eslint-enable */
