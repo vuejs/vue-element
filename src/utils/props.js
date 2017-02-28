@@ -66,7 +66,7 @@ export function reactiveProps(element, props) {
       set(value) {
         if ((typeof value === 'object' || typeof value === 'function') && this.__vue_custom_element__) {
           const propName = props.camelCase[index];
-          this.__vue_custom_element__[propName] = value.bind(this.__vue_custom_element__);
+          this.__vue_custom_element__[propName] = value;
         } else {
           this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
         }
