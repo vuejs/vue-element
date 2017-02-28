@@ -22,8 +22,14 @@ if (!fs.existsSync('dist')) {
 const resolve = _path => path.resolve(__dirname, '../', _path)
 
 build([
+  // browser dev
   {
     dest: resolve('dist/vue-custom-element.js'),
+    format: 'umd',
+    env: 'development'
+  },
+  {
+    dest: resolve('dist/vue-custom-element.min.js'),
     format: 'umd',
     env: 'production'
   }
@@ -71,7 +77,7 @@ function genConfig (opts) {
 }
 
 function buildEntry (config) {
-  const isProd = true;
+  const isProd = /min\.js$/.test(config.dest)
   return rollup.rollup(config).then(bundle => {
     const code = bundle.generate(config).code
     if (isProd) {

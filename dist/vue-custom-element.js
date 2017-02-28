@@ -3,4 +3,440 @@
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
-!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):t.VueCustomElement=e()}(this,function(){"use strict";function setPrototypeOf(t,e){return t.__proto__=e,t}function isES2015(){if("undefined"==typeof Symbol||"undefined"==typeof Reflect)return!1;try{eval("class Foo {}")}catch(t){return!1}return!0}function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function _inherits(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function _CustomElement(){return Reflect.construct(HTMLElement,[],this.__proto__.constructor)}function registerCustomElement(t){function e(){a.shadow===!0&&HTMLElement.prototype.attachShadow&&this.attachShadow({mode:"open"}),"function"==typeof a.constructorCallback&&a.constructorCallback.call(this)}function n(){"function"==typeof a.connectedCallback&&a.connectedCallback.call(this)}function o(){"function"==typeof a.disconnectedCallback&&a.disconnectedCallback.call(this)}function r(t,e,n){"function"==typeof a.attributeChangedCallback&&a.attributeChangedCallback.call(this,t,e,n)}var a=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if("undefined"!=typeof customElements){if(isES2015$1){var c=function(t){function n(t){var o;_classCallCheck(this,n);var r=_possibleConstructorReturn(this,(n.__proto__||Object.getPrototypeOf(n)).call(this)),a=t?HTMLElement.call(t):r;return e.call(a),o=a,_possibleConstructorReturn(r,o)}return _inherits(n,t),_createClass(n,null,[{key:"observedAttributes",get:function(){return a.observedAttributes||[]}}]),n}(_CustomElement);return c.prototype.connectedCallback=n,c.prototype.disconnectedCallback=o,c.prototype.attributeChangedCallback=r,customElements.define(t,c),c}var i=function(t){var n=t?HTMLElement.call(t):this;return e.call(n),n};return i.observedAttributes=a.observedAttributes||[],i.prototype=Object.create(HTMLElement.prototype,{constructor:{configurable:!0,writable:!0,value:i}}),i.prototype.connectedCallback=n,i.prototype.disconnectedCallback=o,i.prototype.attributeChangedCallback=r,customElements.define(t,i),i}}function toArray(t){for(var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,n=t.length-e,o=new Array(n);n--;)o[n]=t[n+e];return o}function convertAttributeValue(t){var e=t,n=["true","false"].indexOf(t)>-1,o=parseFloat(e,10),r=!isNaN(o)&&isFinite(e);return n?e="true"===e:r&&(e=o),e}function getProps(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e={camelCase:[],hyphenate:[]};if(t.props&&t.props.length)t.props.forEach(function(t){e.camelCase.push(camelize(t))});else if(t.props&&"object"===_typeof(t.props))for(var n in t.props)e.camelCase.push(camelize(n));return e.camelCase.forEach(function(t){e.hyphenate.push(hyphenate(t))}),e}function reactiveProps(t,e){e.camelCase.forEach(function(n,o){Object.defineProperty(t,n,{get:function(){return this.__vue_custom_element__[n]},set:function(t){if("function"==typeof t&&this.__vue_custom_element__){var n=e.camelCase[o];this.__vue_custom_element__[n]=t.bind(this.__vue_custom_element__)}else this.setAttribute(e.hyphenate[o],convertAttributeValue(t))}})})}function getPropsData(t,e,n){var o=e.propsData||{};return n.hyphenate.forEach(function(e,r){var a=t.attributes[e]&&t.attributes[e].nodeValue;void 0!==a&&""!==a&&(o[n.camelCase[r]]=convertAttributeValue(a))}),o}function getAttributes(t){var e={};return toArray(t.attributes).forEach(function(t){e["vue-slot"===t.nodeName?"slot":t.nodeName]=t.nodeValue}),e}function getSlots(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=arguments[1],n=[];return toArray(t).forEach(function(t){if("#text"===t.nodeName)t.nodeValue.trim()&&n.push(e("span",t.nodeValue));else{var o=getAttributes(t),r={attrs:o,domProps:{innerHTML:t.innerHTML}};o.slot&&(r.slot=o.slot,o.slot=void 0),n.push(e(t.tagName,r))}}),n}function customEvent(t,e){var n=Object.assign({bubbles:!1,cancelable:!1,detail:e}),o=void 0;return"function"==typeof window.CustomEvent?o=new CustomEvent(t,n):(o=document.createEvent("CustomEvent"),o.initCustomEvent(t,n.bubbles,n.cancelable,n.detail)),o}function customEmit(t,e){for(var n=arguments.length,o=Array(n>2?n-2:0),r=2;r<n;r++)o[r-2]=arguments[r];var a=customEvent(e,[].concat(o));t.dispatchEvent(a)}function createVueInstance(t,e,n,o,r){if(!t.__vue_custom_element__){var a=e.util.extend({},n),c=t.cloneNode(!0).childNodes,i=getPropsData(t,a,o),s=e.version&&parseInt(e.version.split(".")[0],10)||0,u={};a._Ctor&&(u=a._Ctor[0].options),a.methods=u.methods=a.methods||{},a.methods.$emit=u.methods.$emit=function(){for(var e=arguments.length,n=Array(e),o=0;o<e;o++)n[o]=arguments[o];return customEmit.apply(void 0,[t].concat(n))};var l=void 0;if(s>=2)l={propsData:i,props:o.camelCase,computed:{reactiveProps:function(){var t=this,e={};return o.camelCase.forEach(function(n){e[n]=t[n]}),e}},render:function(t){var e={props:this.reactiveProps};return t(a,e,getSlots(c,t))}};else if(1===s)l=a,l.propsData=i;else{l=a;var f={};Object.keys(i).forEach(function(t){f[t]={default:i[t]}}),l.props=f}var p=s>=2?"<div></div>":"<div>"+t.innerHTML+"</div>";r.shadow&&t.shadowRoot?(t.shadowRoot.innerHTML=p,l.el=t.shadowRoot.children[0]):(t.innerHTML=p,l.el=t.children[0]),reactiveProps(t,o),t.__vue_custom_element__=new e(l),t.removeAttribute("ve-cloak"),t.setAttribute("ve-ready","")}}function install(t){t.customElement=function(e,n){var o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{},r="function"==typeof n,a=r&&{props:o.props||[]},c=getProps(r?a:n),i=registerCustomElement(e,{constructorCallback:function(){"function"==typeof o.constructorCallback&&o.constructorCallback.call(this)},connectedCallback:function(){var a=this,i=r&&n(),s=i&&i.then&&"function"==typeof i.then;if(r&&!s)throw new Error("Async component "+e+" do not returns Promise");this.__detached__||(s?i.then(function(e){var n=getProps(e);createVueInstance(a,t,e,n,o)}):createVueInstance(this,t,n,c,o)),this.__detached__=!1},disconnectedCallback:function(){var t=this;this.__detached__=!0,"function"==typeof o.disconnectedCallback&&o.disconnectedCallback.call(this),setTimeout(function(){t.__detached__&&t.__vue_custom_element__&&t.__vue_custom_element__.$destroy(!0)},o.destroyTimeout||3e3)},attributeChangedCallback:function(t,e,n){if(this.__vue_custom_element__&&"undefined"!=typeof n){var r=camelize(t);"function"==typeof o.attributeChangedCallback&&o.attributeChangedCallback.call(this,t,e,n),this.__vue_custom_element__[r]=convertAttributeValue(n)}},observedAttributes:c.hyphenate,shadow:!!o.shadow&&!!HTMLElement.prototype.attachShadow});return i}}Object.setPrototypeOf=Object.setPrototypeOf||setPrototypeOf;var index=setPrototypeOf.bind(Object),isES2015$1=isES2015(),_createClass=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}();Object.setPrototypeOf(_CustomElement.prototype,HTMLElement.prototype),Object.setPrototypeOf(_CustomElement,HTMLElement);var camelizeRE=/-(\w)/g,camelize=function(t){return t.replace(camelizeRE,function(t,e){return e?e.toUpperCase():""})},hyphenateRE=/([^-])([A-Z])/g,hyphenate=function(t){return t.replace(hyphenateRE,"$1-$2").replace(hyphenateRE,"$1-$2").toLowerCase()},_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};return"undefined"!=typeof window&&window.Vue&&window.Vue.use(install),install});
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.VueCustomElement = factory());
+}(this, (function () { 'use strict';
+
+/**
+ * ES6 Object.getPrototypeOf Polyfill
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf
+ */
+
+Object.setPrototypeOf = Object.setPrototypeOf || setPrototypeOf;
+
+function setPrototypeOf(obj, proto) {
+  obj.__proto__ = proto;
+  return obj;
+}
+
+var index = setPrototypeOf.bind(Object);
+
+function isES2015() {
+  if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined') return false;
+  try {
+    eval('class Foo {}');
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
+var isES2015$1 = isES2015();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _CustomElement() {
+  return Reflect.construct(HTMLElement, [], this.__proto__.constructor);
+}
+
+
+Object.setPrototypeOf(_CustomElement.prototype, HTMLElement.prototype);
+Object.setPrototypeOf(_CustomElement, HTMLElement);
+function registerCustomElement(tag) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (typeof customElements === 'undefined') {
+    return;
+  }
+
+  function constructorCallback() {
+    if (options.shadow === true && HTMLElement.prototype.attachShadow) {
+      this.attachShadow({ mode: 'open' });
+    }
+    typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
+  }
+  function connectedCallback() {
+    typeof options.connectedCallback === 'function' && options.connectedCallback.call(this);
+  }
+
+  function disconnectedCallback() {
+    typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
+  }
+
+  function attributeChangedCallback(name, oldValue, value) {
+    typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
+  }
+
+  if (isES2015$1) {
+    var CustomElement = function (_CustomElement2) {
+      _inherits(CustomElement, _CustomElement2);
+
+      function CustomElement(self) {
+        var _ret;
+
+        _classCallCheck(this, CustomElement);
+
+        var _this = _possibleConstructorReturn(this, (CustomElement.__proto__ || Object.getPrototypeOf(CustomElement)).call(this));
+
+        var me = self ? HTMLElement.call(self) : _this;
+
+        constructorCallback.call(me);
+        return _ret = me, _possibleConstructorReturn(_this, _ret);
+      }
+
+      _createClass(CustomElement, null, [{
+        key: 'observedAttributes',
+        get: function get() {
+          return options.observedAttributes || [];
+        }
+      }]);
+
+      return CustomElement;
+    }(_CustomElement);
+
+    CustomElement.prototype.connectedCallback = connectedCallback;
+    CustomElement.prototype.disconnectedCallback = disconnectedCallback;
+    CustomElement.prototype.attributeChangedCallback = attributeChangedCallback;
+
+    customElements.define(tag, CustomElement);
+    return CustomElement;
+  } else {
+    var _CustomElement3 = function _CustomElement3(self) {
+      var me = self ? HTMLElement.call(self) : this;
+
+      constructorCallback.call(me);
+      return me;
+    };
+
+    _CustomElement3.observedAttributes = options.observedAttributes || [];
+
+    _CustomElement3.prototype = Object.create(HTMLElement.prototype, {
+      constructor: {
+        configurable: true,
+        writable: true,
+        value: _CustomElement3
+      }
+    });
+
+    _CustomElement3.prototype.connectedCallback = connectedCallback;
+    _CustomElement3.prototype.disconnectedCallback = disconnectedCallback;
+    _CustomElement3.prototype.attributeChangedCallback = attributeChangedCallback;
+
+    customElements.define(tag, _CustomElement3);
+    return _CustomElement3;
+  }
+}
+
+var camelizeRE = /-(\w)/g;
+var camelize = function camelize(str) {
+  return str.replace(camelizeRE, function (_, c) {
+    return c ? c.toUpperCase() : '';
+  });
+};
+var hyphenateRE = /([^-])([A-Z])/g;
+var hyphenate = function hyphenate(str) {
+  return str.replace(hyphenateRE, '$1-$2').replace(hyphenateRE, '$1-$2').toLowerCase();
+};
+
+function toArray(list) {
+  var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+  var i = list.length - start;
+  var ret = new Array(i);
+  while (i--) {
+    ret[i] = list[i + start];
+  }
+  return ret;
+}
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function convertAttributeValue(value) {
+  var propsValue = value;
+  var isBoolean = ['true', 'false'].indexOf(value) > -1;
+  var valueParsed = parseFloat(propsValue, 10);
+  var isNumber = !isNaN(valueParsed) && isFinite(propsValue);
+
+  if (isBoolean) {
+    propsValue = propsValue === 'true';
+  } else if (isNumber) {
+    propsValue = valueParsed;
+  }
+
+  return propsValue;
+}
+
+function getProps() {
+  var componentDefinition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var props = {
+    camelCase: [],
+    hyphenate: []
+  };
+
+  if (componentDefinition.props && componentDefinition.props.length) {
+    componentDefinition.props.forEach(function (prop) {
+      props.camelCase.push(camelize(prop));
+    });
+  } else if (componentDefinition.props && _typeof(componentDefinition.props) === 'object') {
+    for (var prop in componentDefinition.props) {
+      props.camelCase.push(camelize(prop));
+    }
+  }
+
+  props.camelCase.forEach(function (prop) {
+    props.hyphenate.push(hyphenate(prop));
+  });
+
+  return props;
+}
+
+function reactiveProps(element, props) {
+  props.camelCase.forEach(function (name, index) {
+    Object.defineProperty(element, name, {
+      get: function get() {
+        return this.__vue_custom_element__[name];
+      },
+      set: function set(value) {
+        if (typeof value === 'function' && this.__vue_custom_element__) {
+          var propName = props.camelCase[index];
+          this.__vue_custom_element__[propName] = value.bind(this.__vue_custom_element__);
+        } else {
+          this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
+        }
+      }
+    });
+  });
+}
+
+function getPropsData(element, componentDefinition, props) {
+  var propsData = componentDefinition.propsData || {};
+
+  props.hyphenate.forEach(function (name, index) {
+    var value = element.attributes[name] && element.attributes[name].nodeValue;
+
+    if (value !== undefined && value !== '') {
+      propsData[props.camelCase[index]] = convertAttributeValue(value);
+    }
+  });
+
+  return propsData;
+}
+
+function getAttributes(children) {
+  var attributes = {};
+
+  toArray(children.attributes).forEach(function (attribute) {
+    attributes[attribute.nodeName === 'vue-slot' ? 'slot' : attribute.nodeName] = attribute.nodeValue;
+  });
+
+  return attributes;
+}
+
+function getSlots() {
+  var children = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var createElement = arguments[1];
+
+  var slots = [];
+  toArray(children).forEach(function (child) {
+    if (child.nodeName === '#text') {
+      if (child.nodeValue.trim()) {
+        slots.push(createElement('span', child.nodeValue));
+      }
+    } else {
+      var attributes = getAttributes(child);
+      var elementOptions = {
+        attrs: attributes,
+        domProps: {
+          innerHTML: child.innerHTML
+        }
+      };
+
+      if (attributes.slot) {
+        elementOptions.slot = attributes.slot;
+        attributes.slot = undefined;
+      }
+
+      slots.push(createElement(child.tagName, elementOptions));
+    }
+  });
+
+  return slots;
+}
+
+function customEvent(eventName, detail) {
+  var params = Object.assign({ bubbles: false, cancelable: false, detail: detail });
+  var event = void 0;
+  if (typeof window.CustomEvent === 'function') {
+    event = new CustomEvent(eventName, params);
+  } else {
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent(eventName, params.bubbles, params.cancelable, params.detail);
+  }
+  return event;
+}
+
+function customEmit(element, eventName) {
+  for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    args[_key - 2] = arguments[_key];
+  }
+
+  var event = customEvent(eventName, [].concat(args));
+  element.dispatchEvent(event);
+}
+
+function createVueInstance(element, Vue, componentDefinition, props, options) {
+  if (!element.__vue_custom_element__) {
+    var ComponentDefinition = Vue.util.extend({}, componentDefinition);
+    var elementOriginalChildren = element.cloneNode(true).childNodes;
+    var propsData = getPropsData(element, ComponentDefinition, props);
+    var vueVersion = Vue.version && parseInt(Vue.version.split('.')[0], 10) || 0;
+
+    var ctorOptions = {};
+    if (ComponentDefinition._Ctor) {
+      ctorOptions = ComponentDefinition._Ctor[0].options;
+    }
+    ComponentDefinition.methods = ctorOptions.methods = ComponentDefinition.methods || {};
+    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return customEmit.apply(undefined, [element].concat(args));
+    };
+
+    var rootElement = void 0;
+
+    if (vueVersion >= 2) {
+      rootElement = {
+        propsData: propsData,
+        props: props.camelCase,
+        computed: {
+          reactiveProps: function reactiveProps$$1() {
+            var _this = this;
+
+            var reactivePropsList = {};
+            props.camelCase.forEach(function (prop) {
+              reactivePropsList[prop] = _this[prop];
+            });
+
+            return reactivePropsList;
+          }
+        },
+        render: function render(createElement) {
+          var data = {
+            props: this.reactiveProps
+          };
+
+          return createElement(ComponentDefinition, data, getSlots(elementOriginalChildren, createElement));
+        }
+      };
+    } else if (vueVersion === 1) {
+      rootElement = ComponentDefinition;
+      rootElement.propsData = propsData;
+    } else {
+      rootElement = ComponentDefinition;
+      var propsWithDefault = {};
+      Object.keys(propsData).forEach(function (prop) {
+        propsWithDefault[prop] = { default: propsData[prop] };
+      });
+      rootElement.props = propsWithDefault;
+    }
+
+    var elementInnerHtml = vueVersion >= 2 ? '<div></div>' : '<div>' + element.innerHTML + '</div>';
+    if (options.shadow && element.shadowRoot) {
+      element.shadowRoot.innerHTML = elementInnerHtml;
+      rootElement.el = element.shadowRoot.children[0];
+    } else {
+      element.innerHTML = elementInnerHtml;
+      rootElement.el = element.children[0];
+    }
+
+    reactiveProps(element, props);
+
+    element.__vue_custom_element__ = new Vue(rootElement);
+    element.removeAttribute('ve-cloak');
+    element.setAttribute('ve-ready', '');
+  }
+}
+
+function install(Vue) {
+  Vue.customElement = function vueCustomElement(tag, componentDefinition) {
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    var isAsyncComponent = typeof componentDefinition === 'function';
+    var optionsProps = isAsyncComponent && { props: options.props || [] };
+    var props = getProps(isAsyncComponent ? optionsProps : componentDefinition);
+
+    var CustomElement = registerCustomElement(tag, {
+      constructorCallback: function constructorCallback() {
+        typeof options.constructorCallback === 'function' && options.constructorCallback.call(this);
+      },
+      connectedCallback: function connectedCallback() {
+        var _this = this;
+
+        var asyncComponentPromise = isAsyncComponent && componentDefinition();
+        var isAsyncComponentPromise = asyncComponentPromise && asyncComponentPromise.then && typeof asyncComponentPromise.then === 'function';
+
+        if (isAsyncComponent && !isAsyncComponentPromise) {
+          throw new Error('Async component ' + tag + ' do not returns Promise');
+        }
+        if (!this.__detached__) {
+          if (isAsyncComponentPromise) {
+            asyncComponentPromise.then(function (lazyLoadedComponent) {
+              var lazyLoadedComponentProps = getProps(lazyLoadedComponent);
+              createVueInstance(_this, Vue, lazyLoadedComponent, lazyLoadedComponentProps, options);
+            });
+          } else {
+            createVueInstance(this, Vue, componentDefinition, props, options);
+          }
+        }
+
+        this.__detached__ = false;
+      },
+      disconnectedCallback: function disconnectedCallback() {
+        var _this2 = this;
+
+        this.__detached__ = true;
+        typeof options.disconnectedCallback === 'function' && options.disconnectedCallback.call(this);
+
+        setTimeout(function () {
+          if (_this2.__detached__ && _this2.__vue_custom_element__) {
+            _this2.__vue_custom_element__.$destroy(true);
+          }
+        }, options.destroyTimeout || 3000);
+      },
+      attributeChangedCallback: function attributeChangedCallback(name, oldValue, value) {
+        if (this.__vue_custom_element__ && typeof value !== 'undefined') {
+          var nameCamelCase = camelize(name);
+          typeof options.attributeChangedCallback === 'function' && options.attributeChangedCallback.call(this, name, oldValue, value);
+          this.__vue_custom_element__[nameCamelCase] = convertAttributeValue(value);
+        }
+      },
+
+
+      observedAttributes: props.hyphenate,
+
+      shadow: !!options.shadow && !!HTMLElement.prototype.attachShadow
+    });
+
+    return CustomElement;
+  };
+}
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(install);
+}
+
+return install;
+
+})));
