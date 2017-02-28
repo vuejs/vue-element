@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.0.7
+  * vue-custom-element v1.0.8
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -209,7 +209,7 @@ function reactiveProps(element, props) {
       set: function set(value) {
         if (((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' || typeof value === 'function') && this.__vue_custom_element__) {
           var propName = props.camelCase[index];
-          this.__vue_custom_element__[propName] = value.bind(this.__vue_custom_element__);
+          this.__vue_custom_element__[propName] = value;
         } else {
           this.setAttribute(props.hyphenate[index], convertAttributeValue(value));
         }
