@@ -2,7 +2,7 @@
   "name": "vue-custom-element",
   "version": "1.0.8",
   "description": "Custom Elements for Vue.js",
-  "main": "dist/vue-custom-element.min.js",
+  "main": "dist/vue-custom-element.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/karol-f/vue-custom-element"

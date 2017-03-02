@@ -14,7 +14,6 @@ import { customEmit } from './customEvent';
 export default function createVueInstance(element, Vue, componentDefinition, props, options) {
   if (!element.__vue_custom_element__) {
     const ComponentDefinition = Vue.util.extend({}, componentDefinition);
-    const elementOriginalChildren = element.cloneNode(true).childNodes; // clone hack due to IE compatibility
     const propsData = getPropsData(element, ComponentDefinition, props);
     const vueVersion = (Vue.version && parseInt(Vue.version.split('.')[0], 10)) || 0;
 
@@ -30,56 +29,87 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
 
     let rootElement;
 
-    if (vueVersion >= 2) {
-      // Vue 2+
-      rootElement = {
-        propsData,
-        props: props.camelCase,
-        computed: {
-          reactiveProps() {
-            const reactivePropsList = {};
-            props.camelCase.forEach((prop) => {
-              reactivePropsList[prop] = this[prop];
-            });
+    /**
+     * Developement ENV - will be removed in production build
+     */
+    if (process.env.NODE_ENV === 'development') {
+      if (vueVersion >= 2) {
+        const elementOriginalChildren = element.cloneNode(true).childNodes; // clone hack due to IE compatibility
+        // Vue 2+
+        rootElement = {
+          propsData,
+          props: props.camelCase,
+          computed: {
+            reactiveProps() {
+              const reactivePropsList = {};
+              props.camelCase.forEach((prop) => {
+                reactivePropsList[prop] = this[prop];
+              });
 
-            return reactivePropsList;
+              return reactivePropsList;
+            }
+          },
+          /* eslint-disable */
+          render(createElement) {
+            const data = {
+              props: this.reactiveProps
+            };
+
+            return createElement(
+              ComponentDefinition,
+              data,
+              getSlots(elementOriginalChildren, createElement)
+            );
           }
-        },
-        /* eslint-disable */
-        render(createElement) {
-          const data = {
-            props: this.reactiveProps
-          };
-
-          return createElement(
-            ComponentDefinition,
-            data,
-            getSlots(elementOriginalChildren, createElement)
-          );
-        }
-        /* eslint-enable */
-      };
-    } else if (vueVersion === 1) {
-      // Fallback for Vue 1.x
-      rootElement = ComponentDefinition;
-      rootElement.propsData = propsData;
-    } else {
-      // Fallback for older Vue versions
-      rootElement = ComponentDefinition;
-      const propsWithDefault = {};
-      Object.keys(propsData)
-        .forEach((prop) => {
-          propsWithDefault[prop] = { default: propsData[prop] };
-        });
-      rootElement.props = propsWithDefault;
+          /* eslint-enable */
+        };
+      } else if (vueVersion === 1) {
+        // Fallback for Vue 1.x
+        rootElement = ComponentDefinition;
+        rootElement.propsData = propsData;
+      } else {
+        // Fallback for older Vue versions
+        rootElement = ComponentDefinition;
+        const propsWithDefault = {};
+        Object.keys(propsData)
+          .forEach((prop) => {
+            propsWithDefault[prop] = { default: propsData[prop] };
+          });
+        rootElement.props = propsWithDefault;
+      }
     }
 
-    const elementInnerHtml = vueVersion >= 2 ? '<div></div>' : `<div>${element.innerHTML}</div>`;
+    /**
+     * Production ENV
+     */
+    if (process.env.NODE_ENV === 'production') {
+      if (vueVersion >= 1) {
+        // Fallback for Vue 1.x
+        rootElement = ComponentDefinition;
+        rootElement.propsData = propsData;
+      } else {
+        // Fallback for older Vue versions
+        rootElement = ComponentDefinition;
+        const propsWithDefault = {};
+        Object.keys(propsData)
+          .forEach((prop) => {
+            propsWithDefault[prop] = { default: propsData[prop] };
+          });
+        rootElement.props = propsWithDefault;
+      }
+    }
+
+    const componentRootElement = document.createElement('div');
+
+    while (element.childNodes.length) {
+      componentRootElement.appendChild(element.childNodes[0]);
+    }
+
     if (options.shadow && element.shadowRoot) {
-      element.shadowRoot.innerHTML = elementInnerHtml;
+      element.shadowRoot.appendChild(componentRootElement);
       rootElement.el = element.shadowRoot.children[0];
     } else {
-      element.innerHTML = elementInnerHtml;
+      element.appendChild(componentRootElement);
       rootElement.el = element.children[0];
     }
 

@@ -297,7 +297,6 @@ function customEmit(element, eventName) {
 function createVueInstance(element, Vue, componentDefinition, props, options) {
   if (!element.__vue_custom_element__) {
     var ComponentDefinition = Vue.util.extend({}, componentDefinition);
-    var elementOriginalChildren = element.cloneNode(true).childNodes;
     var propsData = getPropsData(element, ComponentDefinition, props);
     var vueVersion = Vue.version && parseInt(Vue.version.split('.')[0], 10) || 0;
 
@@ -316,48 +315,56 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
 
     var rootElement = void 0;
 
-    if (vueVersion >= 2) {
-      rootElement = {
-        propsData: propsData,
-        props: props.camelCase,
-        computed: {
-          reactiveProps: function reactiveProps$$1() {
-            var _this = this;
+    {
+      if (vueVersion >= 2) {
+        var elementOriginalChildren = element.cloneNode(true).childNodes;
+        rootElement = {
+          propsData: propsData,
+          props: props.camelCase,
+          computed: {
+            reactiveProps: function reactiveProps$$1() {
+              var _this = this;
 
-            var reactivePropsList = {};
-            props.camelCase.forEach(function (prop) {
-              reactivePropsList[prop] = _this[prop];
-            });
+              var reactivePropsList = {};
+              props.camelCase.forEach(function (prop) {
+                reactivePropsList[prop] = _this[prop];
+              });
 
-            return reactivePropsList;
+              return reactivePropsList;
+            }
+          },
+          render: function render(createElement) {
+            var data = {
+              props: this.reactiveProps
+            };
+
+            return createElement(ComponentDefinition, data, getSlots(elementOriginalChildren, createElement));
           }
-        },
-        render: function render(createElement) {
-          var data = {
-            props: this.reactiveProps
-          };
-
-          return createElement(ComponentDefinition, data, getSlots(elementOriginalChildren, createElement));
-        }
-      };
-    } else if (vueVersion === 1) {
-      rootElement = ComponentDefinition;
-      rootElement.propsData = propsData;
-    } else {
-      rootElement = ComponentDefinition;
-      var propsWithDefault = {};
-      Object.keys(propsData).forEach(function (prop) {
-        propsWithDefault[prop] = { default: propsData[prop] };
-      });
-      rootElement.props = propsWithDefault;
+        };
+      } else if (vueVersion === 1) {
+        rootElement = ComponentDefinition;
+        rootElement.propsData = propsData;
+      } else {
+        rootElement = ComponentDefinition;
+        var propsWithDefault = {};
+        Object.keys(propsData).forEach(function (prop) {
+          propsWithDefault[prop] = { default: propsData[prop] };
+        });
+        rootElement.props = propsWithDefault;
+      }
     }
 
-    var elementInnerHtml = vueVersion >= 2 ? '<div></div>' : '<div>' + element.innerHTML + '</div>';
+    var componentRootElement = document.createElement('div');
+
+    while (element.childNodes.length) {
+      componentRootElement.appendChild(element.childNodes[0]);
+    }
+
     if (options.shadow && element.shadowRoot) {
-      element.shadowRoot.innerHTML = elementInnerHtml;
+      element.shadowRoot.appendChild(componentRootElement);
       rootElement.el = element.shadowRoot.children[0];
     } else {
-      element.innerHTML = elementInnerHtml;
+      element.appendChild(componentRootElement);
       rootElement.el = element.children[0];
     }
 
