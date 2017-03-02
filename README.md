@@ -52,7 +52,7 @@ import 'document-register-element/build/document-register-element';
 
 `Vue-custom-element` is a tiny wrapper around Vue components. It provide seamless way to use it in HTML, plain JavaScript, Vue, React, Angular etc., using power of Custom Elements.
 * Works with Vue 0.12.x, 1.x and 2.x
-* Small - 2.7 kb min+gzip, optional polyfill - 5 kb min+gzip
+* Small - 2.5 kb min+gzip, optional polyfill - 5 kb min+gzip
 
 ### Why you might need `Vue-custom-element`?
 ![Vue-custom-element](demo/assets/images/vue-custom-element-why.png)

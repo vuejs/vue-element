@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.0.8
+  * vue-custom-element v1.0.9
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
