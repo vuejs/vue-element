@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.0.11
+  * vue-custom-element v1.0.12
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -315,43 +315,41 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
 
     var rootElement = void 0;
 
-    {
-      if (vueVersion >= 2) {
-        var elementOriginalChildren = element.cloneNode(true).childNodes;
-        rootElement = {
-          propsData: propsData,
-          props: props.camelCase,
-          computed: {
-            reactiveProps: function reactiveProps$$1() {
-              var _this = this;
+    if (vueVersion >= 2) {
+      var elementOriginalChildren = element.cloneNode(true).childNodes;
+      rootElement = {
+        propsData: propsData,
+        props: props.camelCase,
+        computed: {
+          reactiveProps: function reactiveProps$$1() {
+            var _this = this;
 
-              var reactivePropsList = {};
-              props.camelCase.forEach(function (prop) {
-                reactivePropsList[prop] = _this[prop];
-              });
+            var reactivePropsList = {};
+            props.camelCase.forEach(function (prop) {
+              reactivePropsList[prop] = _this[prop];
+            });
 
-              return reactivePropsList;
-            }
-          },
-          render: function render(createElement) {
-            var data = {
-              props: this.reactiveProps
-            };
-
-            return createElement(ComponentDefinition, data, getSlots(elementOriginalChildren, createElement));
+            return reactivePropsList;
           }
-        };
-      } else if (vueVersion === 1) {
-        rootElement = ComponentDefinition;
-        rootElement.propsData = propsData;
-      } else {
-        rootElement = ComponentDefinition;
-        var propsWithDefault = {};
-        Object.keys(propsData).forEach(function (prop) {
-          propsWithDefault[prop] = { default: propsData[prop] };
-        });
-        rootElement.props = propsWithDefault;
-      }
+        },
+        render: function render(createElement) {
+          var data = {
+            props: this.reactiveProps
+          };
+
+          return createElement(ComponentDefinition, data, getSlots(elementOriginalChildren, createElement));
+        }
+      };
+    } else if (vueVersion === 1) {
+      rootElement = ComponentDefinition;
+      rootElement.propsData = propsData;
+    } else {
+      rootElement = ComponentDefinition;
+      var propsWithDefault = {};
+      Object.keys(propsData).forEach(function (prop) {
+        propsWithDefault[prop] = { default: propsData[prop] };
+      });
+      rootElement.props = propsWithDefault;
     }
 
     var componentRootElement = document.createElement('div');
