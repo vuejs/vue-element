@@ -168,6 +168,20 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
 }
 ```
 
+Example options usage:
+
+```javascript
+import MyElement from './MyElement.vue';
+
+Vue.customElement('my-element', MyElement, {
+  shadow: true,
+  shadowCss: `
+  .card {
+     background-color: blue;
+  }`
+});
+```
+
 Callbacks are executed before lifecycle hooks from Vue component passed to Vue-custom-element. It's better idea just to use Vue component lifecycle hooks (e.g. `created`, `mounted`, `beforeDestroy`).
 
 ## How does it work?
