@@ -117,6 +117,13 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
 
     // Define the Vue constructor to manage the element
     element.__vue_custom_element__ = new Vue(rootElement);
+    if (options.shadow && options.shadowCss && element.shadowRoot) {
+      const style = document.createElement('style');
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(options.shadowCss));
+
+      element.shadowRoot.appendChild(style);
+    }
     element.removeAttribute('ve-cloak');
     element.setAttribute('ve-ready', '');
   }
