@@ -35,6 +35,11 @@ If you are using Vue globally, just include `vue-custom-element.js` and it will 
 ```html
 <script src="path/to/vue-custom-element.js"></script>
 ```
+
+Minimized and unminimized `vue-custom-element` files differs only by Hot Module Replacement support (Vue@2+):
+* `dist/vue-custom-element.js` - unminimized, developement build with HMR
+* `dist/vue-custom-element.min.js` - minimized, production build without HMR
+
 ####Optional polyfill
 For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
@@ -74,7 +79,7 @@ Why you might need `Vue-custom-element`? Simply, for your Vue components user's 
 	* automatic props casting (numbers, booleans) so they won't be available as strings but proper data types
 	* listening to Vue component $emit'ed events
 	* 'default' and 'named' slots are available, check demo for example
-	* Hot Module Replacement for seamless developer experience (Vue 2.x+)
+	* Hot Module Replacement for seamless developer experience (unminimized build, Vue 2.x+)
 	* lazy-loading - you can download component after it's attached to document. Useful for e.g. UI library authors. Check demo for example
 	* detecting if detached callback is not invoked due to opening vue-custom-element in modal - element is then detached and attached to DOM again. It would be undesirable to destroy it immediately
 * **Custom Elements v1** - compatible with latest specification. Vue-custom-element will use native implementation if supported
@@ -157,7 +162,7 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
   // in case of using vue-custom-element with modals, we destroy  it after defined timeout
   destroyTimeout: 3000,
   
-  // only needed when using lazy-loading - when 'props' are not accessible on Custom Element registration
+  // only needed when using lazy-loading - 'props' are not accessible on Custom Element registration so we have to provide them
   props: [],
 
   // you can set shadow root for element. Only works if native implementation is available.
