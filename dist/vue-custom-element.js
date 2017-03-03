@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.0.9
+  * vue-custom-element v1.0.10
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -371,6 +371,13 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
     reactiveProps(element, props);
 
     element.__vue_custom_element__ = new Vue(rootElement);
+    if (options.shadow && options.shadowCss && element.shadowRoot) {
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(options.shadowCss));
+
+      element.shadowRoot.appendChild(style);
+    }
     element.removeAttribute('ve-cloak');
     element.setAttribute('ve-ready', '');
   }
