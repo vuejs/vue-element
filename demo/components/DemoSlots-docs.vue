@@ -12,8 +12,16 @@
 
     <el-collapse v-model="activeNames">
       <el-collapse-item title="Description" name="1">
-        <p>You can use default and named slots to pass content to Vue component.</p>
-        <p>The only thing you have to know is, using named slots, instead of <code>slot="slotName"</code> you have to use <code>vue-slot="slotName"</code>.</p>
+        <p>You can use default and named slots to pass static content to Vue component.</p>
+        <p>Please note that when using named slots, instead of <code>slot="slotName"</code> you have to use <code>vue-slot="slotName"</code>.</p>
+        <p>Dynamic content woun't work due to fact that when Custom Element register we replace it's HTML with Vue component template.</p>
+        <p>
+          Use
+          <ul>
+            <li>attributes/props for dynamic content</li>
+            <li>slots for static content</li>
+          </ul>
+        </p>
 
       </el-collapse-item>
       <el-collapse-item title="Custom Element HTML" name="2">

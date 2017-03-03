@@ -78,7 +78,7 @@ Why you might need `Vue-custom-element`? Simply, for your Vue components user's 
 	* reactive props and HTML attributes
 	* automatic props casting (numbers, booleans) so they won't be available as strings but proper data types
 	* listening to Vue component $emit'ed events
-	* 'default' and 'named' slots are available, check demo for example
+	* 'default' and 'named' slots are available for passing static content, check demo for example
 	* Hot Module Replacement for seamless developer experience (unminimized build, Vue 2.x+)
 	* lazy-loading - you can download component after it's attached to document. Useful for e.g. UI library authors. Check demo for example
 	* detecting if detached callback is not invoked due to opening vue-custom-element in modal - element is then detached and attached to DOM again. It would be undesirable to destroy it immediately
