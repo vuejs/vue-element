@@ -161,7 +161,10 @@ Additional, optional, third parameter to `Vue.customElement()` is options object
   props: [],
 
   // you can set shadow root for element. Only works if native implementation is available.
-  shadow: false
+  shadow: false,
+  
+  // you can set CSS that will be available in Shadow DOM.
+  shadowCss: ''
 }
 ```
 
