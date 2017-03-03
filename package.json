@@ -20,7 +20,8 @@
   "scripts": {
     "dev": "rollup -wm -c build/dev.config.rollup.js",
     "dev:demo": "node build/dev-server.js",
-    "build": "node build/build.rollup.js && npm run build:demo",
+    "build": "npm run build:library && npm run build:demo",
+    "build:library": "node build/build.rollup.js",
     "build:demo": "node build/build-demo.js",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run e2e",
