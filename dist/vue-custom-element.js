@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.0.12
+  * vue-custom-element v1.0.13
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -352,17 +352,12 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
       rootElement.props = propsWithDefault;
     }
 
-    var componentRootElement = document.createElement('div');
-
-    while (element.childNodes.length) {
-      componentRootElement.appendChild(element.childNodes[0]);
-    }
-
+    var elementInnerHtml = vueVersion >= 2 ? '<div></div>' : ('<div>' + element.innerHTML + '</div>').replace(/vue-slot=/g, 'slot=');
     if (options.shadow && element.shadowRoot) {
-      element.shadowRoot.appendChild(componentRootElement);
+      element.shadowRoot.innerHTML = elementInnerHtml;
       rootElement.el = element.shadowRoot.children[0];
     } else {
-      element.appendChild(componentRootElement);
+      element.innerHTML = elementInnerHtml;
       rootElement.el = element.children[0];
     }
 
