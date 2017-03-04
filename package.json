@@ -1,6 +1,6 @@
 {
   "name": "vue-custom-element",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Custom Elements for Vue.js",
   "main": "dist/vue-custom-element.js",
   "repository": {
