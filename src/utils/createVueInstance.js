@@ -77,17 +77,12 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
       rootElement.props = propsWithDefault;
     }
 
-    const componentRootElement = document.createElement('div');
-
-    while (element.childNodes.length) {
-      componentRootElement.appendChild(element.childNodes[0]);
-    }
-
+    const elementInnerHtml = vueVersion >= 2 ? '<div></div>' : `<div>${element.innerHTML}</div>`.replace(/vue-slot=/g, 'slot=');
     if (options.shadow && element.shadowRoot) {
-      element.shadowRoot.appendChild(componentRootElement);
+      element.shadowRoot.innerHTML = elementInnerHtml;
       rootElement.el = element.shadowRoot.children[0];
     } else {
-      element.appendChild(componentRootElement);
+      element.innerHTML = elementInnerHtml;
       rootElement.el = element.children[0];
     }
 

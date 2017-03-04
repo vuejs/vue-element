@@ -36,10 +36,6 @@ If you are using Vue globally, just include `vue-custom-element.js` and it will 
 <script src="path/to/vue-custom-element.js"></script>
 ```
 
-Minimized and unminimized `vue-custom-element` files differs only by Hot Module Replacement support (Vue@2+):
-* `dist/vue-custom-element.js` - unminimized, developement build with HMR
-* `dist/vue-custom-element.min.js` - minimized, production build without HMR
-
 ####Optional polyfill
 For cross-browser compatibility (IE9+) use Custom Elements polyfill.
 
