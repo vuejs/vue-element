@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.0.13
+  * vue-custom-element v1.1.0
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -436,6 +436,9 @@ function install(Vue) {
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(install);
+  if (install.installed) {
+    install.installed = false;
+  }
 }
 
 export default install;
