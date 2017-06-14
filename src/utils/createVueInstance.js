@@ -100,7 +100,8 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
 
       element.shadowRoot.appendChild(style);
     }
-    element.removeAttribute('ve-cloak');
-    element.setAttribute('ve-ready', '');
+    element.removeAttribute('vce-cloak');
+    element.setAttribute('vce-ready', '');
+    customEmit(element, 'vce-ready');
   }
 }
