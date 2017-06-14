@@ -25,7 +25,10 @@ export default function createVueInstance(element, Vue, componentDefinition, pro
       ctorOptions = ComponentDefinition._Ctor[0].options;  // eslint-disable-line no-underscore-dangle
     }
     ComponentDefinition.methods = ctorOptions.methods = ComponentDefinition.methods || {}; // eslint-disable-line no-multi-assign
-    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = (...args) => customEmit(element, ...args); // eslint-disable-line no-multi-assign, max-len
+    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = function emit(...args) { // eslint-disable-line no-multi-assign
+      customEmit(element, ...args);
+      this.__proto__.$emit.call(this, ...args); // eslint-disable-line no-proto
+    };
 
     let rootElement;
 
