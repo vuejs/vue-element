@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.1.0
+  * vue-custom-element v1.2.0
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -305,12 +305,15 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
       ctorOptions = ComponentDefinition._Ctor[0].options;
     }
     ComponentDefinition.methods = ctorOptions.methods = ComponentDefinition.methods || {};
-    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = function () {
+    ComponentDefinition.methods.$emit = ctorOptions.methods.$emit = function emit() {
+      var _proto__$$emit;
+
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return customEmit.apply(undefined, [element].concat(args));
+      customEmit.apply(undefined, [element].concat(args));
+      (_proto__$$emit = this.__proto__.$emit).call.apply(_proto__$$emit, [this].concat(args));
     };
 
     var rootElement = void 0;
@@ -371,8 +374,9 @@ function createVueInstance(element, Vue, componentDefinition, props, options) {
 
       element.shadowRoot.appendChild(style);
     }
-    element.removeAttribute('ve-cloak');
-    element.setAttribute('ve-ready', '');
+    element.removeAttribute('vce-cloak');
+    element.setAttribute('vce-ready', '');
+    customEmit(element, 'vce-ready');
   }
 }
 
