@@ -1,5 +1,5 @@
 /**
-  * vue-custom-element v1.2.0
+  * vue-custom-element v1.2.1
   * (c) 2017 Karol Fabjańczuk
   * @license MIT
   */
@@ -19,11 +19,6 @@ var index = setPrototypeOf.bind(Object);
 
 function isES2015() {
   if (typeof Symbol === 'undefined' || typeof Reflect === 'undefined') return false;
-  try {
-    eval('class Foo {}');
-  } catch (e) {
-    return false;
-  }
 
   return true;
 }
